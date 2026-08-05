@@ -52,17 +52,20 @@ if not exist ".git" (
 echo. >> "%LOG%"
 
 REM --- 2. Remoto ---
+REM  La URL lleva el usuario delante (claudioflores-prof@) para que git NO
+REM  reutilice las credenciales guardadas de la otra cuenta y pida un login
+REM  nuevo. Sin esto da: "Permission denied to balker123456" (error 403).
 echo [2/6] Conexion con GitHub...
 echo --- paso 2: remote --- >> "%LOG%"
 git remote remove origin >nul 2>&1
-git remote add origin https://github.com/claudioflores-prof/panel-lms.git >> "%LOG%" 2>&1
+git remote add origin https://claudioflores-prof@github.com/claudioflores-prof/panel-lms.git >> "%LOG%" 2>&1
 git remote -v >> "%LOG%" 2>&1
 echo. >> "%LOG%"
 
 REM --- 3. Agregar archivos ---
 echo [3/6] Preparando archivos...
 echo --- paso 3: git add --- >> "%LOG%"
-git add index.html README.md publicar.bat >> "%LOG%" 2>&1
+git add index.html README.md publicar.bat .gitignore >> "%LOG%" 2>&1
 git status --short >> "%LOG%" 2>&1
 echo. >> "%LOG%"
 
@@ -111,6 +114,12 @@ if "!PUSHERR!"=="0" (
 ) else (
     echo   El push FALLO. Codigo: !PUSHERR!
     echo   El detalle quedo en publicar.log
+    echo.
+    echo   Si el error dice "denied to balker123456":
+    echo   Windows sigue usando las credenciales guardadas.
+    echo   Panel de control ^> Administrador de credenciales ^>
+    echo   Credenciales de Windows ^> borrar la entrada
+    echo   git:https://github.com  y ejecutar esto de nuevo.
 )
 echo ============================================
 echo.
