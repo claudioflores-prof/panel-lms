@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Panel de estado — MVP LMS</title>
+<style>
+:root{
+  --tinta:#111111; --tinta2:#3d3d3d; --linea:#dcdcd6; --papel:#ffffff; --papel2:#f6f5f1;
+  --teal:#0F5F5C; --teal-cl:#d3e6e4; --ambar:#B45309; --ambar-cl:#fbe8d3;
+  --rojo:#9b1c1c; --rojo-cl:#f7dede; --gris:#8a8a84;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--papel);color:var(--tinta);
+  font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+.wrap{max-width:1060px;margin:0 auto;padding:28px 20px 80px}
+h1{font-size:26px;margin:0 0 4px;letter-spacing:-.02em}
+h2{font-size:18px;margin:44px 0 6px;padding-bottom:7px;border-bottom:2px solid var(--tinta);letter-spacing:-.01em}
+h3{font-size:14px;margin:22px 0 8px;color:var(--tinta2);text-transform:uppercase;letter-spacing:.06em}
+p{margin:8px 0}
+.sub{color:var(--gris);font-size:13px;margin:0 0 22px}
+.aud{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+  padding:3px 8px;border-radius:3px;background:var(--papel2);color:var(--tinta2);border:1px solid var(--linea);
+  vertical-align:middle;margin-left:10px}
+
+/* ---- Cabecera de hitos ---- */
+.hitos{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:22px 0}
+.hito{border:1px solid var(--linea);border-top:4px solid var(--teal);padding:14px 15px;background:var(--papel)}
+.hito.alerta{border-top-color:var(--ambar)}
+.hito.riesgo{border-top-color:var(--rojo)}
+.hito .k{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--gris)}
+.hito .v{font-size:27px;font-weight:700;letter-spacing:-.02em;margin:3px 0 1px}
+.hito .n{font-size:12px;color:var(--tinta2);line-height:1.4}
+
+/* ---- Controles ---- */
+.panelctl{background:var(--papel2);border:1px solid var(--linea);padding:16px 18px;margin:18px 0}
+.ctl{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:6px 0}
+.ctl label{font-size:13px;font-weight:600;min-width:190px}
+input[type=range]{flex:1;min-width:180px;accent-color:var(--teal)}
+.valor{font-variant-numeric:tabular-nums;font-weight:700;min-width:74px;text-align:right;font-size:15px}
+.chk{display:flex;align-items:center;gap:8px;font-size:13px;margin-top:10px}
+.chk input{accent-color:var(--teal);width:16px;height:16px}
+.veredicto{margin-top:14px;padding:12px 14px;border-left:4px solid var(--teal);background:var(--papel);font-size:14px}
+.veredicto.alerta{border-left-color:var(--ambar)}
+.veredicto.riesgo{border-left-color:var(--rojo)}
+.veredicto b{font-weight:700}
+
+/* ---- Barras horas ---- */
+.barras{margin-top:10px}
+.fila{display:grid;grid-template-columns:172px 1fr 92px;gap:10px;align-items:center;padding:5px 0}
+.fila .nom{font-size:13px;color:var(--tinta2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pista{position:relative;height:22px;background:var(--papel2);border:1px solid var(--linea)}
+.est{position:absolute;top:0;left:0;height:100%;background:var(--linea)}
+.real{position:absolute;top:0;left:0;height:100%;background:var(--teal)}
+.real.excede{background:var(--rojo)}
+.cifra{font-size:12px;text-align:right;font-variant-numeric:tabular-nums;color:var(--tinta2)}
+.leyenda{font-size:12px;color:var(--gris);margin-top:10px}
+.sw{display:inline-block;width:11px;height:11px;vertical-align:-1px;margin-right:4px;border:1px solid var(--linea)}
+
+/* ---- Timeline ---- */
+.tl{position:relative;margin-top:14px;border-top:1px solid var(--linea);padding-top:8px}
+.tlfila{display:grid;grid-template-columns:172px 1fr;gap:10px;align-items:center;padding:3px 0}
+.tlpista{position:relative;height:20px;background:var(--papel2)}
+.tlbar{position:absolute;top:2px;height:16px;background:var(--teal-cl);border:1px solid var(--teal);
+  font-size:10px;line-height:14px;text-align:center;color:var(--teal);overflow:hidden;white-space:nowrap}
+.tlbar.hecho{background:var(--teal);color:#fff}
+.tlbar.opc{background:var(--ambar-cl);border-color:var(--ambar);color:var(--ambar)}
+.marca{position:absolute;top:0;bottom:0;width:2px;background:var(--rojo);z-index:3}
+.marca.hoy{background:var(--tinta)}
+.tlejes{display:grid;grid-template-columns:172px 1fr;gap:10px;margin-top:4px}
+.tlmeses{position:relative;height:18px;font-size:11px;color:var(--gris)}
+.tlmes{position:absolute;top:0;border-left:1px solid var(--linea);padding-left:3px}
+
+/* ---- Tablero de tareas ---- */
+details{border:1px solid var(--linea);margin:7px 0;background:var(--papel)}
+summary{cursor:pointer;padding:10px 14px;font-size:14px;font-weight:600;display:flex;
+  align-items:center;gap:10px;list-style:none;user-select:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"▸";color:var(--gris);font-size:12px}
+details[open] summary::before{content:"▾"}
+.pill{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:9px;margin-left:auto}
+.pill.done{background:var(--teal);color:#fff}
+.pill.wip{background:var(--ambar);color:#fff}
+.pill.todo{background:var(--papel2);color:var(--gris);border:1px solid var(--linea)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--gris);
+  padding:8px 14px;border-top:1px solid var(--linea);font-weight:600}
+td{padding:8px 14px;border-top:1px solid #efeee9;vertical-align:top}
+td.id{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;white-space:nowrap;width:56px}
+td.h{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;width:62px}
+td.est{width:96px}
+tr.hecha td{color:var(--gris)}
+tr.hecha td.id::after{content:" ✓";color:var(--teal);font-weight:700}
+tr.cortada td{color:var(--gris);text-decoration:line-through}
+.crit{font-size:12px;color:var(--gris);display:block;margin-top:3px}
+
+/* ---- Bloques de texto ---- */
+.nota{border-left:3px solid var(--linea);padding:2px 0 2px 14px;margin:14px 0;font-size:14px;color:var(--tinta2)}
+.nota.ojo{border-left-color:var(--ambar)}
+.nota.stop{border-left-color:var(--rojo)}
+ul{margin:8px 0;padding-left:20px} li{margin:5px 0;font-size:14px}
+.riesgos{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+.riesgos th,.riesgos td{border:1px solid var(--linea);padding:8px 10px;text-align:left;vertical-align:top}
+.riesgos th{background:var(--papel2)}
+.sem{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:0}
+.sem.a{background:var(--rojo)} .sem.m{background:var(--ambar)} .sem.b{background:var(--teal)}
+footer{margin-top:56px;padding-top:14px;border-top:1px solid var(--linea);font-size:12px;color:var(--gris)}
+
+/* ---- Conmutador de vista ---- */
+.vistas{position:sticky;top:0;z-index:20;background:var(--papel);border-bottom:1px solid var(--linea);
+  margin:0 -20px 4px;padding:10px 20px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.vbtn{font:inherit;font-size:13px;font-weight:600;padding:7px 15px;cursor:pointer;
+  background:var(--papel);color:var(--tinta2);border:1px solid var(--linea);border-radius:3px;transition:none}
+.vbtn:hover{border-color:var(--teal);color:var(--teal)}
+.vbtn.activo{background:var(--teal);border-color:var(--teal);color:#fff}
+.vnota{font-size:12px;color:var(--gris);margin-left:auto}
+.copiar{font:inherit;font-size:12px;padding:6px 11px;cursor:pointer;background:transparent;
+  border:1px solid var(--linea);border-radius:3px;color:var(--tinta2)}
+.copiar:hover{border-color:var(--teal);color:var(--teal)}
+section[hidden]{display:none}
+.solofull{display:none}
+body[data-vista="full"] .solofull{display:inline}
+
+@media print{
+  .vistas,.panelctl input,.panelctl .chk,.copiar{display:none}
+  details{break-inside:avoid} details:not([open]){display:block}
+  section[hidden]{display:none !important}
+}
+@media (max-width:640px){
+  .fila,.tlfila,.tlejes{grid-template-columns:104px 1fr} .fila .cifra{display:none}
+  .ctl label{min-width:100%}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="vistas">
+  <button class="vbtn activo" data-v="exec">Resumen ejecutivo</button>
+  <button class="vbtn" data-v="full">Vista completa</button>
+  <button class="copiar" id="copiar">Copiar link de esta vista</button>
+  <span class="vnota" id="vnota"></span>
+</div>
+
+<h1>MVP LMS — panel de estado</h1>
+<p class="sub">Libros interactivos para 2° básico · Actualizado el <b id="fecha-act"></b><span class="solofull"> · Este panel se edita a mano en el bloque <code>DATOS</code> del código fuente.</span></p>
+
+<!-- ============ 1. HITOS ============ -->
+<div class="hitos" id="hitos"></div>
+
+<!-- ============ 2. PROYECCIÓN ============ -->
+<section data-v="ambos">
+<h2>¿Se llega a la fecha del piloto?<span class="aud">Dirección</span></h2>
+<p>Mueve el control para ver cuántas horas semanales de desarrollo hacen falta. La proyección usa las horas
+estimadas del plan para las tareas que aún no están cerradas.</p>
+
+<div class="panelctl">
+  <div class="ctl">
+    <label for="vel">Horas de desarrollo por semana</label>
+    <input type="range" id="vel" min="4" max="18" step="0.5" value="8">
+    <span class="valor" id="vel-v">8 h</span>
+  </div>
+  <div class="chk">
+    <input type="checkbox" id="b8"><label for="b8">Incluir el módulo de evaluación (Bloque 8, 20 h) — candidato a diferirse</label>
+  </div>
+  <div class="chk">
+    <input type="checkbox" id="gest"><label for="gest">Sumar las 42 h de gestión, que compiten por las mismas horas</label>
+  </div>
+  <div class="veredicto" id="veredicto"></div>
+</div>
+
+<div class="nota ojo">
+<b>La cifra que importa.</b> Con 8 h/semana de desarrollo puro, la capacidad hasta el 2 de noviembre es de
+<b>101,7 h</b> frente a <b>103,5 h</b> pendientes: alcanza al filo y sin ningún margen. Pero las 42 h de gestión
+del proyecto salen de las mismas semanas y equivalen a 3,3 h/semana adicionales. La dedicación total honesta
+para sostener la fecha es de <b>~11,4 h/semana</b>, no 8.
+</div>
+</section>
+
+<!-- ============ 3. HORAS REAL VS PLAN ============ -->
+<section data-v="ambos">
+<h2>Horas: reales contra estimadas<span class="aud">Desarrollo · Dirección</span></h2>
+<p>Solo hay una medición cerrada. El bloque medido es el más automatizable del proyecto, así que su ratio
+<b>no se extrapola</b> a lo que viene.</p>
+<div class="barras" id="barras"></div>
+<p class="leyenda"><span class="sw" style="background:var(--linea)"></span>Estimado del plan
+&nbsp;&nbsp;<span class="sw" style="background:var(--teal)"></span>Real registrado
+&nbsp;&nbsp;<span class="sw" style="background:var(--rojo)"></span>Real por sobre lo estimado</p>
+
+<div class="nota">
+<b>Por qué no se proyecta con el ratio medido.</b> Cuatro razones para esperar que caiga: los bloques de
+componentes exigen comportamiento táctil en tablet real (probar en hardware no se acelera escribiendo código
+más rápido); el bloque de infraestructura es depuración remota; el cuello de botella pasa a ser el número de
+decisiones a tomar y verificar, no las líneas de código; y la gestión del proyecto se comprime poco.
+<b>La segunda medición útil es el cierre del Bloque 2.</b>
+</div>
+</section>
+
+<!-- ============ 4. CALENDARIO ============ -->
+<section data-v="ambos">
+<h2>Calendario de bloques<span class="aud">Todos</span></h2>
+<div class="tl" id="timeline"></div>
+<div class="tlejes"><div></div><div class="tlmeses" id="tlmeses"></div></div>
+<p class="leyenda">
+<span class="sw" style="background:var(--teal)"></span>Cerrado
+&nbsp;&nbsp;<span class="sw" style="background:var(--teal-cl);border-color:var(--teal)"></span>Planificado
+&nbsp;&nbsp;<span class="sw" style="background:var(--ambar-cl);border-color:var(--ambar)"></span>Diferible
+&nbsp;&nbsp;<span class="sw" style="background:var(--rojo)"></span>Hito comprometido
+&nbsp;&nbsp;<span class="sw" style="background:var(--tinta)"></span>Hoy
+</p>
+</section>
+
+<!-- ============ 5. LÍNEA DE CONTENIDO ============ -->
+<section data-v="ambos">
+<h2>Línea de contenido<span class="aud">Contenido · Dirección</span></h2>
+<p>El desarrollo y la producción de contenido son <b>dos carriles paralelos</b>. El sistema puede estar
+terminado y el piloto igual no ocurrir si no hay una unidad ensamblada que cargar.</p>
+<div id="contenido"></div>
+</section>
+
+<!-- ============ 6. TABLERO DE TAREAS ============ -->
+<section data-v="full">
+<h2>Tablero de tareas<span class="aud">Desarrollo</span></h2>
+<p>Las 41 tareas del plan con su criterio de término. Cada tarea se cierra solo con su criterio verificado en
+el navegador real; un commit por tarea. <b>Esta sección es el detalle de ejecución</b> — el avance agregado
+está en el calendario de arriba.</p>
+<div id="tablero"></div>
+</section>
+
+<!-- ============ 7. RIESGOS ============ -->
+<section data-v="ambos">
+<h2>Riesgos vivos<span class="aud">Dirección</span></h2>
+<table class="riesgos"><thead><tr><th style="width:22%">Riesgo</th><th style="width:11%">Nivel</th><th>Mitigación y detonante de acción</th></tr></thead>
+<tbody id="riesgos"></tbody></table>
+</section>
+
+<!-- ============ 8. PENDIENTES ============ -->
+<section data-v="ambos">
+<h2>Decisiones y verificaciones pendientes<span class="aud">Dirección</span></h2>
+<div id="pendientes"></div>
+</section>
+
+<!-- ============ 9. HIGIENE DEL PLAN ============ -->
+<section data-v="full">
+<h2>Inconsistencias detectadas en el plan<span class="aud">Desarrollo</span></h2>
+<p>Encontradas al cruzar el plan técnico con el registro de horas. No cambian el rumbo, pero desalinean las
+cifras que se comunican. Se quitan de aquí cuando se corrijan en los documentos fuente.</p>
+<div id="higiene"></div>
+</section>
+
+<footer id="pie"></footer>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   DATOS — esto es lo único que hay que editar al cerrar cada tarea.
+   Estados de tarea: "done" | "wip" | "todo" | "cut"
+   ═══════════════════════════════════════════════════════════════════ */
+const DATOS = {
+  actualizado: "2026-08-05",
+  hoy:         "2026-08-05",   // dejar igual a actualizado; permite congelar el panel para imprimir
+  semana1:     "2026-07-27",   // lunes de la semana 1 del plan
+  piloto:      "2026-11-02",
+  mvp:         "2026-12-01",
+  velocidadDefault: 8,
+  horasGestion: 42,
+
+  bloques: [
+    { id:"B0", nombre:"Slice vertical", semIni:1, semFin:3, real:6,
+      nota:"Cerrado en 2 días de calendario. Incluye instalación de Docker, cuenta de repositorio y decisiones tomadas sobre la marcha.",
+      tareas:[
+        {id:"T0.1",  t:"Repo, estructura de apps, dependencias",              h:3,   e:"done", c:"Verificación del proyecto sin errores; commit inicial"},
+        {id:"T0.2",  t:"Configuración por entornos + base de datos en Docker", h:2,   e:"done", c:"Migraciones corren contra Postgres local"},
+        {id:"T0.3",  t:"Modelo de usuario propio, catálogo y reporte",         h:4.5, e:"done", c:"Migración aplicada; permiso equivocado responde 403"},
+        {id:"T0.4",  t:"Esquema de página + validador + convención de ids",    h:3,   e:"done", c:"6 tests: página válida OK, 5 casos inválidos fallan con mensaje legible"},
+        {id:"T0.5",  t:"Entrega de página sin claves de corrección",           h:2,   e:"done", c:"La respuesta no contiene la clave correcta en ninguna parte"},
+        {id:"T0.6",  t:"Runtime en el navegador: bus, registro, montaje",      h:3,   e:"done", c:"La página se monta y el bus registra lo emitido"},
+        {id:"T0.7",  t:"Primer componente de actividad con validación",        h:2,   e:"done", c:"El reporte llega con los 14 campos del contrato"},
+        {id:"T0.8",  t:"Recepción del reporte + corrección en el servidor",    h:3,   e:"done", c:"Un cliente que miente queda registrado como incorrecto"},
+        {id:"T0.9",  t:"Arnés de vista previa con panel de errores",           h:2,   e:"done", c:"Un bloque inválido muestra el error, no una pantalla en blanco"},
+        {id:"T0.10", t:"Pruebas automatizadas de punta a punta",               h:2,   e:"done", c:"Suite en verde desde máquina limpia"},
+        {id:"T0.11", t:"Una página real de contenido funcionando",             h:2,   e:"done", c:"Renderiza texto, imagen y actividad; el reporte llega a la base"}
+      ]},
+
+    { id:"B1", nombre:"Despliegue base", semIni:3, semFin:4, real:null,
+      nota:"Reestimado a la baja: el servidor ya existe y está administrado con panel, no se configura desde cero. Timebox estricto de 8 h.",
+      tareas:[
+        {id:"T1.1", t:"Base de datos en el servidor + verificar memoria libre real", h:1.5, e:"todo", c:"La base responde; memoria libre medida y registrada"},
+        {id:"T1.2", t:"Sitio con proxy inverso, subdominio y certificado",           h:2,   e:"todo", c:"El subdominio sirve el slice con candado verde"},
+        {id:"T1.3", t:"Script de despliegue + manual de operación",                  h:2,   e:"todo", c:"Un despliegue completo con un comando, documentado"},
+        {id:"T1.4", t:"Respaldo diario + restauración probada una vez",              h:1,   e:"todo", c:"El respaldo se restaura en una base limpia y el sistema funciona"}
+      ]},
+
+    { id:"B2", nombre:"Acceso y organización", semIni:4, semFin:6, real:null,
+      nota:"Va antes del grueso de componentes porque desbloquea al tester. Es la próxima medición útil de velocidad.",
+      tareas:[
+        {id:"T2.1", t:"Inicio de sesión institucional + alta masiva + matriz de permisos", h:5, e:"todo", c:"Correo del dominio entra con su rol; correo personal es rechazado"},
+        {id:"T2.2", t:"Cursos, inscripciones y asignación de libros",                      h:3, e:"todo", c:"Un profesor con 2 cursos ve solo sus 2 cursos"},
+        {id:"T2.3", t:"Autorización real del envío de reportes",                           h:2, e:"todo", c:"Reportar sobre un libro ajeno da 403 y no se persiste"},
+        {id:"T2.4", t:"Vista biblioteca con progreso por unidad",                          h:4, e:"todo", c:"Con 3 de 12 actividades hechas muestra 25 %"}
+      ]},
+
+    { id:"B3", nombre:"Componentes autocorregidos", semIni:6, semFin:9, real:null,
+      nota:"Ordenados por riesgo creciente. Cada componente se cierra completo antes de empezar el siguiente.",
+      tareas:[
+        {id:"T3.1", t:"Verdadero/falso y respuesta corta con normalización", h:5, e:"todo", c:"Test de normalización de texto con espacios, mayúsculas y puntuación"},
+        {id:"T3.2", t:"Selección de palabras y ordenamiento",                h:6, e:"todo", c:"Puntaje parcial verificado con tabla de casos"},
+        {id:"T3.3", t:"Emparejamiento por arrastre y por toque",             h:5, e:"todo", c:"Funciona con mouse Y con toque en la tablet real"},
+        {id:"T3.4", t:"Escuchar y escribir (voz sintetizada)",               h:4, e:"todo", c:"Sin voz disponible muestra aviso y permite continuar"},
+        {id:"T3.5", t:"Cuestionario multi-pregunta con bonus de tiempo",     h:4, e:"todo", c:"El puntaje con bonus coincide con el cálculo del servidor"}
+      ]},
+
+    { id:"B4", nombre:"Runtime completo e ingesta", semIni:9, semFin:11, real:null,
+      hito:"Hito cargable",
+      nota:"Al cerrar este bloque, una unidad completa producida por la línea de contenido se carga con un comando.",
+      tareas:[
+        {id:"T4.1", t:"Importador de libros idempotente y con validación previa", h:5, e:"todo", c:"Correrlo dos veces no produce cambios la segunda vez"},
+        {id:"T4.2", t:"Navegación del libro y retoma de la última página",        h:5, e:"todo", c:"Cerrar el navegador y volver retoma donde se quedó"},
+        {id:"T4.3", t:"Tolerancia a la caída de red al reportar",                 h:4, e:"todo", c:"3 respuestas sin red llegan a la base al restaurarla"},
+        {id:"T4.4", t:"Conteo de actividades cacheado",                           h:2, e:"todo", c:"El progreso no recuenta archivos en cada carga"}
+      ]},
+
+    { id:"B5", nombre:"Captura y multimedia", semIni:11, semFin:13, real:null,
+      nota:"Reducido: dibujo y grabación de voz van SIN subida al servidor en el piloto. Se registra la actividad como completada y nada se persiste. La subida vuelve después del piloto, con política de datos de menores escrita.",
+      tareas:[
+        {id:"T5.1", t:"Respuesta abierta y metacognición con marca de revisión", h:3, e:"todo", c:"Las respuestas abiertas quedan marcadas para revisión docente"},
+        {id:"T5.2", t:"Tocar palabras y lectura en voz alta con resaltado",      h:4, e:"todo", c:"Se registran las palabras tocadas y el porcentaje escuchado"},
+        {id:"T5.3", t:"Endpoint de subida de archivos",                          h:0, e:"cut",  c:"Eliminada por la decisión de no subir media en el piloto"},
+        {id:"T5.4", t:"Dibujo en lienzo (sin subida)",                           h:4, e:"todo", c:"Dibuja con lápiz y goma en tablet; se reporta completado"},
+        {id:"T5.5", t:"Grabación de voz y trazado (sin subida)",                 h:3, e:"todo", c:"Graba y reproduce en el propio dispositivo"}
+      ]},
+
+    { id:"B6", nombre:"Módulo del profesor", semIni:13, semFin:15, real:null,
+      tareas:[
+        {id:"T6.1", t:"Tablero de avance por curso y por estudiante", h:5, e:"todo", c:"Con 35 alumnos × 12 actividades carga en menos de 1 s"},
+        {id:"T6.2", t:"Detalle de respuestas, incluidas las de revisión manual", h:5, e:"todo", c:"El profesor abre un dibujo y un audio desde el tablero"},
+        {id:"T6.3", t:"Filtros sin recarga + exportación a planilla", h:4, e:"todo", c:"El archivo abre en Excel con las tildes correctas"}
+      ]},
+
+    { id:"B7", nombre:"QA y piloto", semIni:15, semFin:16, real:null,
+      hito:"Piloto",
+      tareas:[
+        {id:"T7.1", t:"Endurecimiento de producción", h:3, e:"todo", c:"Revisión de despliegue sin advertencias críticas"},
+        {id:"T7.2", t:"Prueba de carga con 35 sesiones simultáneas", h:3, e:"todo", c:"Sin errores de servidor; latencia p95 bajo 500 ms"},
+        {id:"T7.3", t:"Pauta de QA en el dispositivo real del piloto", h:6, e:"todo", c:"La pauta pasa completa en el modelo de tablet que usarán los niños"},
+        {id:"T7.4", t:"Alta de usuarios del curso + tarjetas de acceso", h:3, e:"todo", c:"35 alumnos entran con su tarjeta"}
+      ]},
+
+    { id:"B8", nombre:"Módulo de evaluación", semIni:16, semFin:19, real:null,
+      opcional:true, hito:"MVP completo",
+      nota:"Candidato principal a diferimiento si la velocidad semanal se mantiene en 8 h.",
+      tareas:[
+        {id:"T8.1", t:"Modelos de evaluación con intento único",        h:4, e:"todo", c:"Un segundo intento se rechaza en la base, no solo en la vista"},
+        {id:"T8.2", t:"Cálculo de nota con exigencia 60 %",             h:2, e:"todo", c:"0 pts→1,0 · 60 %→4,0 · 100 %→7,0 más 6 casos intermedios"},
+        {id:"T8.3", t:"Creación de evaluaciones por el profesor",       h:5, e:"todo", c:"Crea una evaluación de 10 preguntas sin tocar el admin"},
+        {id:"T8.4", t:"Rendición del estudiante, corrección en servidor",h:5, e:"todo", c:"Inspeccionar la red no revela ninguna clave de corrección"},
+        {id:"T8.5", t:"Resultados y distribución en el tablero",        h:4, e:"todo", c:"Nota por alumno y promedio del curso"}
+      ]}
+  ],
+
+  contenido: {
+    horasTotales: 78,
+    responsable: "Externo al equipo de desarrollo",
+    desbloqueado: "2026-08-04",
+    detonante: "Semana 8 sin la primera unidad ensamblada",
+    hitos: [
+      {t:"Esquema de página y contrato de datos congelados", e:"done", n:"Entregable listo desde el cierre de la tarea del validador"},
+      {t:"Paquete de creación de contenido y plantillas entregados", e:"wip", n:"Acción de mayor palanca pendiente hoy"},
+      {t:"Primera unidad de Lenguaje ensamblada", e:"todo", n:"Necesaria para el hito cargable del Bloque 4"},
+      {t:"Segunda unidad", e:"todo", n:"El sistema debe poder pilotear con UNA sola unidad si la segunda no llega"}
+    ]
+  },
+
+  riesgos: [
+    {r:"La línea de contenido no llega a tiempo", n:"a",
+     m:"Es la restricción probable del proyecto, por encima de las horas de desarrollo. El esquema ya está congelado y el sistema debe poder pilotear con una sola unidad. <b>Detonante:</b> semana 8 sin la primera unidad ensamblada."},
+    {r:"Tablet real distinta del navegador de escritorio", n:"m",
+     m:"Toque, voz sintetizada, lienzo y teclado en pantalla se comportan distinto. Se prueba en el dispositivo real desde el bloque de componentes, no en el QA final. <b>Detonante:</b> cualquier componente que funcione en escritorio y no en tablet."},
+    {r:"Roles concentrados en una sola persona", n:"a",
+     m:"Gestión, desarrollo e infraestructura compiten por las mismas horas. Las 42 h de gestión están cuantificadas aparte y no se financian con horas de desarrollo sin decisión explícita."},
+    {r:"La vista central se renderiza en el cliente", n:"m",
+     m:"Es la capa más frágil y no se cubre con las pruebas habituales del servidor. Mitigado con pruebas de navegador automatizadas desde el primer bloque. <b>Ya materializado y contenido.</b>"},
+    {r:"Memoria del servidor compartido", n:"m",
+     m:"El servidor aloja otro sitio además del panel de administración. Se mide la memoria libre real antes de comprometerse, en la primera tarea del despliegue."}
+  ],
+
+  pendientes: [
+    {t:"Velocidad semanal comprometida", d:"Definir por escrito si son 8 u 11–12 h semanales de desarrollo. A 8 h la fecha del piloto se sostiene solo si la gestión no consume tiempo, lo cual no es realista.", quien:"Dirección + desarrollo"},
+    {t:"Escenario de destino del sistema", d:"Uso interno, red de colegios o producto vendible. La estructura de datos ya quedó preparada para el escenario intermedio, así que la decisión ya no bloquea, pero sí define qué se construye después del piloto.", quien:"Dirección"},
+    {t:"Propiedad intelectual del contenido y del código", d:"Sin definir. Conviene resolverlo antes de que exista contenido producido por terceros dentro del sistema.", quien:"Dirección"},
+    {t:"Estado de las tablets del piloto", d:"Confirmar modelo, cantidad y estado de los equipos que usará el curso. Condiciona la pauta de QA y el riesgo de dispositivo.", quien:"Colegio"},
+    {t:"Prueba de acceso con niños reales", d:"Verificar que alumnos de 2° básico logran entrar con el mecanismo elegido. Si falla, hay que rediseñar el acceso, no ajustarlo.", quien:"Desarrollo + profesor jefe"}
+  ],
+
+  higiene: [
+    "El cuadro de conciliación de calendario del plan técnico quedó desactualizado: se calculó antes de las dos reestimaciones a la baja y antes de conocer el costo real del primer bloque. Sus fechas ya no son las vigentes y este panel las reemplaza.",
+    "El Bloque 2 declara 12 h en su encabezado, pero sus cuatro tareas suman 14 h. Este panel usa 14 h.",
+    "El Bloque 5 declara 20 h en su tabla de tareas, cifra anterior a la decisión de dejar la subida de archivos fuera del piloto. La cifra vigente es 14 h y es la que usa este panel.",
+    "El Bloque 0 declara 25 h en su encabezado, pero sus once tareas suman 28,5 h. Este panel usa 28,5 h, que es la suma verificable. Consecuencia: el ratio de velocidad del primer bloque es 4,7× y no 4,2× como quedó anotado en el registro de horas. La conclusión no cambia — sigue sin ser extrapolable — pero conviene alinear ambas cifras.",
+    "El registro de horas del primer bloque es un total informado, sin desglose por tarea, porque se empezó a llevar después de terminarlo. Desde el siguiente bloque se anota por tarea."
+  ]
+};
+
+/* ═══════════════════════════════════════════════════════════════════
+   RENDER — de aquí para abajo no hace falta tocar nada.
+   ═══════════════════════════════════════════════════════════════════ */
+const $ = s => document.querySelector(s);
+const D = s => new Date(s + "T00:00:00");
+const MES = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+const fFecha = d => `${d.getDate()} ${MES[d.getMonth()]} ${d.getFullYear()}`;
+const fCorta = d => `${d.getDate()} ${MES[d.getMonth()]}`;
+const num = n => (Math.round(n*10)/10).toString().replace(".", ",");
+const dias = (a,b) => Math.round((b-a)/86400000);
+
+const HOY = D(DATOS.hoy), PILOTO = D(DATOS.piloto), MVP = D(DATOS.mvp), S1 = D(DATOS.semana1);
+
+// --- agregados por bloque
+DATOS.bloques.forEach(b => {
+  b.estimado  = b.tareas.reduce((s,t)=>s+t.h, 0);
+  b.pendiente = b.tareas.filter(t=>t.e!=="done" && t.e!=="cut").reduce((s,t)=>s+t.h, 0);
+  b.hechas    = b.tareas.filter(t=>t.e==="done").length;
+  b.vivas     = b.tareas.filter(t=>t.e!=="cut").length;
+  b.estado    = b.pendiente===0 ? "done" : (b.hechas>0 ? "wip" : "todo");
+});
+const PEND_PILOTO = DATOS.bloques.filter(b=>!b.opcional).reduce((s,b)=>s+b.pendiente, 0);
+const PEND_MVP    = DATOS.bloques.reduce((s,b)=>s+b.pendiente, 0);
+const REAL_TOTAL  = DATOS.bloques.reduce((s,b)=>s+(b.real||0), 0);
+const EST_CERRADO = DATOS.bloques.filter(b=>b.real!=null).reduce((s,b)=>s+b.estimado, 0);
+
+$("#fecha-act").textContent = fFecha(D(DATOS.actualizado));
+
+// --- 1. hitos
+function pintarHitos(){
+  const semRestantes = dias(HOY, PILOTO)/7;
+  const necesarias = PEND_PILOTO/semRestantes;
+  const clase = necesarias > 12 ? "riesgo" : (necesarias > 9 ? "alerta" : "");
+  $("#hitos").innerHTML = `
+    <div class="hito"><div class="k">Piloto comprometido</div><div class="v">${fCorta(PILOTO)}</div>
+      <div class="n">${dias(HOY,PILOTO)} días · ${num(semRestantes)} semanas</div></div>
+    <div class="hito"><div class="k">Avance de desarrollo</div><div class="v">${Math.round(REAL_TOTAL/(REAL_TOTAL+PEND_MVP)*100)} %</div>
+      <div class="n">1 de 9 bloques cerrado · ${DATOS.bloques[0].hechas} de ${DATOS.bloques.reduce((s,b)=>s+b.vivas,0)} tareas</div></div>
+    <div class="hito ${clase}"><div class="k">Ritmo necesario</div><div class="v">${num(necesarias)} h</div>
+      <div class="n">por semana, solo desarrollo, para llegar al piloto</div></div>
+    <div class="hito ${clase}"><div class="k">Con gestión incluida</div><div class="v">${num(necesarias + DATOS.horasGestion/semRestantes)} h</div>
+      <div class="n">por semana, sumando las ${DATOS.horasGestion} h de gestión del proyecto</div></div>`;
+}
+
+// --- 2. proyección
+function proyectar(){
+  const v = parseFloat($("#vel").value);
+  const conB8 = $("#b8").checked, conG = $("#gest").checked;
+  $("#vel-v").textContent = num(v) + " h";
+  let horas = conB8 ? PEND_MVP : PEND_PILOTO;
+  if (conG) horas += DATOS.horasGestion;
+  const semanas = horas / v;
+  const fin = new Date(HOY.getTime() + semanas*7*86400000);
+  const meta = conB8 ? MVP : PILOTO;
+  const holgura = dias(fin, meta);
+  const etiqueta = conB8 ? "MVP completo (1 dic)" : "piloto (2 nov)";
+  let cls, msg;
+  if (holgura >= 14)      { cls="";       msg=`<b>Llega con holgura.</b> Terminas el ${fFecha(fin)}, ${holgura} días antes del ${etiqueta}.`; }
+  else if (holgura >= 0)  { cls="alerta"; msg=`<b>Llega al filo.</b> Terminas el ${fFecha(fin)}, apenas ${holgura} día${holgura===1?"":"s"} antes del ${etiqueta}. Sin margen para un imprevisto.`; }
+  else                    { cls="riesgo"; msg=`<b>No llega.</b> Terminas el ${fFecha(fin)}, ${-holgura} días después del ${etiqueta}.`; }
+  $("#veredicto").className = "veredicto " + cls;
+  $("#veredicto").innerHTML = `${msg}<br><span style="color:var(--gris);font-size:13px">
+    ${num(horas)} h pendientes ÷ ${num(v)} h/semana = ${num(semanas)} semanas${conG?" · incluye gestión":""}${conB8?"":" · sin módulo de evaluación"}</span>`;
+}
+
+// --- 3. barras de horas
+function pintarBarras(){
+  const max = Math.max(...DATOS.bloques.map(b=>Math.max(b.estimado, b.real||0)));
+  $("#barras").innerHTML = DATOS.bloques.map(b=>{
+    const est = b.estimado/max*100;
+    const real = b.real!=null ? b.real/max*100 : 0;
+    const excede = b.real!=null && b.real > b.estimado;
+    return `<div class="fila">
+      <div class="nom">${b.id} · ${b.nombre}</div>
+      <div class="pista">
+        <div class="est" style="width:${est}%"></div>
+        ${b.real!=null?`<div class="real ${excede?"excede":""}" style="width:${real}%"></div>`:""}
+      </div>
+      <div class="cifra">${b.real!=null? `<b>${num(b.real)}</b> / ${num(b.estimado)} h` : `— / ${num(b.estimado)} h`}</div>
+    </div>`;
+  }).join("") + `<div class="fila" style="border-top:1px solid var(--linea);margin-top:8px;padding-top:10px">
+      <div class="nom"><b>Medido hasta hoy</b></div>
+      <div class="pista"><div class="est" style="width:100%"></div>
+        <div class="real" style="width:${REAL_TOTAL/EST_CERRADO*100}%"></div></div>
+      <div class="cifra"><b>${num(REAL_TOTAL)}</b> / ${num(EST_CERRADO)} h</div>
+    </div>`;
+}
+
+// --- 4. timeline
+function pintarTimeline(){
+  const ini = S1;
+  const fin = new Date(D("2026-12-15"));
+  const total = dias(ini, fin);
+  const pos = d => dias(ini, d)/total*100;
+  $("#timeline").innerHTML = DATOS.bloques.map(b=>{
+    const bi = new Date(ini.getTime() + (b.semIni-1)*7*86400000);
+    const bf = new Date(ini.getTime() + b.semFin*7*86400000);
+    const cls = b.estado==="done" ? "hecho" : (b.opcional ? "opc" : "");
+    const pct = Math.round(b.hechas/b.vivas*100);
+    return `<div class="tlfila">
+      <div class="nom" style="font-size:13px;color:var(--tinta2)">${b.id} · ${b.nombre}
+        <span style="color:var(--gris);font-size:11px">${pct}%</span></div>
+      <div class="tlpista"><div class="tlbar ${cls}" style="left:${pos(bi)}%;width:${pos(bf)-pos(bi)}%">${b.hito||""}</div></div>
+    </div>`;
+  }).join("") + `
+    <div class="marca hoy"    style="left:calc(172px + 10px + (100% - 182px) * ${pos(HOY)/100})" title="Hoy"></div>
+    <div class="marca"        style="left:calc(172px + 10px + (100% - 182px) * ${pos(PILOTO)/100})" title="Piloto"></div>
+    <div class="marca"        style="left:calc(172px + 10px + (100% - 182px) * ${pos(MVP)/100})" title="MVP"></div>`;
+  let m = "";
+  for (let i=6; i<=11; i++){
+    const d = new Date(2026, i, 1);
+    if (d < ini || d > fin) continue;
+    m += `<div class="tlmes" style="left:${pos(d)}%">${MES[i]}</div>`;
+  }
+  $("#tlmeses").innerHTML = m;
+}
+
+// --- 5. contenido
+function pintarContenido(){
+  const c = DATOS.contenido;
+  const hechos = c.hitos.filter(h=>h.e==="done").length;
+  $("#contenido").innerHTML = `
+    <div class="hitos" style="margin-top:14px">
+      <div class="hito ${hechos<2?"alerta":""}"><div class="k">Esfuerzo estimado</div><div class="v">${c.horasTotales} h</div>
+        <div class="n">${c.responsable}</div></div>
+      <div class="hito"><div class="k">Estado</div><div class="v">${hechos}/${c.hitos.length}</div>
+        <div class="n">hitos de contenido alcanzados</div></div>
+      <div class="hito riesgo"><div class="k">Detonante de acción</div><div class="v" style="font-size:16px;line-height:1.3;margin-top:8px">${c.detonante}</div>
+        <div class="n">Si se cumple, se recorta a una unidad</div></div>
+    </div>
+    <table style="margin-top:12px"><thead><tr><th>Hito de la línea de contenido</th><th style="width:120px">Estado</th></tr></thead><tbody>
+    ${c.hitos.map(h=>`<tr class="${h.e==="done"?"hecha":""}"><td>${h.t}<span class="crit">${h.n}</span></td>
+      <td><span class="pill ${h.e}">${h.e==="done"?"Listo":h.e==="wip"?"En curso":"Pendiente"}</span></td></tr>`).join("")}
+    </tbody></table>`;
+}
+
+// --- 6. tablero
+function pintarTablero(){
+  $("#tablero").innerHTML = DATOS.bloques.map(b=>{
+    const et = b.estado==="done"?"Cerrado":b.estado==="wip"?"En curso":"Pendiente";
+    return `<details ${b.estado==="wip"?"open":""}>
+      <summary>${b.id} · ${b.nombre}
+        <span style="font-weight:400;color:var(--gris);font-size:13px">
+          ${b.hechas}/${b.vivas} tareas · ${num(b.estimado)} h${b.real!=null?` · real ${num(b.real)} h`:""}${b.opcional?" · diferible":""}</span>
+        <span class="pill ${b.estado}">${et}</span></summary>
+      ${b.nota?`<div style="padding:0 14px 10px;font-size:13px;color:var(--tinta2)">${b.nota}</div>`:""}
+      <table><thead><tr><th>Id</th><th>Tarea y criterio de término</th><th style="text-align:right">Horas</th></tr></thead><tbody>
+      ${b.tareas.map(t=>`<tr class="${t.e==="done"?"hecha":t.e==="cut"?"cortada":""}">
+        <td class="id">${t.id}</td>
+        <td>${t.t}<span class="crit">${t.c}</span></td>
+        <td class="h">${t.e==="cut"?"—":num(t.h)+" h"}</td></tr>`).join("")}
+      </tbody></table></details>`;
+  }).join("");
+}
+
+// --- 7 a 9
+function pintarResto(){
+  $("#riesgos").innerHTML = DATOS.riesgos.map(r=>{
+    const txt = r.n==="a"?"Alto":r.n==="m"?"Medio":"Bajo";
+    return `<tr><td><b>${r.r}</b></td><td><span class="sem ${r.n}"></span>${txt}</td><td>${r.m}</td></tr>`;
+  }).join("");
+  $("#pendientes").innerHTML = DATOS.pendientes.map(p=>
+    `<div class="nota ojo"><b>${p.t}</b> <span style="color:var(--gris);font-size:12px">· ${p.quien}</span><br>${p.d}</div>`).join("");
+  $("#higiene").innerHTML = "<ul>" + DATOS.higiene.map(h=>`<li>${h}</li>`).join("") + "</ul>";
+  $("#pie").innerHTML = `Panel generado a partir del plan técnico de construcción y del registro de horas del proyecto.
+    Las horas pendientes son estimaciones del plan, no compromisos. Actualizado el ${fFecha(D(DATOS.actualizado))}.`;
+}
+
+// --- 10. conmutador de vista (híbrido: hitos por defecto, detalle a un clic)
+const VISTAS = {
+  exec: "Vista de hitos: fechas, riesgos y decisiones. Sin detalle de tareas.",
+  full: "Vista completa: incluye las 41 tareas con su criterio de término y las inconsistencias del plan."
+};
+function aplicarVista(v, guardarUrl){
+  if (!VISTAS[v]) v = "exec";
+  document.body.dataset.vista = v;
+  document.querySelectorAll("section[data-v]").forEach(s => {
+    s.hidden = (s.dataset.v === "full" && v !== "full");
+  });
+  document.querySelectorAll(".vbtn").forEach(b => b.classList.toggle("activo", b.dataset.v === v));
+  $("#vnota").textContent = VISTAS[v];
+  if (guardarUrl){
+    const u = new URL(location.href);
+    v === "exec" ? u.searchParams.delete("v") : u.searchParams.set("v", v);
+    history.replaceState(null, "", u);
+  }
+}
+document.querySelectorAll(".vbtn").forEach(b =>
+  b.addEventListener("click", () => aplicarVista(b.dataset.v, true)));
+
+$("#copiar").addEventListener("click", async e => {
+  const b = e.currentTarget, txt = b.textContent;
+  try { await navigator.clipboard.writeText(location.href); b.textContent = "Link copiado ✓"; }
+  catch { b.textContent = "Copia el link de la barra del navegador"; }
+  setTimeout(() => b.textContent = txt, 2200);
+});
+
+pintarHitos(); pintarBarras(); pintarTimeline(); pintarContenido(); pintarTablero(); pintarResto();
+$("#vel").value = DATOS.velocidadDefault;
+["#vel","#b8","#gest"].forEach(s => $(s).addEventListener("input", proyectar));
+proyectar();
+aplicarVista(new URL(location.href).searchParams.get("v") || "exec", false);
+</script>
+</body>
+</html>
