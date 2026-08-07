@@ -65,7 +65,7 @@ echo. >> "%LOG%"
 REM --- 3. Agregar archivos ---
 echo [3/6] Preparando archivos...
 echo --- paso 3: git add --- >> "%LOG%"
-git add index.html README.md publicar.bat .gitignore >> "%LOG%" 2>&1
+git add index.html README.md .gitignore publicar.bat nocturno.bat instalar_tarea_nocturna.bat cerrar.bat sincronizar.py cerrar.py >> "%LOG%" 2>&1
 git status --short >> "%LOG%" 2>&1
 echo. >> "%LOG%"
 
@@ -123,4 +123,5 @@ if "!PUSHERR!"=="0" (
 )
 echo ============================================
 echo.
-pause
+REM Con /auto (proceso nocturno) no se detiene a esperar una tecla.
+if /i not "%~1"=="/auto" pause

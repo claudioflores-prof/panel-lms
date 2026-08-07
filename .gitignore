@@ -1,2 +1,4 @@
-# Registro local de la publicacion: contiene rutas del equipo, no se publica
+# Registros locales: contienen rutas del equipo, no se publican
 publicar.log
+nocturno.log
+pendientes_de_cierre.txt
