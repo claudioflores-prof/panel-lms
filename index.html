@@ -258,8 +258,8 @@ cifras que se comunican. Se quitan de aquí cuando se corrijan en los documentos
    Estados de tarea: "done" | "wip" | "todo" | "cut"
    ═══════════════════════════════════════════════════════════════════ */
 const DATOS = {
-  actualizado: "2026-08-09",
-  hoy:         "2026-08-09",   // dejar igual a actualizado; permite congelar el panel para imprimir
+  actualizado: "2026-08-10",
+  hoy:         "2026-08-10",   // dejar igual a actualizado; permite congelar el panel para imprimir
   semana1:     "2026-07-27",   // lunes de la semana 1 del plan
   piloto:      "2026-11-02",
   mvp:         "2026-12-01",
@@ -283,13 +283,13 @@ const DATOS = {
         {id:"T0.11", t:"Una página real de contenido funcionando",             h:2,   e:"done", c:"Renderiza texto, imagen y actividad; el reporte llega a la base"}
       ]},
 
-    { id:"B1", nombre:"Despliegue base", semIni:3, semFin:4, real:null,
-      nota:"Reestimado a la baja: el servidor ya existe y está administrado con panel, no se configura desde cero. Timebox estricto de 8 h.",
+    { id:"B1", nombre:"Despliegue base", semIni:3, semFin:4, real:6,
+      nota:"Reestimado a la baja: el servidor ya existe y está administrado con panel, no se configura desde cero. Timebox estricto de 8 h. Cerrado en 6 h reales contra 6,5 h estimadas.",
       tareas:[
-        {id:"T1.1", t:"Base de datos en el servidor + verificar memoria libre real", h:1.5, e:"todo", c:"La base responde; memoria libre medida y registrada"},
-        {id:"T1.2", t:"Sitio con proxy inverso, subdominio y certificado",           h:2,   e:"todo", c:"El subdominio sirve el slice con candado verde"},
-        {id:"T1.3", t:"Script de despliegue + manual de operación",                  h:2,   e:"todo", c:"Un despliegue completo con un comando, documentado"},
-        {id:"T1.4", t:"Respaldo diario + restauración probada una vez",              h:1,   e:"todo", c:"El respaldo se restaura en una base limpia y el sistema funciona"}
+        {id:"T1.1", t:"Base de datos en el servidor + verificar memoria libre real", h:1.5, e:"done", c:"La base responde; memoria libre medida y registrada"},
+        {id:"T1.2", t:"Sitio con proxy inverso, subdominio y certificado",           h:2,   e:"done", c:"El subdominio sirve el slice con candado verde"},
+        {id:"T1.3", t:"Script de despliegue + manual de operación",                  h:2,   e:"done", c:"Un despliegue completo con un comando, documentado"},
+        {id:"T1.4", t:"Respaldo diario + restauración probada una vez",              h:1,   e:"done", c:"El respaldo se restaura en una base limpia y el sistema funciona"}
       ]},
 
     { id:"B2", nombre:"Acceso y organización", semIni:4, semFin:6, real:null,
