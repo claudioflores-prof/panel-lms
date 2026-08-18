@@ -258,13 +258,13 @@ cifras que se comunican. Se quitan de aquí cuando se corrijan en los documentos
    Estados de tarea: "done" | "wip" | "todo" | "cut"
    ═══════════════════════════════════════════════════════════════════ */
 const DATOS = {
-  actualizado: "2026-08-11",
-  hoy:         "2026-08-11",   // dejar igual a actualizado; permite congelar el panel para imprimir
+  actualizado: "2026-08-17",
+  hoy:         "2026-08-17",   // dejar igual a actualizado; permite congelar el panel para imprimir
   semana1:     "2026-07-27",   // lunes de la semana 1 del plan
-  piloto:      "2026-11-02",
-  mvp:         "2026-12-01",
-  velocidadDefault: 8,
-  horasGestion: 42,
+  piloto:      "2026-10-05",   // Prueba 1 en IV medio (antes: piloto 2 basico 2 nov)
+  mvp:         "2026-11-09",   // Prueba 2 en IV medio: el curso egresa a mediados de nov
+  velocidadDefault: 13.5,
+  horasGestion: 0,   // D21: la gestion deja de competir con las horas de desarrollo
 
   bloques: [
     { id:"B0", nombre:"Slice vertical", semIni:1, semFin:3, real:6,
@@ -292,43 +292,51 @@ const DATOS = {
         {id:"T1.4", t:"Respaldo diario + restauración probada una vez",              h:1,   e:"done", c:"El respaldo se restaura en una base limpia y el sistema funciona"}
       ]},
 
-    { id:"B2", nombre:"Acceso y organización", semIni:4, semFin:6, real:null,
-      nota:"Va antes del grueso de componentes porque desbloquea al tester. Es la próxima medición útil de velocidad.",
+    { id:"B2", nombre:"Acceso y organización", semIni:4, semFin:6, real:3,
+      nota:"Cerrado en 3 h reales contra 14 h estimadas (~4,7× más rápido). Segunda medición de velocidad tras el Bloque 0, esta vez sobre integración real, no solo andamiaje.",
       tareas:[
         {id:"T2.1", t:"Inicio de sesión institucional + alta masiva + matriz de permisos", h:5, e:"done", c:"Correo del dominio entra con su rol; correo personal es rechazado"},
-        {id:"T2.2", t:"Cursos, inscripciones y asignación de libros",                      h:3, e:"todo", c:"Un profesor con 2 cursos ve solo sus 2 cursos"},
-        {id:"T2.3", t:"Autorización real del envío de reportes",                           h:2, e:"todo", c:"Reportar sobre un libro ajeno da 403 y no se persiste"},
-        {id:"T2.4", t:"Vista biblioteca con progreso por unidad",                          h:4, e:"todo", c:"Con 3 de 12 actividades hechas muestra 25 %"}
+        {id:"T2.2", t:"Cursos, inscripciones y asignación de libros",                      h:3, e:"done", c:"Un profesor con 2 cursos ve solo sus 2 cursos"},
+        {id:"T2.3", t:"Autorización real del envío de reportes",                           h:2, e:"done", c:"Reportar sobre un libro ajeno da 403 y no se persiste"},
+        {id:"T2.4", t:"Vista biblioteca con progreso por unidad",                          h:4, e:"done", c:"Con 3 de 12 actividades hechas muestra 25 %"}
       ]},
 
-    { id:"B3", nombre:"Componentes autocorregidos", semIni:6, semFin:9, real:null,
+    { id:"B3", nombre:"Componentes autocorregidos", semIni:6, semFin:9, real:2,
       nota:"Ordenados por riesgo creciente. Cada componente se cierra completo antes de empezar el siguiente.",
       tareas:[
-        {id:"T3.1", t:"Verdadero/falso y respuesta corta con normalización", h:5, e:"todo", c:"Test de normalización de texto con espacios, mayúsculas y puntuación"},
-        {id:"T3.2", t:"Selección de palabras y ordenamiento",                h:6, e:"todo", c:"Puntaje parcial verificado con tabla de casos"},
-        {id:"T3.3", t:"Emparejamiento por arrastre y por toque",             h:5, e:"todo", c:"Funciona con mouse Y con toque en la tablet real"},
-        {id:"T3.4", t:"Escuchar y escribir (voz sintetizada)",               h:4, e:"todo", c:"Sin voz disponible muestra aviso y permite continuar"},
-        {id:"T3.5", t:"Cuestionario multi-pregunta con bonus de tiempo",     h:4, e:"todo", c:"El puntaje con bonus coincide con el cálculo del servidor"}
+        {id:"T3.1", t:"Verdadero/falso y respuesta corta con normalización", h:5, e:"done", c:"Test de normalización de texto con espacios, mayúsculas y puntuación"},
+        {id:"T3.2", t:"Selección de palabras y ordenamiento",                h:6, e:"done", c:"Puntaje parcial verificado con tabla de casos"},
+        {id:"T3.3", t:"Emparejamiento por arrastre y por toque",             h:5, e:"done", c:"Funciona con mouse Y con toque en la tablet real -- verificado con mouse y con eventos de puntero emulados; prueba en tablet física del piloto AÚN PENDIENTE"},
+        {id:"T3.4", t:"Escuchar y escribir (voz sintetizada)",               h:0, e:"cut",  c:"Sale de este bloque por D16 y vuelve al alcance por D20 (17 ago) como T4.7, en el bloque de runtime: el bloque cerrado no se reabre"},
+        {id:"T3.5", t:"Cuestionario multi-pregunta con bonus de tiempo",     h:4, e:"done", c:"El puntaje con bonus coincide con el cálculo del servidor"}
       ]},
 
-    { id:"B4", nombre:"Runtime completo e ingesta", semIni:9, semFin:11, real:null,
-      hito:"Hito cargable",
-      nota:"Al cerrar este bloque, una unidad completa producida por la línea de contenido se carga con un comando.",
+    { id:"B4", nombre:"Runtime, ingesta y adaptacion a media", semIni:9, semFin:11, real:null,
+      hito:"Cargable 21 ago",
+      nota:"Al cerrar este bloque, una unidad completa producida por la línea de contenido se carga con un comando. Desde el 17 de agosto incluye además los tres componentes que se habían diferido en agosto y volvieron al alcance (decisión D20): se construyen aquí, antes del bloque de multimedia, para no repetir después el trabajo de diseño visual.",
       tareas:[
-        {id:"T4.1", t:"Importador de libros idempotente y con validación previa", h:5, e:"todo", c:"Correrlo dos veces no produce cambios la segunda vez"},
-        {id:"T4.2", t:"Navegación del libro y retoma de la última página",        h:5, e:"todo", c:"Cerrar el navegador y volver retoma donde se quedó"},
-        {id:"T4.3", t:"Tolerancia a la caída de red al reportar",                 h:4, e:"todo", c:"3 respuestas sin red llegan a la base al restaurarla"},
-        {id:"T4.4", t:"Conteo de actividades cacheado",                           h:2, e:"todo", c:"El progreso no recuenta archivos en cada carga"}
+        {id:"T4.1", t:"Importador de libros idempotente y con validación previa", h:5, e:"done", c:"Correrlo dos veces no produce cambios la segunda vez"},
+        {id:"T4.2", t:"Navegación del libro y retoma de la última página",        h:5, e:"done", c:"Cerrar el navegador y volver retoma donde se quedó"},
+        {id:"T4.3", t:"Tolerancia a la caída de red al reportar",                 h:4, e:"done", c:"3 respuestas sin red llegan a la base al restaurarla"},
+        {id:"T4.4", t:"Conteo de actividades cacheado",                           h:2, e:"done", c:"El progreso no recuenta archivos en cada carga"},
+        {id:"T4.5", t:"Recorrección de reportes tras arreglar una clave mala",    h:1, e:"done", c:"Se corrige una clave equivocada y las notas ya puestas se recalculan sin tocar la base a mano"},
+        {id:"T4.6", t:"Porte del diseño visual del mockup",                       h:6, e:"done", c:"Las pantallas portadas usan la paleta y los componentes visuales del mockup, no el estilo funcional mínimo"},
+        {id:"T4.7", t:"Escuchar y escribir (voz sintetizada)",                     h:4.5, e:"todo", c:"El alumno escucha el dictado y escribe; el servidor lo corrige con la misma normalización de texto de los otros componentes"},
+        {id:"T4.8", t:"Lectura asistida con resaltado (karaoke)",                   h:3,   e:"todo", c:"El texto se resalta en sincronía con la voz y se registra cuánto alcanzó a escuchar, incluso si interrumpe"},
+        {id:"T4.9", t:"Trazado de cifras",                                         h:2,   e:"todo", c:"Se traza con el dedo en tablet y con el mouse en escritorio; se registra como completado y ninguna imagen sale del dispositivo"},
+        {id:"T4.10", t:"Notacion matematica en enunciados y alternativas",          h:3,   e:"todo", c:"Una pagina con una fraccion, una raiz y una funcion se ve correcta en el navegador; una formula mal escrita se detecta al cargar, no en pantalla del alumno"},
+        {id:"T4.11", t:"Alternativas A a E, formato PAES",                          h:1,   e:"todo", c:"Una pregunta de 5 alternativas rotuladas se responde y se corrige; las de 4 opciones siguen funcionando"},
+        {id:"T4.12", t:"Grafico interactivo",                                       h:7,   e:"todo", c:"Se ve una parabola y un grafico de barras; marcar el vertice correcto da puntaje y otro punto da cero, calculado por el servidor"}
       ]},
 
     { id:"B5", nombre:"Captura y multimedia", semIni:11, semFin:13, real:null,
-      nota:"Reducido: dibujo y grabación de voz van SIN subida al servidor en el piloto. Se registra la actividad como completada y nada se persiste. La subida vuelve después del piloto, con política de datos de menores escrita.",
+      nota:"La grabación de voz va SIN subida al servidor en el piloto. El dibujo sí sube una vez, al cerrar la actividad, detrás de un interruptor que se apaga si no está escrita la política de datos de menores. La lectura asistida y el trazado salieron de este bloque: se adelantan al bloque anterior (T4.8 y T4.9).",
       tareas:[
         {id:"T5.1", t:"Respuesta abierta y metacognición con marca de revisión", h:3, e:"todo", c:"Las respuestas abiertas quedan marcadas para revisión docente"},
-        {id:"T5.2", t:"Tocar palabras y lectura en voz alta con resaltado",      h:4, e:"todo", c:"Se registran las palabras tocadas y el porcentaje escuchado"},
-        {id:"T5.3", t:"Endpoint de subida de archivos",                          h:0, e:"cut",  c:"Eliminada por la decisión de no subir media en el piloto"},
-        {id:"T5.4", t:"Dibujo en lienzo (sin subida)",                           h:4, e:"todo", c:"Dibuja con lápiz y goma en tablet; se reporta completado"},
-        {id:"T5.5", t:"Grabación de voz y trazado (sin subida)",                 h:3, e:"todo", c:"Graba y reproduce en el propio dispositivo"}
+        {id:"T5.2", t:"Palabras tocables con definición",                        h:1.5, e:"todo", c:"Se registran las palabras tocadas con su definición simple"},
+        {id:"T5.3", t:"Recepción de imágenes del dibujo",                        h:2.5, e:"todo", c:"Un archivo grande se rechaza y uno pequeño se guarda con nombre predecible; con el interruptor apagado no sube nada"},
+        {id:"T5.4", t:"Dibujo en lienzo con guardado local y una subida al cerrar", h:6, e:"todo", c:"Se dibuja, se cambia de página y al volver el trazo sigue ahí; cinco dibujos pesan menos de 1 MB en total"},
+        {id:"T5.5", t:"Grabación de voz (sin subida)",                           h:1.5, e:"todo", c:"Graba y reproduce en el propio dispositivo; la actividad se reporta como completada"}
       ]},
 
     { id:"B6", nombre:"Módulo del profesor", semIni:13, semFin:15, real:null,
@@ -339,16 +347,31 @@ const DATOS = {
       ]},
 
     { id:"B7", nombre:"QA y piloto", semIni:15, semFin:16, real:null,
-      hito:"Piloto",
+      hito:"Prueba 1 · IV medio",
       tareas:[
         {id:"T7.1", t:"Endurecimiento de producción", h:3, e:"todo", c:"Revisión de despliegue sin advertencias críticas"},
         {id:"T7.2", t:"Prueba de carga con 35 sesiones simultáneas", h:3, e:"todo", c:"Sin errores de servidor; latencia p95 bajo 500 ms"},
         {id:"T7.3", t:"Pauta de QA en el dispositivo real del piloto", h:6, e:"todo", c:"La pauta pasa completa en el modelo de tablet que usarán los niños"},
-        {id:"T7.4", t:"Alta de usuarios del curso + tarjetas de acceso", h:3, e:"todo", c:"35 alumnos entran con su tarjeta"}
+        {id:"T7.4", t:"Alta de usuarios del curso + tarjetas de acceso", h:3, e:"todo", c:"35 alumnos entran con su tarjeta"},
+        {id:"T7.5", t:"Copia del respaldo fuera del servidor", h:0.5, e:"todo", c:"Se restaura una copia descargada desde el destino externo, no desde el propio servidor"}
+      ]},
+
+    { id:"B10", nombre:"Reportería", semIni:4, semFin:28, real:null,
+      nota:"Prioridad de dirección. No se hace de corrido: la fase 1 va antes de la prueba de octubre, la fase 2 antes de la de noviembre y la fase 3 en el verano. La regla central del módulo viene de un fracaso real: el avance se mide por unidad y lección, nunca por objetivo de aprendizaje, que es lo que volvió inservible el panel anterior del colegio.",
+      tareas:[
+        {id:"T10.0", t:"Profesores, asignaturas y jefatura de curso",              h:3,  e:"todo", c:"Un curso con 6 asignaturas y 6 profesores distintos responde correctamente quién hace cada una"},
+        {id:"T10.1", t:"Permiso de UTP y medición de tiempo de conexión",          h:4.5,e:"todo", c:"Una hora de clase queda registrada como una fila con los minutos conectados, no como sesenta registros"},
+        {id:"T10.2", t:"Panel de avance para UTP y dirección",                     h:10, e:"todo", c:"Con 80 estudiantes y 6 asignaturas abre en menos de 1 segundo; una actividad de repaso no ensucia el avance de ninguna unidad"},
+        {id:"T10.3", t:"Ensayo del correo semanal con datos reales",               h:2,  e:"todo", c:"Llega a las casillas de prueba y se lee bien en el teléfono, sin adjuntos"},
+        {id:"T10.4", t:"Calendario escolar: trimestres, vacaciones y feriados",    h:5,  e:"todo", c:"Después de una semana de vacaciones no aparece ninguna alerta nueva por el solo paso del tiempo"},
+        {id:"T10.5", t:"Planificación del libro por semana",                       h:6,  e:"todo", c:"El profesor confirma la planificación de la semana en un clic; si no planifica, el panel sigue sirviendo igual"},
+        {id:"T10.6", t:"Comparación entre lo planificado y lo realmente avanzado", h:2,  e:"todo", c:"El reporte del viernes responde quién no llegó a la página comprometida"},
+        {id:"T10.7", t:"Correo semanal al apoderado",                              h:8,  e:"todo", c:"Un apoderado dado de baja no lo recibe, y se puede responder qué se envió y cuándo"},
+        {id:"T10.8", t:"Servicio de envío de correo en producción",                h:2,  e:"todo", c:"Los correos llegan a la bandeja de entrada y no a spam"}
       ]},
 
     { id:"B8", nombre:"Módulo de evaluación", semIni:16, semFin:19, real:null,
-      opcional:true, hito:"MVP completo",
+      opcional:true, hito:"En revision",
       nota:"Candidato principal a diferimiento si la velocidad semanal se mantiene en 8 h.",
       tareas:[
         {id:"T8.1", t:"Modelos de evaluación con intento único",        h:4, e:"todo", c:"Un segundo intento se rechaza en la base, no solo en la vista"},
@@ -360,23 +383,29 @@ const DATOS = {
   ],
 
   contenido: {
-    horasTotales: 78,
+    horasTotales: 300,
     responsable: "Externo al equipo de desarrollo",
     desbloqueado: "2026-08-04",
-    detonante: "Semana 8 sin la primera unidad ensamblada",
+    detonante: "30 de septiembre sin definir qué se produce por asignatura para marzo",
     hitos: [
       {t:"Esquema de página y contrato de datos congelados", e:"done", n:"Entregable listo desde el cierre de la tarea del validador"},
       {t:"Paquete de creación de contenido y plantillas entregados", e:"wip", n:"Acción de mayor palanca pendiente hoy"},
-      {t:"Primera unidad de Lenguaje ensamblada", e:"todo", n:"Necesaria para el hito cargable del Bloque 4"},
-      {t:"Segunda unidad", e:"todo", n:"El sistema debe poder pilotear con UNA sola unidad si la segunda no llega"}
+      {t:"Lección de 1° medio para el hito del 21 de agosto", e:"wip", n:"La produce Claudio con IA esta semana, no un tercero. Debe evitar fórmulas y gráficos: ese soporte llega en octubre"},
+      {t:"Contenido PAES para las dos pruebas de IV medio", e:"todo", n:"Octubre y noviembre. Lo producen quienes hacen clases en ese curso, que es la mejor situación que ha tenido este proyecto"},
+      {t:"Definir qué se produce por asignatura para marzo", e:"todo", n:"RIESGO PRINCIPAL. Entre una lección de muestra y el año completo hay un orden de magnitud. Sin esta definición no se puede dimensionar ni pedir ayuda"},
+      {t:"Contenido de 6 asignaturas de 1° medio", e:"todo", n:"Del orden de 300 horas de un tercero, en una ventana que cae en vacaciones. Ninguna hora de desarrollo lo compensa"}
     ]
   },
 
   riesgos: [
-    {r:"La línea de contenido no llega a tiempo", n:"a",
-     m:"Es la restricción probable del proyecto, por encima de las horas de desarrollo. El esquema ya está congelado y el sistema debe poder pilotear con una sola unidad. <b>Detonante:</b> semana 8 sin la primera unidad ensamblada."},
+    {r:"El contenido de las 6 asignaturas de marzo no existe", n:"a",
+     m:"<b>Es la única restricción real del proyecto desde el 17 de agosto.</b> Seis asignaturas de 1° medio son del orden de <b>300 horas</b> de trabajo de un tercero, en una ventana que cae entre diciembre y febrero con el colegio en vacaciones, y a cargo de quien aún no entrega una lección válida. <b>Ninguna hora de desarrollo compensa esto.</b> <b>Detonante:</b> 30 de septiembre sin definir qué se produce por asignatura."},
+    {r:"Propiedad intelectual sin definir sobre un producto vendible", n:"a",
+     m:"Dirección declaró el sistema vendible a otros colegios. Hoy el repositorio está en una cuenta personal y no hay ningún documento sobre a quién pertenece el software ni el contenido. <b>Cada semana de desarrollo aumenta el valor de algo cuya propiedad nadie definió.</b> No es un problema técnico y no se resuelve construyendo."},
+    {r:"La ventana de validación se cierra sola", n:"a",
+     m:"Las dos pruebas con estudiantes caben entre octubre y mediados de noviembre <b>porque IV medio egresa</b>. No es un plazo administrativo: el curso deja de existir. Si la primera se corre de fecha, la segunda se comprime; si se corren las dos, no hay con quién probar hasta marzo."},
     {r:"Tablet real distinta del navegador de escritorio", n:"m",
-     m:"Toque, voz sintetizada, lienzo y teclado en pantalla se comportan distinto. Se prueba en el dispositivo real desde el bloque de componentes, no en el QA final. <b>Detonante:</b> cualquier componente que funcione en escritorio y no en tablet."},
+     m:"Toque, voz sintetizada, lienzo y teclado en pantalla se comportan distinto. <b>Hay cinco verificaciones acumuladas en tablet física y ninguna hecha todavía</b> (emparejar, lectura asistida, trazado, dibujo y grabación de voz); dejarlas todas para el QA final concentra el riesgo justo antes del piloto. <b>Detonante:</b> cualquier componente que funcione en escritorio y no en tablet."},
     {r:"Roles concentrados en una sola persona", n:"a",
      m:"Gestión, desarrollo e infraestructura compiten por las mismas horas. Las 42 h de gestión están cuantificadas aparte y no se financian con horas de desarrollo sin decisión explícita."},
     {r:"La vista central se renderiza en el cliente", n:"m",
@@ -386,11 +415,11 @@ const DATOS = {
   ],
 
   pendientes: [
-    {t:"Velocidad semanal comprometida", d:"Definir por escrito si son 8 u 11–12 h semanales de desarrollo. A 8 h la fecha del piloto se sostiene solo si la gestión no consume tiempo, lo cual no es realista.", quien:"Dirección + desarrollo"},
-    {t:"Escenario de destino del sistema", d:"Uso interno, red de colegios o producto vendible. La estructura de datos ya quedó preparada para el escenario intermedio, así que la decisión ya no bloquea, pero sí define qué se construye después del piloto.", quien:"Dirección"},
-    {t:"Propiedad intelectual del contenido y del código", d:"Sin definir. Conviene resolverlo antes de que exista contenido producido por terceros dentro del sistema.", quien:"Dirección"},
-    {t:"Estado de las tablets del piloto", d:"Confirmar modelo, cantidad y estado de los equipos que usará el curso. Condiciona la pauta de QA y el riesgo de dispositivo.", quien:"Colegio"},
-    {t:"Prueba de acceso con niños reales", d:"Verificar que alumnos de 2° básico logran entrar con el mecanismo elegido. Si falla, hay que rediseñar el acceso, no ajustarlo.", quien:"Desarrollo + profesor jefe"}
+    {t:"En qué consiste la prueba de octubre", d:"¿Una clase o una secuencia? ¿Cuántos estudiantes y en qué dispositivos? ¿Qué se considera éxito? ¿Qué contenido PAES exactamente? Sin criterio escrito antes de correrla, la prueba produce anécdotas en vez de decisiones. Vence el 5 de septiembre, un mes antes.", quien:"Desarrollo + contenido"},
+    {t:"Autorización del envío semanal a apoderados", d:"Los requerimientos de reportería ya están levantados y estimados. Falta que dirección autorice formalmente el envío de información académica de menores por correo, y que se confirme el encuadre bajo la nueva ley de datos personales, que entra en vigencia el 1 de diciembre de 2026, antes de la puesta en producción.", quien:"Director del colegio"},
+    {t:"Propiedad intelectual del sistema y del contenido", d:"Dirección definió que el sistema es un producto vendible a otros colegios. Falta lo otro: quién es dueño del software y del contenido. Conviene resolverlo mientras es una conversación interna y no un asunto con un cliente de por medio. Aparte: el permiso para parafrasear textos escolares con IA se dio pensando probablemente en uso interno; el escenario comercial es un análisis distinto y conviene reconfirmarlo por escrito.", quien:"Dirección"},
+    {t:"Qué se produce por asignatura para marzo", d:"Una lección de muestra, una unidad completa o el año entero. Entre esas tres respuestas hay un orden de magnitud de diferencia, y de ella depende si el compromiso de marzo es alcanzable. Es la pregunta que hay que llevar a dirección con cifras.", quien:"Dirección + contenido"},
+    {t:"Fuente curricular de enseñanza media", d:"Incorporar al proyecto los Planes y Programas de 1° medio y IV medio y el temario PAES. Sin fuente verificable, el contenido se produce a ojo: es exactamente lo que detectó la auditoría de la primera entrega.", quien:"Desarrollo + contenido"}
   ],
 
   higiene: [
@@ -427,6 +456,9 @@ const PEND_PILOTO = DATOS.bloques.filter(b=>!b.opcional).reduce((s,b)=>s+b.pendi
 const PEND_MVP    = DATOS.bloques.reduce((s,b)=>s+b.pendiente, 0);
 const REAL_TOTAL  = DATOS.bloques.reduce((s,b)=>s+(b.real||0), 0);
 const EST_CERRADO = DATOS.bloques.filter(b=>b.real!=null).reduce((s,b)=>s+b.estimado, 0);
+const BLOQUES_CERRADOS = DATOS.bloques.filter(b=>b.estado==="done").length;
+const TAREAS_HECHAS    = DATOS.bloques.reduce((s,b)=>s+b.hechas, 0);
+const TAREAS_VIVAS     = DATOS.bloques.reduce((s,b)=>s+b.vivas, 0);
 
 $("#fecha-act").textContent = fFecha(D(DATOS.actualizado));
 
@@ -439,7 +471,7 @@ function pintarHitos(){
     <div class="hito"><div class="k">Piloto comprometido</div><div class="v">${fCorta(PILOTO)}</div>
       <div class="n">${dias(HOY,PILOTO)} días · ${num(semRestantes)} semanas</div></div>
     <div class="hito"><div class="k">Avance de desarrollo</div><div class="v">${Math.round(REAL_TOTAL/(REAL_TOTAL+PEND_MVP)*100)} %</div>
-      <div class="n">1 de 9 bloques cerrado · ${DATOS.bloques[0].hechas} de ${DATOS.bloques.reduce((s,b)=>s+b.vivas,0)} tareas</div></div>
+      <div class="n">${BLOQUES_CERRADOS} de ${DATOS.bloques.length} bloques cerrados · ${TAREAS_HECHAS} de ${TAREAS_VIVAS} tareas</div></div>
     <div class="hito ${clase}"><div class="k">Ritmo necesario</div><div class="v">${num(necesarias)} h</div>
       <div class="n">por semana, solo desarrollo, para llegar al piloto</div></div>
     <div class="hito ${clase}"><div class="k">Con gestión incluida</div><div class="v">${num(necesarias + DATOS.horasGestion/semRestantes)} h</div>
