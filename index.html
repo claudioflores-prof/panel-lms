@@ -258,8 +258,8 @@ cifras que se comunican. Se quitan de aquí cuando se corrijan en los documentos
    Estados de tarea: "done" | "wip" | "todo" | "cut"
    ═══════════════════════════════════════════════════════════════════ */
 const DATOS = {
-  actualizado: "2026-08-17",
-  hoy:         "2026-08-17",   // dejar igual a actualizado; permite congelar el panel para imprimir
+  actualizado: "2026-08-19",
+  hoy:         "2026-08-19",   // dejar igual a actualizado; permite congelar el panel para imprimir
   semana1:     "2026-07-27",   // lunes de la semana 1 del plan
   piloto:      "2026-10-05",   // Prueba 1 en IV medio (antes: piloto 2 basico 2 nov)
   mvp:         "2026-11-09",   // Prueba 2 en IV medio: el curso egresa a mediados de nov
@@ -311,7 +311,7 @@ const DATOS = {
         {id:"T3.5", t:"Cuestionario multi-pregunta con bonus de tiempo",     h:4, e:"done", c:"El puntaje con bonus coincide con el cálculo del servidor"}
       ]},
 
-    { id:"B4", nombre:"Runtime, ingesta y adaptacion a media", semIni:9, semFin:11, real:null,
+    { id:"B4", nombre:"Runtime, ingesta y adaptacion a media", semIni:9, semFin:11, real:9.5,
       hito:"Cargable 21 ago",
       nota:"Al cerrar este bloque, una unidad completa producida por la línea de contenido se carga con un comando. Desde el 17 de agosto incluye además los tres componentes que se habían diferido en agosto y volvieron al alcance (decisión D20): se construyen aquí, antes del bloque de multimedia, para no repetir después el trabajo de diseño visual.",
       tareas:[
@@ -321,22 +321,23 @@ const DATOS = {
         {id:"T4.4", t:"Conteo de actividades cacheado",                           h:2, e:"done", c:"El progreso no recuenta archivos en cada carga"},
         {id:"T4.5", t:"Recorrección de reportes tras arreglar una clave mala",    h:1, e:"done", c:"Se corrige una clave equivocada y las notas ya puestas se recalculan sin tocar la base a mano"},
         {id:"T4.6", t:"Porte del diseño visual del mockup",                       h:6, e:"done", c:"Las pantallas portadas usan la paleta y los componentes visuales del mockup, no el estilo funcional mínimo"},
-        {id:"T4.7", t:"Escuchar y escribir (voz sintetizada)",                     h:4.5, e:"todo", c:"El alumno escucha el dictado y escribe; el servidor lo corrige con la misma normalización de texto de los otros componentes"},
-        {id:"T4.8", t:"Lectura asistida con resaltado (karaoke)",                   h:3,   e:"todo", c:"El texto se resalta en sincronía con la voz y se registra cuánto alcanzó a escuchar, incluso si interrumpe"},
-        {id:"T4.9", t:"Trazado de cifras",                                         h:2,   e:"todo", c:"Se traza con el dedo en tablet y con el mouse en escritorio; se registra como completado y ninguna imagen sale del dispositivo"},
-        {id:"T4.10", t:"Notacion matematica en enunciados y alternativas",          h:3,   e:"todo", c:"Una pagina con una fraccion, una raiz y una funcion se ve correcta en el navegador; una formula mal escrita se detecta al cargar, no en pantalla del alumno"},
-        {id:"T4.11", t:"Alternativas A a E, formato PAES",                          h:1,   e:"todo", c:"Una pregunta de 5 alternativas rotuladas se responde y se corrige; las de 4 opciones siguen funcionando"},
-        {id:"T4.12", t:"Grafico interactivo",                                       h:7,   e:"todo", c:"Se ve una parabola y un grafico de barras; marcar el vertice correcto da puntaje y otro punto da cero, calculado por el servidor"}
+        {id:"T4.7", t:"Escuchar y escribir (voz sintetizada)",                     h:4.5, e:"done", c:"El alumno escucha el dictado y escribe; el servidor lo corrige con la misma normalización de texto de los otros componentes"},
+        {id:"T4.8", t:"Lectura asistida con resaltado (karaoke)",                   h:3,   e:"done", c:"El texto se resalta en sincronía con la voz y se registra cuánto alcanzó a escuchar, incluso si interrumpe"},
+        {id:"T4.9", t:"Trazado de cifras",                                         h:2,   e:"done", c:"Se traza con el dedo en tablet y con el mouse en escritorio; se registra como completado y ninguna imagen sale del dispositivo"},
+        {id:"T4.10", t:"Notacion matematica en enunciados y alternativas",          h:3,   e:"done", c:"Una pagina con una fraccion, una raiz y una funcion se ve correcta en el navegador; una formula mal escrita se detecta al cargar, no en pantalla del alumno"},
+        {id:"T4.11", t:"Alternativas A a E, formato PAES",                          h:1,   e:"done", c:"Una pregunta de 5 alternativas rotuladas se responde y se corrige; las de 4 opciones siguen funcionando"},
+        {id:"T4.12", t:"Grafico interactivo",                                       h:7,   e:"done", c:"Se ve una parabola y un grafico de barras; marcar el vertice correcto da puntaje y otro punto da cero, calculado por el servidor"},
+        {id:"T4.13", t:"Cierre de notacion: delimitadores, quimica y verificacion",  h:2,   e:"done", c:"$4.800 se muestra tal cual; \\(x+3\\) renderiza; un delimitador sin cerrar queda impreso; \\mathbb{R} se ve como R con raya desde el servidor propio; la reaccion quimica renderiza"}
       ]},
 
-    { id:"B5", nombre:"Captura y multimedia", semIni:11, semFin:13, real:null,
+    { id:"B5", nombre:"Captura y multimedia", semIni:11, semFin:13, real:3.5,
       nota:"La grabación de voz va SIN subida al servidor en el piloto. El dibujo sí sube una vez, al cerrar la actividad, detrás de un interruptor que se apaga si no está escrita la política de datos de menores. La lectura asistida y el trazado salieron de este bloque: se adelantan al bloque anterior (T4.8 y T4.9).",
       tareas:[
-        {id:"T5.1", t:"Respuesta abierta y metacognición con marca de revisión", h:3, e:"todo", c:"Las respuestas abiertas quedan marcadas para revisión docente"},
-        {id:"T5.2", t:"Palabras tocables con definición",                        h:1.5, e:"todo", c:"Se registran las palabras tocadas con su definición simple"},
-        {id:"T5.3", t:"Recepción de imágenes del dibujo",                        h:2.5, e:"todo", c:"Un archivo grande se rechaza y uno pequeño se guarda con nombre predecible; con el interruptor apagado no sube nada"},
-        {id:"T5.4", t:"Dibujo en lienzo con guardado local y una subida al cerrar", h:6, e:"todo", c:"Se dibuja, se cambia de página y al volver el trazo sigue ahí; cinco dibujos pesan menos de 1 MB en total"},
-        {id:"T5.5", t:"Grabación de voz (sin subida)",                           h:1.5, e:"todo", c:"Graba y reproduce en el propio dispositivo; la actividad se reporta como completada"}
+        {id:"T5.1", t:"Respuesta abierta y metacognición con marca de revisión", h:3, e:"done", c:"Las respuestas abiertas quedan marcadas para revisión docente"},
+        {id:"T5.2", t:"Palabras tocables con definición",                        h:1.5, e:"done", c:"Se registran las palabras tocadas con su definición simple"},
+        {id:"T5.3", t:"Recepción de imágenes del dibujo",                        h:2.5, e:"done", c:"Un archivo grande se rechaza y uno pequeño se guarda con nombre predecible; con el interruptor apagado no sube nada"},
+        {id:"T5.4", t:"Dibujo en lienzo con guardado local y una subida al cerrar", h:6, e:"done", c:"Se dibuja, se cambia de página y al volver el trazo sigue ahí; cinco dibujos pesan menos de 1 MB en total"},
+        {id:"T5.5", t:"Grabación de voz (sin subida)",                           h:1.5, e:"done", c:"Graba y reproduce en el propio dispositivo; la actividad se reporta como completada"}
       ]},
 
     { id:"B6", nombre:"Módulo del profesor", semIni:13, semFin:15, real:null,
