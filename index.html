@@ -258,8 +258,8 @@ cifras que se comunican. Se quitan de aquí cuando se corrijan en los documentos
    Estados de tarea: "done" | "wip" | "todo" | "cut"
    ═══════════════════════════════════════════════════════════════════ */
 const DATOS = {
-  actualizado: "2026-08-19",
-  hoy:         "2026-08-19",   // dejar igual a actualizado; permite congelar el panel para imprimir
+  actualizado: "2026-08-20",
+  hoy:         "2026-08-20",   // dejar igual a actualizado; permite congelar el panel para imprimir
   semana1:     "2026-07-27",   // lunes de la semana 1 del plan
   piloto:      "2026-10-05",   // Prueba 1 en IV medio (antes: piloto 2 basico 2 nov)
   mvp:         "2026-11-09",   // Prueba 2 en IV medio: el curso egresa a mediados de nov
@@ -338,6 +338,14 @@ const DATOS = {
         {id:"T5.3", t:"Recepción de imágenes del dibujo",                        h:2.5, e:"done", c:"Un archivo grande se rechaza y uno pequeño se guarda con nombre predecible; con el interruptor apagado no sube nada"},
         {id:"T5.4", t:"Dibujo en lienzo con guardado local y una subida al cerrar", h:6, e:"done", c:"Se dibuja, se cambia de página y al volver el trazo sigue ahí; cinco dibujos pesan menos de 1 MB en total"},
         {id:"T5.5", t:"Grabación de voz (sin subida)",                           h:1.5, e:"done", c:"Graba y reproduce en el propio dispositivo; la actividad se reporta como completada"}
+      ]},
+
+    { id:"BR", nombre:"Retrabajo sobre lo cerrado", semIni:13, semFin:13, real:1.25,
+      nota:"Bloque abierto de forma permanente (D40, 19 ago 2026). Recibe todo arreglo o cambio que toque una etapa ya cerrada, en vez de dejarlo como nota dentro de un bloque que nadie va a volver a abrir. Su largo es una señal en sí misma: si crece rápido, el problema no está aquí.",
+      tareas:[
+        {id:"TR.1", t:"Clave de corrección obligatoria en los 9 tipos autocorregidos", h:0.5, e:"done", c:"Una alternativa cargada sin su respuesta correcta se rechaza al importar, en vez de entrar y calificar mal a todo el curso sin avisar"},
+        {id:"TR.2", t:"Lector de una página por pantalla, alumno y profesor",          h:2,   e:"todo", c:"En tablet vertical una página con tres actividades se lee completa desplazándose hacia abajo, sin zoom ni desplazamiento lateral"},
+        {id:"TR.3", t:"Identificador de libro con año en el validador y el runtime",   h:1,   e:"done", c:"Una página de IV medio 2026 se carga sin errores; una sin año se rechaza al momento de cargarla"}
       ]},
 
     { id:"B6", nombre:"Módulo del profesor", semIni:13, semFin:15, real:null,

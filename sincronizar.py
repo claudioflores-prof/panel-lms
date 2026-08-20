@@ -36,9 +36,12 @@ SIMULAR = "--simular" in sys.argv or "--dry-run" in sys.argv
 # El id cuenta como trabajo SOLO si abre el mensaje del commit ("T0.11: ...").
 # Es la convencion real del proyecto y evita falsos positivos: el commit
 # "D13: ... tabla Activity en T4.1" MENCIONA T4.1, no la trabaja.
-PATRON_INICIO = re.compile(r"^\s*T(\d)\.(\d{1,2})\b")
+# El bloque puede ser un digito (T4.13) o la R del Bloque R de retrabajo
+# (TR.1), creado por D40 el 19 ago 2026. Sin la R, el panel era ciego
+# justamente al bloque que existe para que el retrabajo no se pierda de vista.
+PATRON_INICIO = re.compile(r"^\s*T([R\d])\.(\d{1,2})\b")
 # Cualquier mencion, para reportarla aparte sin actuar sobre ella.
-PATRON_MENCION = re.compile(r"\bT(\d)\.(\d{1,2})\b")
+PATRON_MENCION = re.compile(r"\bT([R\d])\.(\d{1,2})\b")
 
 
 def salir(msg, codigo=1):
