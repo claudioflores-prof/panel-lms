@@ -340,12 +340,15 @@ const DATOS = {
         {id:"T5.5", t:"Grabación de voz (sin subida)",                           h:1.5, e:"done", c:"Graba y reproduce en el propio dispositivo; la actividad se reporta como completada"}
       ]},
 
-    { id:"BR", nombre:"Retrabajo sobre lo cerrado", semIni:13, semFin:13, real:1.25,
+    { id:"BR", nombre:"Retrabajo sobre lo cerrado", semIni:13, semFin:13, real:4.25,
       nota:"Bloque abierto de forma permanente (D40, 19 ago 2026). Recibe todo arreglo o cambio que toque una etapa ya cerrada, en vez de dejarlo como nota dentro de un bloque que nadie va a volver a abrir. Su largo es una señal en sí misma: si crece rápido, el problema no está aquí.",
       tareas:[
         {id:"TR.1", t:"Clave de corrección obligatoria en los 9 tipos autocorregidos", h:0.5, e:"done", c:"Una alternativa cargada sin su respuesta correcta se rechaza al importar, en vez de entrar y calificar mal a todo el curso sin avisar"},
-        {id:"TR.2", t:"Lector de una página por pantalla, alumno y profesor",          h:2,   e:"todo", c:"En tablet vertical una página con tres actividades se lee completa desplazándose hacia abajo, sin zoom ni desplazamiento lateral"},
-        {id:"TR.3", t:"Identificador de libro con año en el validador y el runtime",   h:1,   e:"done", c:"Una página de IV medio 2026 se carga sin errores; una sin año se rechaza al momento de cargarla"}
+        {id:"TR.2", t:"Lector de una página por pantalla, alumno y profesor",          h:2,   e:"cut", c:"Absorbido por TR.5 en el porte de diseño"},
+        {id:"TR.3", t:"Identificador de libro con año en el validador y el runtime",   h:1,   e:"done", c:"Una página de IV medio 2026 se carga sin errores; una sin año se rechaza al momento de cargarla"},
+        {id:"TR.4", t:"Arquitectura de acceso central, login institucional .login-card", h:2.5, e:"done", c:"Enrutador dinámico post-login activo con roles (D41)"},
+        {id:"TR.5", t:"Porte integral del cascarón visual del estudiante y lector 1p", h:4, e:"done", c:"Topbar, Sidebar, Dashboard y Lector a 1 página funcionando y probado"},
+        {id:"TR.6", t:"Motor de maquetación editorial CSS automático, fix ES modules", h:1.5, e:"done", c:"Diseño Santillana replicado vía CSS para markdown, y fix al colapso de página en blanco del frontend"}
       ]},
 
     { id:"B6", nombre:"Módulo del profesor", semIni:13, semFin:15, real:null,
