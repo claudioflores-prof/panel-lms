@@ -312,7 +312,7 @@ const DATOS = {
       ]},
 
     { id:"B4", nombre:"Runtime, ingesta y adaptacion a media", semIni:9, semFin:11, real:9.5,
-      hito:"Cargable 21 ago",
+      hito:"Cargable 22 ago",
       nota:"Al cerrar este bloque, una unidad completa producida por la línea de contenido se carga con un comando. Desde el 17 de agosto incluye además los tres componentes que se habían diferido en agosto y volvieron al alcance (decisión D20): se construyen aquí, antes del bloque de multimedia, para no repetir después el trabajo de diseño visual.",
       tareas:[
         {id:"T4.1", t:"Importador de libros idempotente y con validación previa", h:5, e:"done", c:"Correrlo dos veces no produce cambios la segunda vez"},
@@ -327,7 +327,12 @@ const DATOS = {
         {id:"T4.10", t:"Notacion matematica en enunciados y alternativas",          h:3,   e:"done", c:"Una pagina con una fraccion, una raiz y una funcion se ve correcta en el navegador; una formula mal escrita se detecta al cargar, no en pantalla del alumno"},
         {id:"T4.11", t:"Alternativas A a E, formato PAES",                          h:1,   e:"done", c:"Una pregunta de 5 alternativas rotuladas se responde y se corrige; las de 4 opciones siguen funcionando"},
         {id:"T4.12", t:"Grafico interactivo",                                       h:7,   e:"done", c:"Se ve una parabola y un grafico de barras; marcar el vertice correcto da puntaje y otro punto da cero, calculado por el servidor"},
-        {id:"T4.13", t:"Cierre de notacion: delimitadores, quimica y verificacion",  h:2,   e:"done", c:"$4.800 se muestra tal cual; \\(x+3\\) renderiza; un delimitador sin cerrar queda impreso; \\mathbb{R} se ve como R con raya desde el servidor propio; la reaccion quimica renderiza"}
+        {id:"T4.13", t:"Cierre de notacion: delimitadores, quimica y verificacion",  h:2,   e:"done", c:"$4.800 se muestra tal cual; \\(x+3\\) renderiza; un delimitador sin cerrar queda impreso; \\mathbb{R} se ve como R con raya desde el servidor propio; la reaccion quimica renderiza"},
+        {id:"T4.14", t:"Purgado de paginas fantasmas (C21)", h:1, e:"done", c:"Paginas retiradas del JSON desaparecen de la BD tras importar"},
+        {id:"T4.15", t:"Cola offline persistente LocalStorage (C22)", h:1.5, e:"done", c:"Refrescar offline no pierde la cola"},
+        {id:"T4.16", t:"Escape XSS preventivo (C22)", h:1, e:"done", c:"HTML tags se escapan antes de KaTeX"},
+        {id:"T4.17", t:"Prevencion Race Condition en intentos (C23)", h:1, e:"done", c:"Se usa F() expression"},
+        {id:"T4.18", t:"Rate Limiting basico API (C23)", h:1, e:"done", c:"Respuestas limitadas a 5/seg HTTP 429"}
       ]},
 
     { id:"B5", nombre:"Captura y multimedia", semIni:11, semFin:13, real:3.5,
@@ -349,7 +354,8 @@ const DATOS = {
         {id:"TR.4", t:"Arquitectura de acceso central, login institucional .login-card", h:2.5, e:"done", c:"Enrutador dinámico post-login activo con roles (D41)"},
         {id:"TR.5", t:"Porte integral del cascarón visual del estudiante y lector 1p", h:4, e:"done", c:"Topbar, Sidebar, Dashboard y Lector a 1 página funcionando y probado"},
         {id:"TR.6", t:"Motor de maquetación editorial CSS automático, fix ES modules", h:1.5, e:"done", c:"Diseño Santillana replicado vía CSS para markdown, y fix al colapso de página en blanco del frontend"},
-        {id:"TR.7", t:"Refinamiento UX para Enseñanza Media y PAES", h:2, e:"done", c:"Playwright confirma los touch targets >= 44px, la clase de descarte visual al fallar, y el Modo Focus en el Lector"}
+        {id:"TR.7", t:"Refinamiento UX para Enseñanza Media y PAES", h:2, e:"done", c:"Playwright confirma los touch targets >= 44px, la clase de descarte visual al fallar, y el Modo Focus en el Lector"},
+        {id:"TR.8", t:"Cierre de defectos de T4.14-T4.18 y cobertura del renderizador", h:2, e:"done", c:"Los 3 hallazgos se reprodujeron con un test que falla antes del arreglo y pasa después; el E2E del renderizador ahora corre dentro de la suite"}
       ]},
 
     { id:"B6", nombre:"Módulo del profesor", semIni:13, semFin:15, real:null,
