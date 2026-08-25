@@ -258,8 +258,8 @@ cifras que se comunican. Se quitan de aquí cuando se corrijan en los documentos
    Estados de tarea: "done" | "wip" | "todo" | "cut"
    ═══════════════════════════════════════════════════════════════════ */
 const DATOS = {
-  actualizado: "2026-08-24",
-  hoy:         "2026-08-24",   // dejar igual a actualizado; permite congelar el panel para imprimir
+  actualizado: "2026-08-25",
+  hoy:         "2026-08-25",   // dejar igual a actualizado; permite congelar el panel para imprimir
   semana1:     "2026-07-27",   // lunes de la semana 1 del plan
   piloto:      "2026-10-05",   // Prueba 1 en IV medio (antes: piloto 2 basico 2 nov)
   mvp:         "2026-11-09",   // Prueba 2 en IV medio: el curso egresa a mediados de nov
@@ -359,10 +359,20 @@ const DATOS = {
       ]},
 
     { id:"B6", nombre:"Módulo del profesor", semIni:13, semFin:15, real:null,
+      nota:"Reescrito completo el 19 ago 2026 por C17/D34-D38: pasa de 14 h (solo tablero) a 42 h. Especificación vinculante: Requerimientos_Modulo_Profesor_LMS_Nahuel.md v2.1. T6.1 (tablero) queda fusionada en T6.11, no se suma de nuevo.",
       tareas:[
-        {id:"T6.1", t:"Tablero de avance por curso y por estudiante", h:5, e:"todo", c:"Con 35 alumnos × 12 actividades carga en menos de 1 s"},
-        {id:"T6.2", t:"Detalle de respuestas, incluidas las de revisión manual", h:5, e:"todo", c:"El profesor abre un dibujo y un audio desde el tablero"},
-        {id:"T6.3", t:"Filtros sin recarga + exportación a planilla", h:4, e:"todo", c:"El archivo abre en Excel con las tildes correctas"}
+        {id:"T6.0", t:"Modelo docente: Asignatura, AsignacionDocente, Course.profesor_jefe (D29)", h:3, e:"done", c:"Un curso con 6 asignaturas y 6 profesores responde quién hace cada una; un profesor ve solo su asignatura"},
+        {id:"T6.4", t:"Permisos docentes + navegación asignatura → curso → libro", h:3, e:"done", c:"Un profesor con una sola asignatura y un solo curso llega al libro en un clic"},
+        {id:"T6.5", t:"Lector en modo docente: componentes inertes, sin reanudación, sin reporte", h:4, e:"done", c:"Recorrer el libro completo no cambia ActivityReport.objects.count()"},
+        {id:"T6.6", t:"Endpoint de solución + botón revelar/ocultar (D36)", h:4, e:"done", c:"La clave no aparece en la red hasta presionar el botón; un alumno que llama al endpoint recibe 403 sin contenido"},
+        {id:"T6.7", t:"Contrato de entrada: clave obligatoria + model_answer (D37)", h:3, e:"wip", c:"Una actividad sin su clave aborta la importación completa, nombrando el activity_id"},
+        {id:"T6.9", t:"Emisión de in_progress/started_at al primer gesto (D38)", h:2.5, e:"done", c:"Tocar una sola actividad de tres emite un solo reporte in_progress, no tres"},
+        {id:"T6.10", t:"Consulta agregada de 5 estados + insignia de avance por actividad", h:4, e:"done", c:"Una página con 3 actividades hace una sola consulta agregada, no tres"},
+        {id:"T6.11", t:"Matriz de curso agrupada por página (absorbe T6.1)", h:5, e:"done", c:"35 alumnos × 12 actividades carga en menos de 1 s; se navega matriz ↔ libro"},
+        {id:"T6.12", t:"Nombres al pasar el cursor, intentos y barra de frescura", h:3, e:"done", c:"Con Seguir en vivo encendido y la pestaña en segundo plano, el servidor no recibe peticiones"},
+        {id:"T6.2", t:"Detalle de respuestas, incluidas las de revisión manual", h:5, e:"done", c:"El profesor abre un dibujo y un audio desde el tablero"},
+        {id:"T6.3", t:"Filtros HTMX + exportación CSV con tildes correctas", h:4, e:"done", c:"Filtrar no recarga la página; el CSV abre bien en Excel"},
+        {id:"T6.8", t:"Tests de aislamiento y autorización", h:1.5, e:"done", c:"Alumno → 403, profesor de otra asignatura → 403, recorrido docente sin un ActivityReport nuevo"}
       ]},
 
     { id:"B7", nombre:"QA y piloto", semIni:15, semFin:16, real:null,
