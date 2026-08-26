@@ -358,14 +358,14 @@ const DATOS = {
         {id:"TR.8", t:"Cierre de defectos de T4.14-T4.18 y cobertura del renderizador", h:2, e:"done", c:"Los 3 hallazgos se reprodujeron con un test que falla antes del arreglo y pasa después; el E2E del renderizador ahora corre dentro de la suite"}
       ]},
 
-    { id:"B6", nombre:"Módulo del profesor", semIni:13, semFin:15, real:null,
-      nota:"Reescrito completo el 19 ago 2026 por C17/D34-D38: pasa de 14 h (solo tablero) a 42 h. Especificación vinculante: Requerimientos_Modulo_Profesor_LMS_Nahuel.md v2.1. T6.1 (tablero) queda fusionada en T6.11, no se suma de nuevo.",
+    { id:"B6", nombre:"Módulo del profesor", semIni:13, semFin:15, real:12.75,
+      nota:"Reescrito completo el 19 ago 2026 por C17/D34-D38: pasa de 14 h (solo tablero) a 42 h. Especificación vinculante: Requerimientos_Modulo_Profesor_LMS_Nahuel.md v2.1. T6.1 (tablero) queda fusionada en T6.11, no se suma de nuevo. Cerrado el 25 ago 2026, 12/12 tareas, 12,75 h reales contra 39 h estimadas.",
       tareas:[
         {id:"T6.0", t:"Modelo docente: Asignatura, AsignacionDocente, Course.profesor_jefe (D29)", h:3, e:"done", c:"Un curso con 6 asignaturas y 6 profesores responde quién hace cada una; un profesor ve solo su asignatura"},
         {id:"T6.4", t:"Permisos docentes + navegación asignatura → curso → libro", h:3, e:"done", c:"Un profesor con una sola asignatura y un solo curso llega al libro en un clic"},
         {id:"T6.5", t:"Lector en modo docente: componentes inertes, sin reanudación, sin reporte", h:4, e:"done", c:"Recorrer el libro completo no cambia ActivityReport.objects.count()"},
         {id:"T6.6", t:"Endpoint de solución + botón revelar/ocultar (D36)", h:4, e:"done", c:"La clave no aparece en la red hasta presionar el botón; un alumno que llama al endpoint recibe 403 sin contenido"},
-        {id:"T6.7", t:"Contrato de entrada: clave obligatoria + model_answer (D37)", h:3, e:"wip", c:"Una actividad sin su clave aborta la importación completa, nombrando el activity_id"},
+        {id:"T6.7", t:"Contrato de entrada: clave obligatoria + model_answer (D37)", h:3, e:"done", c:"Una actividad sin su clave aborta la importación completa, nombrando el activity_id"},
         {id:"T6.9", t:"Emisión de in_progress/started_at al primer gesto (D38)", h:2.5, e:"done", c:"Tocar una sola actividad de tres emite un solo reporte in_progress, no tres"},
         {id:"T6.10", t:"Consulta agregada de 5 estados + insignia de avance por actividad", h:4, e:"done", c:"Una página con 3 actividades hace una sola consulta agregada, no tres"},
         {id:"T6.11", t:"Matriz de curso agrupada por página (absorbe T6.1)", h:5, e:"done", c:"35 alumnos × 12 actividades carga en menos de 1 s; se navega matriz ↔ libro"},
@@ -378,10 +378,10 @@ const DATOS = {
     { id:"B7", nombre:"QA y piloto", semIni:15, semFin:16, real:null,
       hito:"Prueba 1 · IV medio",
       tareas:[
-        {id:"T7.1", t:"Endurecimiento de producción", h:3, e:"todo", c:"Revisión de despliegue sin advertencias críticas"},
-        {id:"T7.2", t:"Prueba de carga con 35 sesiones simultáneas", h:3, e:"todo", c:"Sin errores de servidor; latencia p95 bajo 500 ms"},
-        {id:"T7.3", t:"Pauta de QA en el dispositivo real del piloto", h:6, e:"todo", c:"La pauta pasa completa en el modelo de tablet que usarán los niños"},
-        {id:"T7.4", t:"Alta de usuarios del curso + tarjetas de acceso", h:3, e:"todo", c:"35 alumnos entran con su tarjeta"},
+        {id:"T7.1", t:"Endurecimiento de producción", h:3, e:"done", c:"Revisión de despliegue sin advertencias críticas"},
+        {id:"T7.2", t:"Prueba de carga con 35 sesiones simultáneas", h:3, e:"done", c:"Sin errores de servidor; latencia p95 bajo 500 ms"},
+        {id:"T7.3", t:"Pauta de QA en tablet y notebook reales (D54)", h:6, e:"wip", c:"La pauta pasa completa en tablet y notebook; en celular, rendir/continuar una prueba ya iniciada funciona"},
+        {id:"T7.4", t:"Verificación de cuentas SSO activas (D54)", h:3, e:"todo", c:"Los alumnos de IV medio entran con su cuenta institucional sin intervención manual"},
         {id:"T7.5", t:"Copia del respaldo fuera del servidor", h:0.5, e:"todo", c:"Se restaura una copia descargada desde el destino externo, no desde el propio servidor"}
       ]},
 
@@ -403,8 +403,8 @@ const DATOS = {
       opcional:true, hito:"En revision",
       nota:"Candidato principal a diferimiento si la velocidad semanal se mantiene en 8 h.",
       tareas:[
-        {id:"T8.1", t:"Modelos de evaluación con intento único",        h:4, e:"todo", c:"Un segundo intento se rechaza en la base, no solo en la vista"},
-        {id:"T8.2", t:"Cálculo de nota con exigencia 60 %",             h:2, e:"todo", c:"0 pts→1,0 · 60 %→4,0 · 100 %→7,0 más 6 casos intermedios"},
+        {id:"T8.1", t:"Modelos de evaluación con intento único",        h:4, e:"wip", c:"Un segundo intento se rechaza en la base, no solo en la vista"},
+        {id:"T8.2", t:"Cálculo de nota con exigencia 60 %",             h:2, e:"wip", c:"0 pts→1,0 · 60 %→4,0 · 100 %→7,0 más 6 casos intermedios"},
         {id:"T8.3", t:"Creación de evaluaciones por el profesor",       h:5, e:"todo", c:"Crea una evaluación de 10 preguntas sin tocar el admin"},
         {id:"T8.4", t:"Rendición del estudiante, corrección en servidor",h:5, e:"todo", c:"Inspeccionar la red no revela ninguna clave de corrección"},
         {id:"T8.5", t:"Resultados y distribución en el tablero",        h:4, e:"todo", c:"Nota por alumno y promedio del curso"}
