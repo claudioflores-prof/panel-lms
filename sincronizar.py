@@ -169,20 +169,33 @@ def main():
         print("     trabajo hecho. Si si lo era, marcala a mano en el panel.\n")
 
     # --- recordatorio de cierre manual ---
+    # Se reescribe SIEMPRE, tambien cuando no queda nada pendiente. Antes solo
+    # se escribia si habia pendientes, asi que al cerrarse la ultima tarea el
+    # archivo quedaba con la lista vieja y seguia acusando tareas "en curso"
+    # que ya estaban cerradas o cuyo alcance se habia retirado (caso real:
+    # T7.3, T8.1 y T8.2 el 28 ago 2026). Un recordatorio que miente es peor
+    # que no tenerlo.
     por_cerrar = cambiadas + en_curso
+    texto = [
+        "TAREAS CON COMMITS QUE SIGUEN SIN CERRAR",
+        f"(generado el {date.today().isoformat()})",
+        "",
+    ]
     if por_cerrar:
-        texto = [
-            "TAREAS CON COMMITS QUE SIGUEN SIN CERRAR",
-            f"(generado el {date.today().isoformat()})",
-            "",
+        texto += [
             "El panel las muestra EN CURSO. Para pasarlas a cerradas hacen falta",
             "las tres escrituras: criterio verificado en el navegador real,",
             "horas en Registro_Horas.md, y e:\"done\" en Panel_Estado/index.html.",
             "",
         ]
         texto += [f"  {t}   ultimo commit: {commits[t]}" for t in por_cerrar]
-        if not SIMULAR:
-            RECORDATORIO.write_text("\n".join(texto) + "\n", encoding="utf-8")
+    else:
+        texto += [
+            "  Ninguna. Toda tarea con commit propio esta cerrada en el panel",
+            "  o quedo fuera de alcance.",
+        ]
+    if not SIMULAR:
+        RECORDATORIO.write_text("\n".join(texto) + "\n", encoding="utf-8")
 
     hoy = date.today().isoformat()
     html = actualizar_fechas(html, hoy)
