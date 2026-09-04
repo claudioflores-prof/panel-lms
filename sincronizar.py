@@ -20,6 +20,7 @@ USO
     python sincronizar.py --simular  muestra que haria, sin escribir nada
 """
 
+import io
 import re
 import subprocess
 import sys
@@ -36,12 +37,41 @@ SIMULAR = "--simular" in sys.argv or "--dry-run" in sys.argv
 # El id cuenta como trabajo SOLO si abre el mensaje del commit ("T0.11: ...").
 # Es la convencion real del proyecto y evita falsos positivos: el commit
 # "D13: ... tabla Activity en T4.1" MENCIONA T4.1, no la trabaja.
-# El bloque puede ser un digito (T4.13) o la R del Bloque R de retrabajo
-# (TR.1), creado por D40 el 19 ago 2026. Sin la R, el panel era ciego
-# justamente al bloque que existe para que el retrabajo no se pierda de vista.
-PATRON_INICIO = re.compile(r"^\s*T([R\d])\.(\d{1,2})\b")
+# El bloque puede ser uno o DOS digitos (T4.13, T13.1) o la R del Bloque R
+# de retrabajo (TR.1), creado por D40 el 19 ago 2026. Sin la R, el panel era
+# ciego justamente al bloque que existe para que el retrabajo no se pierda
+# de vista. El bloque tambien puede ser la M del modulo Repositorio (T-M.1),
+# cuyos ids vienen del documento de requerimientos vinculante y se conservan:
+# renumerarlos rompería la referencia, y este proyecto ya pago dos veces por
+# inventar esquemas de numeracion (D72, D79).
+#
+# 29 ago 2026: el patron decia ([R\d]), que acepta UN SOLO caracter, asi que
+# todo bloque de dos digitos era invisible -- T10.x, T11.x y T13.x. El Bloque
+# 13 completo (7 tareas cerradas el 28 ago) paso por debajo del radar y T11.1
+# llevaba 4 dias construida sin cerrar, mientras pendientes_de_cierre.txt
+# afirmaba "Ninguna". La rama de ids desconocidos nunca se alcanzaba porque el
+# id ni siquiera se reconocia como id. Es el mismo patron que D33 describe: una
+# verificacion escrita contra su propia convencion no detecta que la convencion
+# quedo corta -- aqui aplicado a la herramienta que vigila el cierre.
+PATRON_INICIO = re.compile(r"^\s*T(R|M|\d{1,2})\.(\d{1,2})\b")
 # Cualquier mencion, para reportarla aparte sin actuar sobre ella.
-PATRON_MENCION = re.compile(r"\bT([R\d])\.(\d{1,2})\b")
+PATRON_MENCION = re.compile(r"\bT(R|M|\d{1,2})\.(\d{1,2})\b")
+
+
+def clave_de_orden(tid):
+    """Ordena por bloque y numero, tratando el bloque como entero.
+
+    La version anterior usaba tid[1], el segundo CARACTER del id, que con
+    bloques de dos digitos ordena mal: "T13.1"[1] es "1", asi que el Bloque 13
+    caia entre el 1 y el 2. La R del Bloque R va al final, como antes.
+    """
+    m = PATRON_MENCION.search(tid)
+    if not m:
+        return (2, 0, 0)
+    bloque, num = m.group(1), int(m.group(2))
+    if bloque in ("R", "M"):
+        return (1, 0 if bloque == "R" else 1, num)
+    return (0, int(bloque), num)
 
 
 def salir(msg, codigo=1):
@@ -118,7 +148,13 @@ def main():
     if not (REPO / ".git").exists():
         salir(f"{REPO} no parece un repositorio git")
 
-    html = PANEL.read_text(encoding="utf-8")
+    # newline="" preserva el terminador tal como esta en el archivo. Sin eso,
+    # read_text lo traduce a "\n" y write_text lo vuelve a escribir con el
+    # terminador del SISTEMA QUE CORRE: en Windows no se nota, pero corrido
+    # desde una sesion Linux convierte el panel entero de CRLF a LF y deja 683
+    # lineas de ruido en el historial del repo del panel (29 ago 2026).
+    with io.open(PANEL, "r", encoding="utf-8", newline="") as f:
+        html = f.read()
     original = html
     commits, mencionadas = ids_en_los_commits()
 
@@ -132,7 +168,7 @@ def main():
 
     cambiadas, ya_cerradas, en_curso, desconocidas = [], [], [], []
 
-    for tid in sorted(commits, key=lambda t: (t[1], float(t.split(".")[1]))):
+    for tid in sorted(commits, key=clave_de_orden):
         estado = estado_actual(html, tid)
         if estado is None:
             desconocidas.append(tid)
@@ -189,13 +225,32 @@ def main():
             "",
         ]
         texto += [f"  {t}   ultimo commit: {commits[t]}" for t in por_cerrar]
-    else:
+    # 29 ago 2026: las 'desconocidas' faltaban aqui, y ese hueco es el que dejo
+    # a T11.1 cuatro dias construida sin que nadie lo supiera. Una tarea que el
+    # panel no conoce no puede estar 'en curso' ni 'cerrada', asi que no entraba
+    # en por_cerrar y el recordatorio decia "Ninguna" con toda tranquilidad. El
+    # aviso existia, pero solo por consola: lo unico que persiste es este archivo.
+    if desconocidas:
+        texto += [
+            "",
+            "CON COMMIT PROPIO Y AUSENTES DEL PANEL",
+            "",
+            "El panel no las conoce, asi que no pueden figurar ni en curso ni",
+            "cerradas: son invisibles para el seguimiento y para dirección.",
+            "Agregarlas al bloque DATOS de index.html, o corregir el id del",
+            "mensaje del commit si fue un typo.",
+            "",
+        ]
+        texto += [f"  {t}   ultimo commit: {commits[t]}" for t in desconocidas]
+    if not por_cerrar and not desconocidas:
         texto += [
             "  Ninguna. Toda tarea con commit propio esta cerrada en el panel",
             "  o quedo fuera de alcance.",
         ]
     if not SIMULAR:
-        RECORDATORIO.write_text("\n".join(texto) + "\n", encoding="utf-8")
+        salto = "\r\n" if "\r\n" in html else "\n"
+        with io.open(RECORDATORIO, "w", encoding="utf-8", newline="") as f:
+            f.write(salto.join(texto) + salto)
 
     hoy = date.today().isoformat()
     html = actualizar_fechas(html, hoy)
@@ -209,7 +264,8 @@ def main():
         print(f"  [simulacion] y la fecha se habria puesto en {hoy}.\n")
         return
 
-    PANEL.write_text(html, encoding="utf-8")
+    with io.open(PANEL, "w", encoding="utf-8", newline="") as f:
+        f.write(html)
     print(f"  Panel actualizado. Fecha: {hoy}")
     if por_cerrar:
         print(f"  Recordatorio de cierre escrito en {RECORDATORIO.name}")

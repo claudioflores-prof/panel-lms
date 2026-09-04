@@ -6,14 +6,13 @@ Panel de una página para contrastar el avance real contra el plan. Autocontenid
 
 ## 1. Las dos vistas
 
-El panel abre siempre en **Resumen ejecutivo**: hitos, proyección de fecha, calendario de bloques con su
+**El panel tiene UNA sola vista desde el 29 ago 2026 (D92).** Hitos, proyección de fecha, calendario de bloques, tareas con su criterio de término y los pendientes, todo junto. Antes abría en un «Resumen ejecutivo» y escondía el detalle tras `?v=full`: esa separación existía para dirección, que **no abre el panel** — sigue los tres compromisos de marzo (D91). Mantener dos vistas era una cosa más que actualizar sin ningún lector al otro lado.
 porcentaje de avance, línea de contenido, riesgos y decisiones pendientes. Sin detalle de tareas.
 
 El botón **Vista completa** agrega las 41 tareas con su criterio de término y las inconsistencias detectadas
 en el plan. La vista queda registrada en la URL:
 
 - <https://claudioflores-prof.github.io/panel-lms/> → resumen ejecutivo (para dirección)
-- <https://claudioflores-prof.github.io/panel-lms/?v=full> → vista completa (para el equipo)
 
 El botón **Copiar link de esta vista** te da la dirección con la vista que estás viendo, para mandar a cada
 audiencia la que corresponde. Imprimir (`Ctrl+P`) respeta la vista activa: el resumen ejecutivo sale en

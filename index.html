@@ -107,23 +107,12 @@ ul{margin:8px 0;padding-left:20px} li{margin:5px 0;font-size:14px}
 .sem.a{background:var(--rojo)} .sem.m{background:var(--ambar)} .sem.b{background:var(--teal)}
 footer{margin-top:56px;padding-top:14px;border-top:1px solid var(--linea);font-size:12px;color:var(--gris)}
 
-/* ---- Conmutador de vista ---- */
-.vistas{position:sticky;top:0;z-index:20;background:var(--papel);border-bottom:1px solid var(--linea);
-  margin:0 -20px 4px;padding:10px 20px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.vbtn{font:inherit;font-size:13px;font-weight:600;padding:7px 15px;cursor:pointer;
-  background:var(--papel);color:var(--tinta2);border:1px solid var(--linea);border-radius:3px;transition:none}
-.vbtn:hover{border-color:var(--teal);color:var(--teal)}
-.vbtn.activo{background:var(--teal);border-color:var(--teal);color:#fff}
-.vnota{font-size:12px;color:var(--gris);margin-left:auto}
-.copiar{font:inherit;font-size:12px;padding:6px 11px;cursor:pointer;background:transparent;
-  border:1px solid var(--linea);border-radius:3px;color:var(--tinta2)}
-.copiar:hover{border-color:var(--teal);color:var(--teal)}
-section[hidden]{display:none}
-.solofull{display:none}
-body[data-vista="full"] .solofull{display:inline}
+/* .solofull era el texto que solo se veia en la vista completa. Con una sola
+   vista (D92) siempre se muestra. */
+.solofull{display:inline}
 
 @media print{
-  .vistas,.panelctl input,.panelctl .chk,.copiar{display:none}
+  .panelctl input,.panelctl .chk{display:none}
   details{break-inside:avoid} details:not([open]){display:block}
   section[hidden]{display:none !important}
 }
@@ -136,15 +125,9 @@ body[data-vista="full"] .solofull{display:inline}
 <body>
 <div class="wrap">
 
-<div class="vistas">
-  <button class="vbtn activo" data-v="exec">Resumen ejecutivo</button>
-  <button class="vbtn" data-v="full">Vista completa</button>
-  <button class="copiar" id="copiar">Copiar link de esta vista</button>
-  <span class="vnota" id="vnota"></span>
-</div>
 
 <h1>MVP LMS — panel de estado</h1>
-<p class="sub">Libros interactivos para 2° básico · Actualizado el <b id="fecha-act"></b><span class="solofull"> · Este panel se edita a mano en el bloque <code>DATOS</code> del código fuente.</span></p>
+<p class="sub">Libros interactivos · 1° medio (marzo 2027) y IV medio (pruebas de oct y nov) · Actualizado el <b id="fecha-act"></b><span class="solofull"> · Este panel se edita a mano en el bloque <code>DATOS</code> del código fuente.</span></p>
 
 <!-- ============ 1. HITOS ============ -->
 <div class="hitos" id="hitos"></div>
@@ -258,8 +241,8 @@ cifras que se comunican. Se quitan de aquí cuando se corrijan en los documentos
    Estados de tarea: "done" | "wip" | "todo" | "cut"
    ═══════════════════════════════════════════════════════════════════ */
 const DATOS = {
-  actualizado: "2026-08-27",
-  hoy:         "2026-08-27",   // dejar igual a actualizado; permite congelar el panel para imprimir
+  actualizado: "2026-09-03",
+  hoy:         "2026-09-03",   // dejar igual a actualizado; permite congelar el panel para imprimir
   semana1:     "2026-07-27",   // lunes de la semana 1 del plan
   piloto:      "2026-10-05",   // Prueba 1 en IV medio (antes: piloto 2 basico 2 nov)
   mvp:         "2026-11-09",   // Prueba 2 en IV medio: el curso egresa a mediados de nov
@@ -267,7 +250,7 @@ const DATOS = {
   horasGestion: 0,   // D21: la gestion deja de competir con las horas de desarrollo
 
   bloques: [
-    { id:"B0", nombre:"Slice vertical", semIni:1, semFin:3, real:6,
+    { id:"B0", nombre:"Slice vertical", ini:"2026-08-03", fin:"2026-08-04", real:6,
       nota:"Cerrado en 2 días de calendario. Incluye instalación de Docker, cuenta de repositorio y decisiones tomadas sobre la marcha.",
       tareas:[
         {id:"T0.1",  t:"Repo, estructura de apps, dependencias",              h:3,   e:"done", c:"Verificación del proyecto sin errores; commit inicial"},
@@ -283,7 +266,7 @@ const DATOS = {
         {id:"T0.11", t:"Una página real de contenido funcionando",             h:2,   e:"done", c:"Renderiza texto, imagen y actividad; el reporte llega a la base"}
       ]},
 
-    { id:"B1", nombre:"Despliegue base", semIni:3, semFin:4, real:6,
+    { id:"B1", nombre:"Despliegue base", ini:"2026-08-10", fin:"2026-08-10", real:6,
       nota:"Reestimado a la baja: el servidor ya existe y está administrado con panel, no se configura desde cero. Timebox estricto de 8 h. Cerrado en 6 h reales contra 6,5 h estimadas.",
       tareas:[
         {id:"T1.1", t:"Base de datos en el servidor + verificar memoria libre real", h:1.5, e:"done", c:"La base responde; memoria libre medida y registrada"},
@@ -292,7 +275,7 @@ const DATOS = {
         {id:"T1.4", t:"Respaldo diario + restauración probada una vez",              h:1,   e:"done", c:"El respaldo se restaura en una base limpia y el sistema funciona"}
       ]},
 
-    { id:"B2", nombre:"Acceso y organización", semIni:4, semFin:6, real:3,
+    { id:"B2", nombre:"Acceso y organización", ini:"2026-08-10", fin:"2026-08-11", real:3,
       nota:"Cerrado en 3 h reales contra 14 h estimadas (~4,7× más rápido). Segunda medición de velocidad tras el Bloque 0, esta vez sobre integración real, no solo andamiaje.",
       tareas:[
         {id:"T2.1", t:"Inicio de sesión institucional + alta masiva + matriz de permisos", h:5, e:"done", c:"Correo del dominio entra con su rol; correo personal es rechazado"},
@@ -301,7 +284,7 @@ const DATOS = {
         {id:"T2.4", t:"Vista biblioteca con progreso por unidad",                          h:4, e:"done", c:"Con 3 de 12 actividades hechas muestra 25 %"}
       ]},
 
-    { id:"B3", nombre:"Componentes autocorregidos", semIni:6, semFin:9, real:2,
+    { id:"B3", nombre:"Componentes autocorregidos", ini:"2026-08-11", fin:"2026-08-12", real:2,
       nota:"Ordenados por riesgo creciente. Cada componente se cierra completo antes de empezar el siguiente.",
       tareas:[
         {id:"T3.1", t:"Verdadero/falso y respuesta corta con normalización", h:5, e:"done", c:"Test de normalización de texto con espacios, mayúsculas y puntuación"},
@@ -311,7 +294,7 @@ const DATOS = {
         {id:"T3.5", t:"Cuestionario multi-pregunta con bonus de tiempo",     h:4, e:"done", c:"El puntaje con bonus coincide con el cálculo del servidor"}
       ]},
 
-    { id:"B4", nombre:"Runtime, ingesta y adaptacion a media", semIni:9, semFin:11, real:9.5,
+    { id:"B4", nombre:"Runtime, ingesta y adaptacion a media", ini:"2026-08-12", fin:"2026-08-22", real:9.5,
       hito:"Cargable 22 ago",
       nota:"Al cerrar este bloque, una unidad completa producida por la línea de contenido se carga con un comando. Desde el 17 de agosto incluye además los tres componentes que se habían diferido en agosto y volvieron al alcance (decisión D20): se construyen aquí, antes del bloque de multimedia, para no repetir después el trabajo de diseño visual.",
       tareas:[
@@ -335,7 +318,7 @@ const DATOS = {
         {id:"T4.18", t:"Rate Limiting basico API (C23)", h:1, e:"done", c:"Respuestas limitadas a 5/seg HTTP 429"}
       ]},
 
-    { id:"B5", nombre:"Captura y multimedia", semIni:11, semFin:13, real:3.5,
+    { id:"B5", nombre:"Captura y multimedia", ini:"2026-08-18", fin:"2026-08-18", real:3.5,
       nota:"La grabación de voz va SIN subida al servidor en el piloto. El dibujo sí sube una vez, al cerrar la actividad, detrás de un interruptor que se apaga si no está escrita la política de datos de menores. La lectura asistida y el trazado salieron de este bloque: se adelantan al bloque anterior (T4.8 y T4.9).",
       tareas:[
         {id:"T5.1", t:"Respuesta abierta y metacognición con marca de revisión", h:3, e:"done", c:"Las respuestas abiertas quedan marcadas para revisión docente"},
@@ -345,7 +328,7 @@ const DATOS = {
         {id:"T5.5", t:"Grabación de voz (sin subida)",                           h:1.5, e:"done", c:"Graba y reproduce en el propio dispositivo; la actividad se reporta como completada"}
       ]},
 
-    { id:"BR", nombre:"Retrabajo sobre lo cerrado", semIni:13, semFin:13, real:5,
+    { id:"BR", nombre:"Retrabajo sobre lo cerrado", ini:"2026-08-20", fin:"2026-08-24", real:5,
       nota:"Bloque abierto de forma permanente (D40, 19 ago 2026). Recibe todo arreglo o cambio que toque una etapa ya cerrada, en vez de dejarlo como nota dentro de un bloque que nadie va a volver a abrir. Su largo es una señal en sí misma: si crece rápido, el problema no está aquí.",
       tareas:[
         {id:"TR.1", t:"Clave de corrección obligatoria en los 9 tipos autocorregidos", h:0.5, e:"done", c:"Una alternativa cargada sin su respuesta correcta se rechaza al importar, en vez de entrar y calificar mal a todo el curso sin avisar"},
@@ -358,7 +341,7 @@ const DATOS = {
         {id:"TR.8", t:"Cierre de defectos de T4.14-T4.18 y cobertura del renderizador", h:2, e:"done", c:"Los 3 hallazgos se reprodujeron con un test que falla antes del arreglo y pasa después; el E2E del renderizador ahora corre dentro de la suite"}
       ]},
 
-    { id:"B6", nombre:"Módulo del profesor", semIni:13, semFin:15, real:12.75,
+    { id:"B6", nombre:"Módulo del profesor", ini:"2026-08-24", fin:"2026-08-25", real:12.75,
       nota:"Reescrito completo el 19 ago 2026 por C17/D34-D38: pasa de 14 h (solo tablero) a 42 h. Especificación vinculante: Requerimientos_Modulo_Profesor_LMS_Nahuel.md v2.1. T6.1 (tablero) queda fusionada en T6.11, no se suma de nuevo. Cerrado el 25 ago 2026, 12/12 tareas, 12,75 h reales contra 39 h estimadas.",
       tareas:[
         {id:"T6.0", t:"Modelo docente: Asignatura, AsignacionDocente, Course.profesor_jefe (D29)", h:3, e:"done", c:"Un curso con 6 asignaturas y 6 profesores responde quién hace cada una; un profesor ve solo su asignatura"},
@@ -375,20 +358,41 @@ const DATOS = {
         {id:"T6.8", t:"Tests de aislamiento y autorización", h:1.5, e:"done", c:"Alumno → 403, profesor de otra asignatura → 403, recorrido docente sin un ActivityReport nuevo"}
       ]},
 
-    { id:"B7", nombre:"QA y piloto", semIni:15, semFin:16, real:null,
+    { id:"B7", nombre:"QA y piloto", ini:"2026-08-25", fin:"2026-10-03", real:null,
       hito:"Prueba 1 · IV medio",
       tareas:[
         {id:"T7.1", t:"Endurecimiento de producción", h:3, e:"done", c:"Revisión de despliegue sin advertencias críticas"},
         {id:"T7.2", t:"Prueba de carga con 35 sesiones simultáneas", h:3, e:"done", c:"Sin errores de servidor; latencia p95 bajo 500 ms"},
         {id:"T7.3", t:"Pauta de QA en tablet y notebook reales (D54)", h:6, e:"done", c:"La pauta pasa completa en tablet y notebook; en celular, rendir/continuar una prueba ya iniciada funciona"},
-        {id:"T7.4", t:"Verificación de cuentas SSO activas (D54)", h:3, e:"todo", c:"Los alumnos de IV medio entran con su cuenta institucional sin intervención manual"},
-        {id:"T7.5", t:"Copia del respaldo fuera del servidor", h:0.5, e:"todo", c:"Se restaura una copia descargada desde el destino externo, no desde el propio servidor"}
+        {id:"T7.4", t:"Verificación de cuentas SSO activas (D54)", h:3, e:"done", c:"Los alumnos de IV medio entran con su cuenta institucional sin intervención manual"},
+        {id:"T7.5", t:"Copia del respaldo fuera del servidor", h:0.5, e:"done", c:"Se restaura una copia descargada desde el destino externo, no desde el propio servidor"}
       ]},
 
-    { id:"B10", nombre:"Reportería", semIni:4, semFin:28, real:null,
-      nota:"Prioridad de dirección. No se hace de corrido: la fase 1 va antes de la prueba de octubre, la fase 2 antes de la de noviembre y la fase 3 en el verano. La regla central del módulo viene de un fracaso real: el avance se mide por unidad y lección, nunca por objetivo de aprendizaje, que es lo que volvió inservible el panel anterior del colegio.",
+    { id:"B13", nombre:"Piezas de maquetación del libro", ini:"2026-08-28", fin:"2026-08-28", real:null,
+      nota:"Prioridad máxima, y existe porque no existía: el documento que se le entregó al creador de contenido le promete doce piezas para armar una página, y el software acepta cuatro. Las otras ocho no se ignoran, la carga las rechaza, así que hoy el creador no puede entregar una lección que entre al sistema. Se detectó el 28 de agosto comparando el software contra ese documento. El contenido es la restricción del proyecto, no el desarrollo. OJO: las fechas de los demás bloques de este panel están corridas sobre el calendario anterior, ya cancelado, y su corrección está pendiente; las de este bloque sí son las reales.",
       tareas:[
-        {id:"T10.0", t:"Profesores, asignaturas y jefatura de curso",              h:3,  e:"todo", c:"Un curso con 6 asignaturas y 6 profesores distintos responde correctamente quién hace cada una"},
+        {id:"T13.1", t:"Cuatro piezas simples: lista, concepto, alerta y síntesis",     h:6,   e:"done", c:"Las cuatro se declaran en una ficha y se ven según la guía de estilo; el título de la síntesis lo pone el sistema, no el contenido"},
+        {id:"T13.2", t:"Ejemplo resuelto, con numeración corrida de ejercicios",        h:2,   e:"done", c:"Un ejemplo y una actividad en la misma página comparten la numeración, sin reiniciar"},
+        {id:"T13.3", t:"Nota de apoyo al margen",                                       h:2,   e:"done", c:"En pantalla ancha va al costado del texto; en tablet vertical pasa a ancho completo justo después del párrafo que la precede, no al final"},
+        {id:"T13.4", t:"Tabla de datos",                                                h:3,   e:"done", c:"Una fila con menos celdas que columnas es rechazada al cargar; una tabla ancha se desplaza dentro de su propia caja sin mover la página"},
+        {id:"T13.5", t:"Tarjetas de repaso que se dan vuelta",                          h:3,   e:"done", c:"Dar vuelta una tarjeta no mueve las demás, y no queda registrada como respuesta del alumno: no es una actividad"},
+        {id:"T13.6", t:"Etiqueta de página y pie de figura",                            h:2, e:"done", c:"Una etiqueta fuera de la lista permitida se rechaza; el contenido que ya está cargado, que no la declara, sigue cargando"},
+        {id:"T13.7", t:"Retiro de la detección de cajas por texto y verificación cruzada", h:1.5, e:"done", c:"La apariencia deja de depender de las palabras que eligió el creador, y la misma pieza se ve igual en dos asignaturas distintas"}
+      ]},
+
+    { id:"C29", nombre:"Conversor de fichas y vista previa del creador", ini:"2026-09-02", fin:"2026-09-02", real:5.5,
+      nota:"Aprobado el 27 ago 2026 (D71) como la fila 4 de la Cola. Cierra el ciclo del creador de contenido sin Claudio en el medio: escribe la ficha, la pega en la vista previa, ve el resultado y corrige. Es lo que vuelve verificable el criterio funcional del Bloque 13 (D94), que verifica Claudio con Alejandro. Construido en una sesión, 2,5 h reales contra 18 estimadas.",
+      tareas:[
+        {id:"T29.1", t:"Conversor determinista ficha.md → JSON, comando convertir_ficha y quinto espejo de D84", h:10, e:"done", c:"La ficha de la fixture l9 convertida da exactamente sus JSON; una pieza o un campo que el Brief no documenta hace fallar la conversión nombrando la línea"},
+        {id:"T29.2", t:"Página «Vista previa de borrador» con el runtime real, sin escribir en la BD",           h:5,  e:"done", c:"El creador pega la ficha y ve el lector del alumno; tocar una actividad no genera ninguna petición a la API ni ningún reporte"},
+        {id:"T29.3", t:"Cuenta del creador con permiso único y endurecimiento del endpoint",                       h:3,  e:"done", c:"El rol creador solo entra a /borrador/; tamaño máximo, solo texto, rate limit de D47 y CSRF verificados con tests"},
+        {id:"T29.4", t:"Entrega completa en .zip: carpeta e imágenes validadas como manda el Brief, imágenes incrustadas", h:3, e:"done", c:"Un .zip con la carpeta mal armada o una imagen fuera de norma lista qué archivo y qué regla; uno correcto se ve con sus imágenes sin guardar nada"},
+        {id:"T29.5", t:"generar_ficha, el camino de vuelta del conversor (C37, sesión nocturna 2-3 sep)", h:4, e:"wip", c:"generar_ficha → convertir_ficha reproduce el mismo JSON para TODA lección de content/, no solo para la fixture l9 — hoy solo l9 lo hace: las otras 6 lecciones fallan por falta de «Versión:» en su JSON (D30/D72 nunca se les aplicó) y quedan como hallazgo, no como defecto del comando"}
+      ]},
+
+    { id:"B10", nombre:"Reportería", ini:"2026-09-14", fin:"2027-02-28", real:null,
+      nota:"Prioridad de dirección. No se hace de corrido: la fase 1 va antes de la prueba de octubre, la fase 2 antes de la de noviembre y la fase 3 en el verano. La regla central del módulo viene de un fracaso real: el avance se mide por unidad y lección, nunca por objetivo de aprendizaje, que es lo que volvió inservible el panel anterior del colegio. T10.0 se retiró de esta lista (C-3, auditoría del 28 ago 2026): era la misma tarea que T6.0, movida por D35 el 24 de agosto y ya cerrada en el Bloque 6 — este bloque la contaba dos veces.",
+      tareas:[
         {id:"T10.1", t:"Permiso de UTP y medición de tiempo de conexión",          h:4.5,e:"todo", c:"Una hora de clase queda registrada como una fila con los minutos conectados, no como sesenta registros"},
         {id:"T10.2", t:"Panel de avance para UTP y dirección",                     h:10, e:"todo", c:"Con 80 estudiantes y 6 asignaturas abre en menos de 1 segundo; una actividad de repaso no ensucia el avance de ninguna unidad"},
         {id:"T10.3", t:"Ensayo del correo semanal con datos reales",               h:2,  e:"todo", c:"Llega a las casillas de prueba y se lee bien en el teléfono, sin adjuntos"},
@@ -399,16 +403,55 @@ const DATOS = {
         {id:"T10.8", t:"Servicio de envío de correo en producción",                h:2,  e:"todo", c:"Los correos llegan a la bandeja de entrada y no a spam"}
       ]},
 
-    { id:"B8", nombre:"Módulo de evaluación", semIni:16, semFin:19, real:null,
+    { id:"B8", nombre:"Módulo de evaluación", ini:"2026-09-07", fin:"2026-11-13", real:null,
       hito:"Prueba 2 · con nota",
       nota:"Dejó de ser diferible: sin él no hay Prueba 2 con nota y el curso de IV medio egresa a mediados de noviembre. El alcance que figuraba aquí se retiró completo el 26 de agosto (una versión construida y funcionando, pero mucho más angosta que el uso real) y el módulo se replantea desde sus requerimientos. Las horas del bloque volverán a este panel cuando ese alcance esté escrito y estimado; mientras tanto solo se muestra lo que sí está definido.",
       tareas:[
-        {id:"T8.0", t:"Año escolar en el curso (habilita matrícula y evaluación por período)", h:1.5, e:"todo", c:"Existen \"2° A 2026\" y \"2° A 2027\" como cursos distintos y un alumno que repite se matricula sin error"},
+        {id:"T8.0", t:"Año escolar en el curso (habilita matrícula y evaluación por período)", h:1.5, e:"done", c:"Existen \"2° A 2026\" y \"2° A 2027\" como cursos distintos y un alumno que repite se matricula sin error"},
         {id:"T8.1", t:"Modelos de evaluación con intento único",        h:0, e:"cut", c:"Alcance retirado el 26 ago 2026: el módulo se rehace desde sus requerimientos. El trabajo hecho queda guardado como referencia"},
         {id:"T8.2", t:"Cálculo de nota con exigencia 60 %",             h:0, e:"cut", c:"Alcance retirado el 26 ago 2026 junto con el resto del módulo"},
         {id:"T8.3", t:"Creación de evaluaciones por el profesor",       h:0, e:"cut", c:"Alcance retirado el 26 ago 2026: la creación real parte de un banco de ejercicios, que esta versión no contemplaba"},
         {id:"T8.4", t:"Rendición del estudiante, corrección en servidor",h:0, e:"cut", c:"Alcance retirado el 26 ago 2026 junto con el resto del módulo"},
         {id:"T8.5", t:"Resultados y distribución en el tablero",        h:0, e:"cut", c:"Alcance retirado el 26 ago 2026 junto con el resto del módulo"}
+      ]},
+{ id:"B11", nombre:"Administración Central", ini:"2026-08-25", fin:"2026-08-25", real:null,
+      nota:"Solo se muestra lo construido. El resto del módulo (T11.2 a T11.7, ~23 h) depende de C25, que sigue PENDIENTE DE APROBAR: mostrarlo aquí sugeriría un compromiso que nadie autorizó.",
+      tareas:[
+        {id:"T11.1", t:"Perfil administrativo: titular de permisos acotados (D56/RAC-2)", h:1, e:"done", c:"Un administrativo tiene sus 6 permisos de RAC-2 y NUNCA is_superuser ni is_staff, por construcción"}
+      ]},
+    { id:"B9", nombre:"Producción 2027", ini:"2026-12-01", fin:"2027-02-28", real:null,
+      nota:"Ventana dic 2026 – mar 2027: purga anual, ActivityReport por matrícula, filtro de período y consulta agregada de biblioteca. Añadido al panel el 3 sep 2026 (C-4, auditoría del 28 ago): existía en el Plan Técnico y no figuraba aquí. T9.1 se adelantó al Bloque 7 como T8.0 (D69, cerrada) y T9.5 ya se ejecutó como D29/T6.0 (Bloque 6, cerrada) — ninguna de las dos se cuenta de nuevo en este bloque.",
+      tareas:[
+        {id:"T9.2", t:"Definir el alcance de la purga anual y construir manage.py export_year (volcado + purga)", h:2,   e:"todo", c:"Se exporta un año completo a archivo, se purga, y el archivo permite reconstruir lo exportado"},
+        {id:"T9.3", t:"ActivityReport pasa a FK a Enrollment; unicidad (enrollment, activity_id)",                  h:3,   e:"todo", c:"Un alumno que repite el curso rehace la misma actividad y quedan dos reportes, no uno pisado"},
+        {id:"T9.4", t:"Filtro de período en la autorización del endpoint de reporte y en la biblioteca",           h:1.5, e:"todo", c:"Un alumno de 3° en 2028 no ve el libro de 2° 2027 en su biblioteca"},
+        {id:"T9.6", t:"Consulta agregada de progreso por unidad (elimina el N+1 de la biblioteca)",                h:0.5, e:"todo", c:"La biblioteca hace un número constante de consultas, no una por unidad"}
+      ]},
+    { id:"B12", nombre:"Paquete Editorial Santillana", ini:"2026-10-06", fin:"2026-12-19", real:null,
+      nota:"Aprobado por D70/C28 el 27 ago 2026: 62 h de alcance NUEVO, no corrección. Posterior al Bloque 7. Hasta el 29 de agosto no existía ni en el Plan Técnico ni en este panel, así que dirección nunca lo vio.",
+      tareas:[
+        {id:"T12.1", t:"Ajustes al contrato vigente: cursiva, fuente, imagen en nota, idea clave, insignia", h:6.5, e:"done", c:"Las cinco entran por el validador y se ven en el navegador real"},
+        {id:"T12.2", t:"Piezas nuevas: lectura, desplegable, pestañas, proyecto, portada de unidad",         h:20,  e:"wip", c:"Las cinco cargan con import_book y pasan la verificación cruzada de D50"},
+        {id:"T12.3", t:"Actividades nuevas: completar (cloze), multi_choice y escala",                        h:17,  e:"todo", c:"Cada una con payload, regla de corrección, tope de intentos (D64) y tests"},
+        {id:"T12.4", t:"Marcas dentro de texto: enlace con URL validada y vocabulario",                       h:9,   e:"wip", c:"La política de dominios permitidos está definida ANTES de construir el enlace"},
+        {id:"T12.5", t:"Visor: zoom de figuras, barra de página siguiente y volver arriba",                   h:4.5, e:"wip", c:"Verificado en tablet y teléfono: la Prueba es BYOD. Construido y verificado en navegador de escritorio real contra contenido real (mat-4m-2026) el 3 sep 2026, con 3 E2E; falta la verificación táctil en tablet/teléfono que este criterio exige -- no se cierra hasta entonces (D94)"},
+        {id:"T12.6", t:"Fondo fotográfico declarable por página, lección o unidad",                           h:5,   e:"todo", c:"El tratamiento visual lo fija el sistema (D50) y la foto entra con derechos declarados (R9)"},
+        {id:"T12.7", t:"El color del libro en tres capas: paleta por área con contraste AA, sepia y ámbar por función (D102, C36)", h:2.5, e:"done", c:"La misma página en Matemática y en Lenguaje: identidad distinta, función igual, contraste AA medido en el lector (E2E)"}
+      ]},
+    { id:"BM", nombre:"Repositorio de material", ini:"2026-11-17", fin:"2027-01-31", real:null,
+      nota:"Aprobado por D68 el 27 ago 2026. Requerimientos completos en Requerimientos_Modulo_Repositorio v1.2. NUNCA se registró como solicitud de cambio: el número C28 se lo llevó Santillana el mismo día, y estas 56 h llevan desde entonces fuera de la cifra comprometida. Los ids T-M.x son los del documento vinculante y se conservan.",
+      tareas:[
+        {id:"T-M.1",  t:"Modelo de datos, migraciones, admin",                                    h:4, e:"todo", c:"Migración aplicada y el admin permite crear material sin tocar la base"},
+        {id:"T-M.2",  t:"Subida: validación en tres capas, UUID, cuotas y límites",                h:6, e:"todo", c:"Un archivo que miente su tipo se rechaza en las tres capas"},
+        {id:"T-M.3",  t:"Servido seguro: permiso, X-Accel-Redirect, cabeceras, nginx",            h:5, e:"todo", c:"Sin permiso responde 403 y el archivo nunca se sirve directo desde media"},
+        {id:"T-M.4",  t:"Pantalla del profesor: lista por unidad, arrastrar, edición y deshacer",  h:8, e:"todo", c:"El profesor reordena y deshace sin recargar la página"},
+        {id:"T-M.5",  t:"Pantalla del alumno: carpeta, colapsables, novedad, vista previa y peso", h:6, e:"todo", c:"Verificado en tablet real: el alumno ve el peso antes de descargar"},
+        {id:"T-M.6",  t:"Publicación programada: manager perezoso, feriados y vista como alumno",  h:5, e:"todo", c:"Un material programado no aparece antes de su fecha ni siquiera para quien lo subió"},
+        {id:"T-M.7",  t:"Marcar como hecho y contador agregado",                                   h:3, e:"todo", c:"El contador coincide con el conteo real, verificado contra la base"},
+        {id:"T-M.8",  t:"Seguimiento nominal, retención por cron y pantalla de transparencia",     h:6, e:"todo", c:"La pantalla dice qué se guarda y por cuánto tiempo, en palabras del apoderado"},
+        {id:"T-M.9",  t:"Auditoría de descargas y respaldo del media (empalma con T7.5)",          h:4, e:"todo", c:"El respaldo se restaura en limpio y los archivos quedan servibles"},
+        {id:"T-M.10", t:"Tests automatizados y QA en dispositivos reales",                         h:6, e:"todo", c:"Suite en verde y pauta de QA pasada en tablet y teléfono"},
+        {id:"T-M.11", t:"Política de datos y documento para dirección (D-c)",                      h:3, e:"todo", c:"Firmado por el director antes de que el módulo reciba un solo archivo real"}
       ]}
   ],
 
@@ -519,11 +562,11 @@ function proyectar(){
   const fin = new Date(HOY.getTime() + semanas*7*86400000);
   const meta = conB8 ? MVP : PILOTO;
   const holgura = dias(fin, meta);
-  const etiqueta = conB8 ? "MVP completo (1 dic)" : "piloto (2 nov)";
+  const etiqueta = conB8 ? `Prueba 2 (${fCorta(MVP)})` : `Prueba 1 (${fCorta(PILOTO)})`;
   let cls, msg;
-  if (holgura >= 14)      { cls="";       msg=`<b>Llega con holgura.</b> Terminas el ${fFecha(fin)}, ${holgura} días antes del ${etiqueta}.`; }
-  else if (holgura >= 0)  { cls="alerta"; msg=`<b>Llega al filo.</b> Terminas el ${fFecha(fin)}, apenas ${holgura} día${holgura===1?"":"s"} antes del ${etiqueta}. Sin margen para un imprevisto.`; }
-  else                    { cls="riesgo"; msg=`<b>No llega.</b> Terminas el ${fFecha(fin)}, ${-holgura} días después del ${etiqueta}.`; }
+  if (holgura >= 14)      { cls="";       msg=`<b>Llega con holgura.</b> Terminas el ${fFecha(fin)}, ${holgura} días antes de la ${etiqueta}.`; }
+  else if (holgura >= 0)  { cls="alerta"; msg=`<b>Llega al filo.</b> Terminas el ${fFecha(fin)}, apenas ${holgura} día${holgura===1?"":"s"} antes de la ${etiqueta}. Sin margen para un imprevisto.`; }
+  else                    { cls="riesgo"; msg=`<b>No llega.</b> Terminas el ${fFecha(fin)}, ${-holgura} días después de la ${etiqueta}.`; }
   $("#veredicto").className = "veredicto " + cls;
   $("#veredicto").innerHTML = `${msg}<br><span style="color:var(--gris);font-size:13px">
     ${num(horas)} h pendientes ÷ ${num(v)} h/semana = ${num(semanas)} semanas${conG?" · incluye gestión":""}${conB8?"":" · sin módulo de evaluación"}</span>`;
@@ -555,12 +598,17 @@ function pintarBarras(){
 // --- 4. timeline
 function pintarTimeline(){
   const ini = S1;
-  const fin = new Date(D("2026-12-15"));
+  const fin = new Date(D("2027-03-31"));
   const total = dias(ini, fin);
   const pos = d => dias(ini, d)/total*100;
   $("#timeline").innerHTML = DATOS.bloques.map(b=>{
-    const bi = new Date(ini.getTime() + (b.semIni-1)*7*86400000);
-    const bf = new Date(ini.getTime() + b.semFin*7*86400000);
+    // 29 ago 2026: antes se derivaba de semIni/semFin contra semana1. Las
+    // semanas se desincronizaron dos veces porque cada bloque nuevo entraba
+    // con numeros a ojo: el panel mostraba bloques CERRADOS EN AGOSTO como si
+    // ocurrieran en octubre y noviembre. Una fecha se verifica contra el
+    // calendario; un numero de semana no.
+    const bi = D(b.ini);
+    const bf = D(b.fin);
     const cls = b.estado==="done" ? "hecho" : (b.opcional ? "opc" : "");
     const pct = Math.round(b.hechas/b.vivas*100);
     return `<div class="tlfila">
@@ -633,39 +681,11 @@ function pintarResto(){
 }
 
 // --- 10. conmutador de vista (híbrido: hitos por defecto, detalle a un clic)
-const VISTAS = {
-  exec: "Vista de hitos: fechas, riesgos y decisiones. Sin detalle de tareas.",
-  full: "Vista completa: incluye las 41 tareas con su criterio de término y las inconsistencias del plan."
-};
-function aplicarVista(v, guardarUrl){
-  if (!VISTAS[v]) v = "exec";
-  document.body.dataset.vista = v;
-  document.querySelectorAll("section[data-v]").forEach(s => {
-    s.hidden = (s.dataset.v === "full" && v !== "full");
-  });
-  document.querySelectorAll(".vbtn").forEach(b => b.classList.toggle("activo", b.dataset.v === v));
-  $("#vnota").textContent = VISTAS[v];
-  if (guardarUrl){
-    const u = new URL(location.href);
-    v === "exec" ? u.searchParams.delete("v") : u.searchParams.set("v", v);
-    history.replaceState(null, "", u);
-  }
-}
-document.querySelectorAll(".vbtn").forEach(b =>
-  b.addEventListener("click", () => aplicarVista(b.dataset.v, true)));
-
-$("#copiar").addEventListener("click", async e => {
-  const b = e.currentTarget, txt = b.textContent;
-  try { await navigator.clipboard.writeText(location.href); b.textContent = "Link copiado ✓"; }
-  catch { b.textContent = "Copia el link de la barra del navegador"; }
-  setTimeout(() => b.textContent = txt, 2200);
-});
 
 pintarHitos(); pintarBarras(); pintarTimeline(); pintarContenido(); pintarTablero(); pintarResto();
 $("#vel").value = DATOS.velocidadDefault;
 ["#vel","#b8","#gest"].forEach(s => $(s).addEventListener("input", proyectar));
 proyectar();
-aplicarVista(new URL(location.href).searchParams.get("v") || "exec", false);
 </script>
 </body>
 </html>
