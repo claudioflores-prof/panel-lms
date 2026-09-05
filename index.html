@@ -241,8 +241,8 @@ cifras que se comunican. Se quitan de aquí cuando se corrijan en los documentos
    Estados de tarea: "done" | "wip" | "todo" | "cut"
    ═══════════════════════════════════════════════════════════════════ */
 const DATOS = {
-  actualizado: "2026-09-03",
-  hoy:         "2026-09-03",   // dejar igual a actualizado; permite congelar el panel para imprimir
+  actualizado: "2026-09-04",
+  hoy:         "2026-09-04",   // dejar igual a actualizado; permite congelar el panel para imprimir
   semana1:     "2026-07-27",   // lunes de la semana 1 del plan
   piloto:      "2026-10-05",   // Prueba 1 en IV medio (antes: piloto 2 basico 2 nov)
   mvp:         "2026-11-09",   // Prueba 2 en IV medio: el curso egresa a mediados de nov
@@ -431,11 +431,11 @@ const DATOS = {
       nota:"Aprobado por D70/C28 el 27 ago 2026: 62 h de alcance NUEVO, no corrección. Posterior al Bloque 7. Hasta el 29 de agosto no existía ni en el Plan Técnico ni en este panel, así que dirección nunca lo vio.",
       tareas:[
         {id:"T12.1", t:"Ajustes al contrato vigente: cursiva, fuente, imagen en nota, idea clave, insignia", h:6.5, e:"done", c:"Las cinco entran por el validador y se ven en el navegador real"},
-        {id:"T12.2", t:"Piezas nuevas: lectura, desplegable, pestañas, proyecto, portada de unidad",         h:20,  e:"wip", c:"Las cinco cargan con import_book y pasan la verificación cruzada de D50"},
-        {id:"T12.3", t:"Actividades nuevas: completar (cloze), multi_choice y escala",                        h:17,  e:"todo", c:"Cada una con payload, regla de corrección, tope de intentos (D64) y tests"},
-        {id:"T12.4", t:"Marcas dentro de texto: enlace con URL validada y vocabulario",                       h:9,   e:"wip", c:"La política de dominios permitidos está definida ANTES de construir el enlace"},
+        {id:"T12.2", t:"Piezas nuevas: lectura, desplegable, pestañas, proyecto, portada de unidad",         h:20,  e:"done", c:"Las cinco cargan con import_book y pasan la verificación cruzada de D50. `portada_unidad`: esquema y runtime construidos; la integración con la ficha del creador queda pendiente, decisión de Claudio (3 sep 2026)"},
+        {id:"T12.3", t:"Actividades nuevas: completar (cloze), multi_choice y escala",                        h:17,  e:"done", c:"Cada una con payload, regla de corrección, tope de intentos (D64) y tests. Construidas y verificadas en navegador real el 3 sep 2026"},
+        {id:"T12.4", t:"Marcas dentro de texto: enlace con URL validada y vocabulario",                       h:9,   e:"cut", c:"`vocabulario` ya construida (C28-d, 2 sep). `enlace` DESCARTADO por decisión de Claudio el 3 sep 2026 (C28-resto): no se construye en esta ronda, sin política de dominios escrita"},
         {id:"T12.5", t:"Visor: zoom de figuras, barra de página siguiente y volver arriba",                   h:4.5, e:"wip", c:"Verificado en tablet y teléfono: la Prueba es BYOD. Construido y verificado en navegador de escritorio real contra contenido real (mat-4m-2026) el 3 sep 2026, con 3 E2E; falta la verificación táctil en tablet/teléfono que este criterio exige -- no se cierra hasta entonces (D94)"},
-        {id:"T12.6", t:"Fondo fotográfico declarable por página, lección o unidad",                           h:5,   e:"todo", c:"El tratamiento visual lo fija el sistema (D50) y la foto entra con derechos declarados (R9)"},
+        {id:"T12.6", t:"Fondo fotográfico declarable por página, lección o unidad",                           h:5,   e:"done", c:"El tratamiento visual lo fija el sistema (D50): foto difuminada detrás del panel, gradiente de asignatura intacto. La foto entra con derechos declarados (R9, campo opcional). Falta la integración con la ficha del creador, decisión de Claudio"},
         {id:"T12.7", t:"El color del libro en tres capas: paleta por área con contraste AA, sepia y ámbar por función (D102, C36)", h:2.5, e:"done", c:"La misma página en Matemática y en Lenguaje: identidad distinta, función igual, contraste AA medido en el lector (E2E)"}
       ]},
     { id:"BM", nombre:"Repositorio de material", ini:"2026-11-17", fin:"2027-01-31", real:null,
