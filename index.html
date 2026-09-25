@@ -241,8 +241,8 @@ cifras que se comunican. Se quitan de aquí cuando se corrijan en los documentos
    Estados de tarea: "done" | "wip" | "todo" | "cut"
    ═══════════════════════════════════════════════════════════════════ */
 const DATOS = {
-  actualizado: "2026-09-22",
-  hoy:         "2026-09-22",   // dejar igual a actualizado; permite congelar el panel para imprimir
+  actualizado: "2026-09-23",
+  hoy:         "2026-09-23",   // dejar igual a actualizado; permite congelar el panel para imprimir
   semana1:     "2026-07-27",   // lunes de la semana 1 del plan
   piloto:      "2026-10-05",   // Prueba 1 en IV medio (antes: piloto 2 basico 2 nov)
   mvp:         "2026-11-09",   // Prueba 2 en IV medio: el curso egresa a mediados de nov
@@ -358,7 +358,7 @@ const DATOS = {
         {id:"T6.8", t:"Tests de aislamiento y autorización", h:1.5, e:"done", c:"Alumno → 403, profesor de otra asignatura → 403, recorrido docente sin un ActivityReport nuevo"}
       ]},
 
-    { id:"B7", nombre:"QA y piloto", ini:"2026-08-25", fin:"2026-10-03", real:null,
+    { id:"B7", nombre:"QA y piloto", ini:"2026-08-25", fin:"2026-10-03", real:8,
       hito:"Prueba 1 · IV medio",
       tareas:[
         {id:"T7.1", t:"Endurecimiento de producción", h:3, e:"done", c:"Revisión de despliegue sin advertencias críticas"},
@@ -368,7 +368,7 @@ const DATOS = {
         {id:"T7.5", t:"Copia del respaldo fuera del servidor", h:0.5, e:"done", c:"Se restaura una copia descargada desde el destino externo, no desde el propio servidor"}
       ]},
 
-    { id:"B13", nombre:"Piezas de maquetación del libro", ini:"2026-08-28", fin:"2026-08-28", real:null,
+    { id:"B13", nombre:"Piezas de maquetación del libro", ini:"2026-08-28", fin:"2026-08-28", real:7.25,
       nota:"Prioridad máxima, y existe porque no existía: el documento que se le entregó al creador de contenido le promete doce piezas para armar una página, y el software acepta cuatro. Las otras ocho no se ignoran, la carga las rechaza, así que hoy el creador no puede entregar una lección que entre al sistema. Se detectó el 28 de agosto comparando el software contra ese documento. El contenido es la restricción del proyecto, no el desarrollo. OJO: las fechas de los demás bloques de este panel están corridas sobre el calendario anterior, ya cancelado, y su corrección está pendiente; las de este bloque sí son las reales.",
       tareas:[
         {id:"T13.1", t:"Cuatro piezas simples: lista, concepto, alerta y síntesis",     h:6,   e:"done", c:"Las cuatro se declaran en una ficha y se ven según la guía de estilo; el título de la síntesis lo pone el sistema, no el contenido"},
