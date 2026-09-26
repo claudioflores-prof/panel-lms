@@ -53,9 +53,13 @@ SIMULAR = "--simular" in sys.argv or "--dry-run" in sys.argv
 # id ni siquiera se reconocia como id. Es el mismo patron que D33 describe: una
 # verificacion escrita contra su propia convencion no detecta que la convencion
 # quedo corta -- aqui aplicado a la herramienta que vigila el cierre.
-PATRON_INICIO = re.compile(r"^\s*T(R|M|\d{1,2})\.(\d{1,2})\b")
+# 26 sep 2026 (D126-8): `-?M`. El comentario de arriba prometia T-M.1 y el
+# patron solo aceptaba TM.1 -- por el guion, los commits del Repositorio eran
+# invisibles. Con el guion capturado, `T{bloque}.{num}` da `T-M.1`, que es el
+# id de la tabla DATOS.
+PATRON_INICIO = re.compile(r"^\s*T(R|-?M|\d{1,2})\.(\d{1,2})\b")
 # Cualquier mencion, para reportarla aparte sin actuar sobre ella.
-PATRON_MENCION = re.compile(r"\bT(R|M|\d{1,2})\.(\d{1,2})\b")
+PATRON_MENCION = re.compile(r"\bT(R|-?M|\d{1,2})\.(\d{1,2})\b")
 
 
 def clave_de_orden(tid):
@@ -69,7 +73,7 @@ def clave_de_orden(tid):
     if not m:
         return (2, 0, 0)
     bloque, num = m.group(1), int(m.group(2))
-    if bloque in ("R", "M"):
+    if bloque in ("R", "M", "-M"):
         return (1, 0 if bloque == "R" else 1, num)
     return (0, int(bloque), num)
 
