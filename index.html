@@ -241,8 +241,8 @@ cifras que se comunican. Se quitan de aquí cuando se corrijan en los documentos
    Estados de tarea: "done" | "wip" | "todo" | "cut"
    ═══════════════════════════════════════════════════════════════════ */
 const DATOS = {
-  actualizado: "2026-09-25",
-  hoy:         "2026-09-25",   // dejar igual a actualizado; permite congelar el panel para imprimir
+  actualizado: "2026-09-26",
+  hoy:         "2026-09-26",   // dejar igual a actualizado; permite congelar el panel para imprimir
   semana1:     "2026-07-27",   // lunes de la semana 1 del plan
   piloto:      "2026-10-05",   // Prueba 1 en IV medio (antes: piloto 2 basico 2 nov)
   mvp:         "2026-11-09",   // Prueba 2 en IV medio: el curso egresa a mediados de nov
@@ -450,13 +450,13 @@ const DATOS = {
     { id:"BM", nombre:"Repositorio de material", ini:"2026-11-17", fin:"2027-01-31", real:null,
       nota:"Aprobado por D68 el 27 ago 2026. Requerimientos completos en Requerimientos_Modulo_Repositorio v1.2. NUNCA se registró como solicitud de cambio: el número C28 se lo llevó Santillana el mismo día, y estas 56 h llevan desde entonces fuera de la cifra comprometida. Los ids T-M.x son los del documento vinculante y se conservan.",
       tareas:[
-        {id:"T-M.1",  t:"Modelo de datos, migraciones, admin",                                    h:4, e:"todo", c:"Migración aplicada y el admin permite crear material sin tocar la base"},
-        {id:"T-M.2",  t:"Subida: validación en tres capas, UUID, cuotas y límites",                h:6, e:"todo", c:"Un archivo que miente su tipo se rechaza en las tres capas"},
-        {id:"T-M.3",  t:"Servido seguro: permiso, X-Accel-Redirect, cabeceras, nginx",            h:5, e:"todo", c:"Sin permiso responde 403 y el archivo nunca se sirve directo desde media"},
-        {id:"T-M.4",  t:"Pantalla del profesor: lista por unidad, arrastrar, edición y deshacer",  h:8, e:"todo", c:"El profesor reordena y deshace sin recargar la página"},
-        {id:"T-M.5",  t:"Pantalla del alumno: carpeta, colapsables, novedad, vista previa y peso", h:6, e:"todo", c:"Verificado en tablet real: el alumno ve el peso antes de descargar"},
-        {id:"T-M.6",  t:"Publicación programada: manager perezoso, feriados y vista como alumno",  h:5, e:"todo", c:"Un material programado no aparece antes de su fecha ni siquiera para quien lo subió"},
-        {id:"T-M.7",  t:"Marcar como hecho y contador agregado",                                   h:3, e:"todo", c:"El contador coincide con el conteo real, verificado contra la base"},
+        {id:"T-M.1",  t:"Modelo de datos, migraciones, admin",                                    h:4, e:"wip", c:"Migración aplicada y el admin permite crear material sin tocar la base"},
+        {id:"T-M.2",  t:"Subida: validación en tres capas, UUID, cuotas y límites",                h:6, e:"wip", c:"Un archivo que miente su tipo se rechaza en las tres capas"},
+        {id:"T-M.3",  t:"Servido seguro: permiso, X-Accel-Redirect, cabeceras, nginx",            h:5, e:"wip", c:"Sin permiso responde 403 y el archivo nunca se sirve directo desde media"},
+        {id:"T-M.4",  t:"Pantalla del profesor: lista por unidad, arrastrar, edición y deshacer",  h:8, e:"wip", c:"El profesor reordena y deshace sin recargar la página"},
+        {id:"T-M.5",  t:"Pantalla del alumno: carpeta, colapsables, novedad, vista previa y peso", h:6, e:"wip", c:"Verificado en tablet real: el alumno ve el peso antes de descargar"},
+        {id:"T-M.6",  t:"Publicación programada: manager perezoso, feriados y vista como alumno",  h:5, e:"wip", c:"Un material programado no aparece antes de su fecha ni siquiera para quien lo subió"},
+        {id:"T-M.7",  t:"Marcar como hecho y contador agregado",                                   h:3, e:"wip", c:"El contador coincide con el conteo real, verificado contra la base"},
         {id:"T-M.8",  t:"Seguimiento nominal, retención por cron y pantalla de transparencia",     h:6, e:"todo", c:"La pantalla dice qué se guarda y por cuánto tiempo, en palabras del apoderado"},
         {id:"T-M.9",  t:"Auditoría de descargas y respaldo del media (empalma con T7.5)",          h:4, e:"todo", c:"El respaldo se restaura en limpio y los archivos quedan servibles"},
         {id:"T-M.10", t:"Tests automatizados y QA en dispositivos reales",                         h:6, e:"todo", c:"Suite en verde y pauta de QA pasada en tablet y teléfono"},
