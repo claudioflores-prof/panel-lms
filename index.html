@@ -241,8 +241,8 @@ cifras que se comunican. Se quitan de aquí cuando se corrijan en los documentos
    Estados de tarea: "done" | "wip" | "todo" | "cut"
    ═══════════════════════════════════════════════════════════════════ */
 const DATOS = {
-  actualizado: "2026-09-26",
-  hoy:         "2026-09-26",   // dejar igual a actualizado; permite congelar el panel para imprimir
+  actualizado: "2026-09-28",
+  hoy:         "2026-09-28",   // dejar igual a actualizado; permite congelar el panel para imprimir
   semana1:     "2026-07-27",   // lunes de la semana 1 del plan
   piloto:      "2026-10-05",   // Prueba 1 en IV medio (antes: piloto 2 basico 2 nov)
   mvp:         "2026-11-09",   // Prueba 2 en IV medio: el curso egresa a mediados de nov
@@ -457,10 +457,10 @@ const DATOS = {
         {id:"T-M.5",  t:"Pantalla del alumno: lista por fecha, novedad, vista previa y peso",     h:6, e:"wip", c:"Verificado en tablet real: el alumno ve el peso antes de descargar"},
         {id:"T-M.6",  t:"Publicación programada: manager perezoso, feriados y vista como alumno",  h:5, e:"wip", c:"Un material programado no aparece antes de su fecha ni siquiera para quien lo subió"},
         {id:"T-M.7",  t:"Marcar como hecho y contador agregado",                                   h:3, e:"wip", c:"El contador coincide con el conteo real, verificado contra la base"},
-        {id:"T-M.8",  t:"Seguimiento nominal, retención por cron y pantalla de transparencia",     h:6, e:"todo", c:"La pantalla dice qué se guarda y por cuánto tiempo, en palabras del apoderado"},
-        {id:"T-M.9",  t:"Auditoría de descargas y respaldo del media (empalma con T7.5)",          h:4, e:"todo", c:"El respaldo se restaura en limpio y los archivos quedan servibles"},
+        {id:"T-M.8",  t:"Seguimiento nominal, retención por cron y pantalla de transparencia",     h:6, e:"wip", c:"La pantalla dice qué se guarda y por cuánto tiempo, en palabras del apoderado"},
+        {id:"T-M.9",  t:"Auditoría de descargas y respaldo del media (empalma con T7.5)",          h:4, e:"wip", c:"El respaldo se restaura en limpio y los archivos quedan servibles"},
         {id:"T-M.10", t:"Tests automatizados y QA en dispositivos reales",                         h:6, e:"todo", c:"Suite en verde y pauta de QA pasada en tablet y teléfono"},
-        {id:"T-M.11", t:"Política de datos y documento para dirección (D-c)",                      h:3, e:"todo", c:"Firmado por el director antes de que el módulo reciba un solo archivo real"}
+        {id:"T-M.11", t:"Política de datos y documento para dirección (D-c)",                      h:3, e:"wip", c:"Firmado por el director antes de que el módulo reciba un solo archivo real"}
       ]},
     { id:"B14", nombre:"Resaltador y notas del lector", ini:"2026-09-10", fin:"2026-09-10", real:5,
       nota:"C43 / D106, 10 sep 2026. Pedido por Lenguaje: subrayar y anotar es parte de la técnica de comprensión lectora que enseña. Capa privada de quien lee sobre el libro: un color, solo piezas de lectura, nota que cuelga de la marca, marca que sobrevive a la corrección del contenido como huérfana, nadie ve lo de otro (Ley 21.719). No es el resaltado editorial que D70 descartó. Construido el 10 sep en una sesión tras un spike de 1,5 h verificado con el dedo en tablet Android. NO cerrado: criterio funcional B14 pendiente al 14 sep (un alumno real, al día siguiente, en su dispositivo).",
