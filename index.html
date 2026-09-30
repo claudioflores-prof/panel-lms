@@ -241,8 +241,8 @@ cifras que se comunican. Se quitan de aquí cuando se corrijan en los documentos
    Estados de tarea: "done" | "wip" | "todo" | "cut"
    ═══════════════════════════════════════════════════════════════════ */
 const DATOS = {
-  actualizado: "2026-09-29",
-  hoy:         "2026-09-29",   // dejar igual a actualizado; permite congelar el panel para imprimir
+  actualizado: "2026-09-30",
+  hoy:         "2026-09-30",   // dejar igual a actualizado; permite congelar el panel para imprimir
   semana1:     "2026-07-27",   // lunes de la semana 1 del plan
   piloto:      "2026-10-05",   // Prueba 1 en IV medio (antes: piloto 2 basico 2 nov)
   mvp:         "2026-11-09",   // Prueba 2 en IV medio: el curso egresa a mediados de nov
@@ -460,7 +460,11 @@ const DATOS = {
         {id:"T-M.8",  t:"Seguimiento nominal, retención por cron y pantalla de transparencia",     h:6, e:"wip", c:"La pantalla dice qué se guarda y por cuánto tiempo, en palabras del apoderado"},
         {id:"T-M.9",  t:"Auditoría de descargas y respaldo del media (empalma con T7.5)",          h:4, e:"wip", c:"El respaldo se restaura en limpio y los archivos quedan servibles"},
         {id:"T-M.10", t:"Tests automatizados y QA en dispositivos reales",                         h:6, e:"todo", c:"Suite en verde y pauta de QA pasada en tablet y teléfono"},
-        {id:"T-M.11", t:"Política de datos y documento para dirección (D-c)",                      h:3, e:"wip", c:"Firmado por el director antes de que el módulo reciba un solo archivo real"}
+        {id:"T-M.11", t:"Política de datos y documento para dirección (D-c)",                      h:3, e:"wip", c:"Firmado por el director antes de que el módulo reciba un solo archivo real"},
+        {id:"T-M.13", t:"Inicio del alumno con una tarjeta por asignatura (C54/D125)",             h:3, e:"wip", c:"Un alumno abre el material de una asignatura sin libro desde su tarjeta, en dos pulsaciones"},
+        {id:"T-M.14", t:"Aviso de material nuevo en el inicio del alumno (C54/D125)",              h:1.5, e:"wip", c:"Un material programado aparece como aviso a su hora y no antes, verificado en el navegador"},
+        {id:"T-M.15", t:"«Material complementario de clase», 500 MB por curso × asignatura y 10 MB por archivo (C56/D132)", h:1.5, e:"done", c:"Ninguna pantalla dice «Material de clase»; un archivo de 11 MB se rechaza con la cifra 10; el material del colega de la misma asignatura y curso cuenta en la misma cuota. Revisado por Claudio el 30 sep 2026"},
+        {id:"T-M.16", t:"Material de tipo «Enlace» a Google Drive (C56/D132)",                     h:5, e:"done", c:"Un profesor agrega un enlace de Drive con su título y lo envía; un alumno lo toca en su tablet y se abre Drive; la apertura queda registrada; un enlace de YouTube se rechaza. Revisado por Claudio el 30 sep 2026"}
       ]},
     { id:"B14", nombre:"Resaltador y notas del lector", ini:"2026-09-10", fin:"2026-09-10", real:5,
       nota:"C43 / D106, 10 sep 2026. Pedido por Lenguaje: subrayar y anotar es parte de la técnica de comprensión lectora que enseña. Capa privada de quien lee sobre el libro: un color, solo piezas de lectura, nota que cuelga de la marca, marca que sobrevive a la corrección del contenido como huérfana, nadie ve lo de otro (Ley 21.719). No es el resaltado editorial que D70 descartó. Construido el 10 sep en una sesión tras un spike de 1,5 h verificado con el dedo en tablet Android. NO cerrado: criterio funcional B14 pendiente al 14 sep (un alumno real, al día siguiente, en su dispositivo).",
