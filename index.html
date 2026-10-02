@@ -241,8 +241,8 @@ cifras que se comunican. Se quitan de aquí cuando se corrijan en los documentos
    Estados de tarea: "done" | "wip" | "todo" | "cut"
    ═══════════════════════════════════════════════════════════════════ */
 const DATOS = {
-  actualizado: "2026-09-30",
-  hoy:         "2026-09-30",   // dejar igual a actualizado; permite congelar el panel para imprimir
+  actualizado: "2026-10-01",
+  hoy:         "2026-10-01",   // dejar igual a actualizado; permite congelar el panel para imprimir
   semana1:     "2026-07-27",   // lunes de la semana 1 del plan
   piloto:      "2026-10-05",   // Prueba 1 en IV medio (antes: piloto 2 basico 2 nov)
   mvp:         "2026-11-09",   // Prueba 2 en IV medio: el curso egresa a mediados de nov
@@ -405,14 +405,29 @@ const DATOS = {
 
     { id:"B8", nombre:"Módulo de evaluación", ini:"2026-09-07", fin:"2026-11-13", real:null,
       hito:"Prueba 2 · con nota",
-      nota:"Dejó de ser diferible: sin él no hay Prueba 2 con nota y el curso de IV medio egresa a mediados de noviembre. El alcance que figuraba aquí se retiró completo el 26 de agosto (una versión construida y funcionando, pero mucho más angosta que el uso real) y el módulo se replantea desde sus requerimientos. Las horas del bloque volverán a este panel cuando ese alcance esté escrito y estimado; mientras tanto solo se muestra lo que sí está definido.",
+      nota:"Replanteado el 30 sep 2026 (D133/C26, 83 h): reemplaza a Santillana Pleno. Primero una rebanada de punta a punta (T8.6, T8.9, T8.10, T8.11 y T8.14 en su versión delgada), luego el ensayo técnico con IV medio en octubre (T8.20) y después se ensancha. Ninguna pantalla se construye sin maqueta aprobada por Claudio (D135). La Prueba 2 de noviembre depende de este bloque (R10).",
       tareas:[
         {id:"T8.0", t:"Año escolar en el curso (habilita matrícula y evaluación por período)", h:1.5, e:"done", c:"Existen \"2° A 2026\" y \"2° A 2027\" como cursos distintos y un alumno que repite se matricula sin error"},
         {id:"T8.1", t:"Modelos de evaluación con intento único",        h:0, e:"cut", c:"Alcance retirado el 26 ago 2026: el módulo se rehace desde sus requerimientos. El trabajo hecho queda guardado como referencia"},
         {id:"T8.2", t:"Cálculo de nota con exigencia 60 %",             h:0, e:"cut", c:"Alcance retirado el 26 ago 2026 junto con el resto del módulo"},
         {id:"T8.3", t:"Creación de evaluaciones por el profesor",       h:0, e:"cut", c:"Alcance retirado el 26 ago 2026: la creación real parte de un banco de ejercicios, que esta versión no contemplaba"},
         {id:"T8.4", t:"Rendición del estudiante, corrección en servidor",h:0, e:"cut", c:"Alcance retirado el 26 ago 2026 junto con el resto del módulo"},
-        {id:"T8.5", t:"Resultados y distribución en el tablero",        h:0, e:"cut", c:"Alcance retirado el 26 ago 2026 junto con el resto del módulo"}
+        {id:"T8.5", t:"Resultados y distribución en el tablero",        h:0, e:"cut", c:"Alcance retirado el 26 ago 2026 junto con el resto del módulo"},
+        {id:"T8.6", t:"Banco de preguntas (noche 1: solo servidor, sin pantallas por D135)", h:10, e:"wip", c:"Un profesor crea una pregunta con fórmula e imagen y la ve en su celular; editarla no cambia una prueba ya rendida"},
+        {id:"T8.7", t:"Permiso UTP, visado y gestión del banco, profesor que se retira", h:5, e:"todo", c:"Un colega no ve la pregunta hasta que la UTP la visa; su autor sí la usa antes"},
+        {id:"T8.8", t:"Carga masiva de preguntas por planilla", h:5, e:"todo", c:"Una planilla con una fila mala carga las buenas y dice cuál falló y por qué"},
+        {id:"T8.9", t:"Armado de la prueba (noche 1: solo servidor, sin pantallas por D135)", h:9, e:"wip", c:"Dos alumnos con preguntas distintas tienen la misma cantidad por dificultad y OA y el mismo puntaje máximo; el profesor ve la prueba en formato celular antes de programarla"},
+        {id:"T8.10", t:"Programación por curso, horario, calendario, reabrir, aviso y menú «Pruebas»", h:6, e:"todo", c:"Sumar minutos en 1°A no cambia 1°B; un alumno de otro curso o antes de la hora no la abre"},
+        {id:"T8.11", t:"Rendición: una por pantalla, guardado por respuesta, retomar, cierre en el servidor, antiplagio", h:12, e:"todo", c:"Con el wifi cortado no se pierde nada; al apagar el celular sigue en otro equipo; ninguna clave llega al navegador"},
+        {id:"T8.12", t:"Monitor en vivo, +5 minutos y cerrar antes", h:5, e:"todo", c:"Dos veces +5 mueven el cierre 10 min; al cierre queda entregado quien no entregó"},
+        {id:"T8.13", t:"Compartir, congelar lo rendido y anular una pregunta", h:4, e:"todo", c:"Anular una pregunta recalcula dos cursos y muestra quién y cuándo"},
+        {id:"T8.14", t:"Resultados: liberar, vista del alumno sin nota, nota sugerida, NEE, planilla", h:6, e:"todo", c:"El alumno ve puntaje, respuestas, correctas y explicación, y ninguna nota; la planilla abre en Excel"},
+        {id:"T8.15", t:"Reportes por pregunta, OA, eje y habilidad, y agregados de la UTP", h:8, e:"todo", c:"La UTP ve el logro por OA de todos los 1° medios en Matemática"},
+        {id:"T8.16", t:"Ensayos PAES/SIMCE con puntaje referencial", h:3, e:"todo", c:"Con una tabla cargada, un ensayo muestra puntaje y categoría «referencial»"},
+        {id:"T8.17", t:"Marca NEE en la ficha del alumno", h:2, e:"todo", c:"Un profesor que no le hace clases al alumno no ve la marca"},
+        {id:"T8.18", t:"Cierre del año escolar, prueba de seguridad de la red y QA en tablet", h:5, e:"todo", c:"Ningún cuerpo de respuesta contiene una clave antes de liberar; la prueba del año anterior se reprograma sin mezclar resultados"},
+        {id:"T8.19", t:"Imprimible de respaldo, sin la clave", h:2, e:"todo", c:"La prueba impresa se lee bien en papel carta y no muestra la clave"},
+        {id:"T8.20", t:"Ensayo técnico con IV medio y prueba de carga de 140 min", h:1, e:"todo", c:"Un curso real de IV medio rinde de punta a punta sin perder respuestas y el cierre llega a todos"}
       ]},
 { id:"B11", nombre:"Administración Central", ini:"2026-08-25", fin:"2026-10-17", real:3,
       nota:"C49 aprobada el 16 sep 2026 (D120): 32 h en nueve tareas, para que dirección pruebe el sistema con los usuarios que quiera sin depender de Claudio. El orden es el de construcción, no el numérico. T11.3 (electivos) y T11.6 (promoción anual) siguen en C25 SIN APROBAR y no se muestran: mostrarlas sugeriría un compromiso que nadie autorizó. Las nueve tareas se construyeron el 17 sep 2026 en una sesión, 3 h reales contra 32 estimadas, y quedan en «en curso»: marcarlas hechas exige criterio verificado y es decisión de Claudio. La fecha de término es la del criterio funcional B11 (17 oct), que verifica una persona de dirección, no un compromiso con dirección sobre horas (D91).",
