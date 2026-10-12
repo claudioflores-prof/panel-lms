@@ -241,8 +241,8 @@ cifras que se comunican. Se quitan de aquí cuando se corrijan en los documentos
    Estados de tarea: "done" | "wip" | "todo" | "cut"
    ═══════════════════════════════════════════════════════════════════ */
 const DATOS = {
-  actualizado: "2026-10-10",
-  hoy:         "2026-10-10",   // dejar igual a actualizado; permite congelar el panel para imprimir
+  actualizado: "2026-10-11",
+  hoy:         "2026-10-11",   // dejar igual a actualizado; permite congelar el panel para imprimir
   semana1:     "2026-07-27",   // lunes de la semana 1 del plan
   piloto:      "2026-10-05",   // Prueba 1 en IV medio (antes: piloto 2 basico 2 nov)
   mvp:         "2026-11-09",   // Prueba 2 en IV medio: el curso egresa a mediados de nov
@@ -415,7 +415,7 @@ const DATOS = {
         {id:"T8.5", t:"Resultados y distribución en el tablero",        h:0, e:"cut", c:"Alcance retirado el 26 ago 2026 junto con el resto del módulo"},
         {id:"T8.6", t:"Banco de preguntas (noche 1: servidor; noche 2: pantallas del banco y del editor)", h:10, e:"wip", c:"Un profesor crea una pregunta con fórmula e imagen y la ve en su celular; editarla no cambia una prueba ya rendida"},
         {id:"T8.7", t:"Permiso UTP, visado y gestión del banco, profesor que se retira", h:5, e:"todo", c:"Un colega no ve la pregunta hasta que la UTP la visa; su autor sí la usa antes"},
-        {id:"T8.8", t:"Carga masiva de preguntas por planilla", h:5, e:"todo", c:"Una planilla con una fila mala carga las buenas y dice cuál falló y por qué"},
+        {id:"T8.8", t:"Carga masiva de preguntas por planilla", h:5, e:"done", c:"Una planilla con una fila mala carga las buenas y dice cuál falló y por qué"},
         {id:"T8.9", t:"Armado de la prueba (noche 1: servidor; noche 2: pantalla de armado)", h:9, e:"wip", c:"Dos alumnos con preguntas distintas tienen la misma cantidad por dificultad y OA y el mismo puntaje máximo; el profesor ve la prueba en formato celular antes de programarla"},
         {id:"T8.10", t:"Programación por curso, horario, calendario, reabrir, aviso y menú «Pruebas»", h:6, e:"wip", c:"Sumar minutos en 1°A no cambia 1°B; un alumno de otro curso o antes de la hora no la abre"},
         {id:"T8.11", t:"Rendición: una por pantalla, guardado por respuesta, retomar, cierre en el servidor, antiplagio", h:12, e:"wip", c:"Con el wifi cortado no se pierde nada; al apagar el celular sigue en otro equipo; ninguna clave llega al navegador"},
@@ -426,7 +426,7 @@ const DATOS = {
         {id:"T8.16", t:"Ensayos PAES/SIMCE con puntaje referencial", h:3, e:"todo", c:"Con una tabla cargada, un ensayo muestra puntaje y categoría «referencial»"},
         {id:"T8.17", t:"Marca NEE en la ficha del alumno", h:2, e:"todo", c:"Un profesor que no le hace clases al alumno no ve la marca"},
         {id:"T8.18", t:"Cierre del año escolar, prueba de seguridad de la red y QA en tablet", h:5, e:"todo", c:"Ningún cuerpo de respuesta contiene una clave antes de liberar; la prueba del año anterior se reprograma sin mezclar resultados"},
-        {id:"T8.19", t:"Imprimible de respaldo, sin la clave", h:2, e:"todo", c:"La prueba impresa se lee bien en papel carta y no muestra la clave"},
+        {id:"T8.19", t:"Imprimible de respaldo, sin la clave", h:2, e:"done", c:"La prueba impresa se lee bien en papel carta y no muestra la clave"},
         {id:"T8.20", t:"Ensayo técnico con IV medio y prueba de carga de 140 min", h:1, e:"todo", c:"Un curso real de IV medio rinde de punta a punta sin perder respuestas y el cierre llega a todos"}
       ]},
 { id:"B11", nombre:"Administración Central", ini:"2026-08-25", fin:"2026-10-17", real:3,
