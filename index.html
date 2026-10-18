@@ -241,8 +241,8 @@ cifras que se comunican. Se quitan de aquí cuando se corrijan en los documentos
    Estados de tarea: "done" | "wip" | "todo" | "cut"
    ═══════════════════════════════════════════════════════════════════ */
 const DATOS = {
-  actualizado: "2026-10-14",
-  hoy:         "2026-10-14",   // dejar igual a actualizado; permite congelar el panel para imprimir
+  actualizado: "2026-10-17",
+  hoy:         "2026-10-17",   // dejar igual a actualizado; permite congelar el panel para imprimir
   semana1:     "2026-07-27",   // lunes de la semana 1 del plan
   piloto:      "2026-10-05",   // Prueba 1 en IV medio (antes: piloto 2 basico 2 nov)
   mvp:         "2026-11-09",   // Prueba 2 en IV medio: el curso egresa a mediados de nov
@@ -434,7 +434,8 @@ const DATOS = {
         {id:"T8.24", t:"Corrección: exportar la prueba completa, cargar puntajes, descuento (C58)", h:3.5, e:"done", c:"La planilla exportada vuelve con los puntajes; una fila sobre el máximo se rechaza y las demás entran"},
         {id:"T8.25", t:"Resultados de la prueba de vocabulario y lo que ve el alumno (C58)", h:2.5, e:"done", c:"No se libera con textos sin puntaje; el alumno ve sus textos y puntajes, sin nota"},
         {id:"T8.26", t:"Lo heredado: duplicar, compartir, vista previa, PDF, anular, NEE, año cerrado (C58)", h:1.5, e:"done", c:"La prueba de vocabulario se duplica, se comparte, sale en PDF y su NEE ajusta solo la escala"},
-        {id:"T8.27", t:"E2E de punta a punta, seguridad de la red y tablet (C58)", h:1, e:"done", c:"El criterio funcional §6.1 recorrido en el navegador y verificado por Claudio el 14 oct 2026"}
+        {id:"T8.27", t:"E2E de punta a punta, seguridad de la red y tablet (C58)", h:1, e:"done", c:"El criterio funcional §6.1 recorrido en el navegador y verificado por Claudio el 14 oct 2026"},
+        {id:"T8.28", t:"Recorrido y tiempo por pregunta (C60)", h:9, e:"wip", c:"Con el wifi cortado el alumno pasa por cinco preguntas y al volver la conexión las cinco visitas aparecen en su recorrido con su hora; el Excel trae «Tiempo por pregunta»"}
       ]},
 { id:"B11", nombre:"Administración Central", ini:"2026-08-25", fin:"2026-10-17", real:3,
       nota:"C49 aprobada el 16 sep 2026 (D120): 32 h en nueve tareas, para que dirección pruebe el sistema con los usuarios que quiera sin depender de Claudio. El orden es el de construcción, no el numérico. T11.3 (electivos) y T11.6 (promoción anual) siguen en C25 SIN APROBAR y no se muestran: mostrarlas sugeriría un compromiso que nadie autorizó. Las nueve tareas se construyeron el 17 sep 2026 en una sesión, 3 h reales contra 32 estimadas, y quedan en «en curso»: marcarlas hechas exige criterio verificado y es decisión de Claudio. La fecha de término es la del criterio funcional B11 (17 oct), que verifica una persona de dirección, no un compromiso con dirección sobre horas (D91).",
