@@ -241,8 +241,8 @@ cifras que se comunican. Se quitan de aquí cuando se corrijan en los documentos
    Estados de tarea: "done" | "wip" | "todo" | "cut"
    ═══════════════════════════════════════════════════════════════════ */
 const DATOS = {
-  actualizado: "2026-11-11",
-  hoy:         "2026-11-11",   // dejar igual a actualizado; permite congelar el panel para imprimir
+  actualizado: "2026-11-12",
+  hoy:         "2026-11-12",   // dejar igual a actualizado; permite congelar el panel para imprimir
   semana1:     "2026-07-27",   // lunes de la semana 1 del plan
   piloto:      "2026-10-05",   // Prueba 1 en IV medio (antes: piloto 2 basico 2 nov)
   mvp:         "2026-11-09",   // Prueba 2 en IV medio: el curso egresa a mediados de nov
@@ -546,7 +546,32 @@ const DATOS = {
         {id:"T18.8", t:"Revisión con D111 y conservación por año (RF-PIZ-19, 22)", h:1.5, e:"wip", c:"El profesor valora con un toque y el alumno no ve nada"},
         {id:"T18.9", t:"Seis maquetas antes de construir (D135)", h:3, e:"done", c:"Las seis aprobadas por Claudio en MockUP/"},
         {id:"T18.10", t:"Seguridad y carga: sin rutas públicas, tamaño de imagen, 40 alumnos guardando a la vez", h:2, e:"wip", c:"Un archivo pedido sin permiso da 404; 40 alumnos guardando no traban el servidor"},
-        {id:"T18.11", t:"Documentos, trazabilidad, criterio funcional B18, E2E y cierre", h:3, e:"todo", c:"Cada RF-PIZ citado por un test (D93)"}
+        {id:"T18.11", t:"Documentos, trazabilidad, criterio funcional B18, E2E y cierre", h:3, e:"wip", c:"Cada RF-PIZ citado por un test (D93)"}
+      ]},
+    { id:"B17", nombre:"Módulo UTP", ini:"2026-11-10", fin:"2027-02-26", real:null,
+      nota:"C62 / D171 (aprobada el 4 nov 2026, 24 h) y C66 / D175 (aprobada el 9 nov 2026, ampliada el 10 nov a 32,5 h). Especificación: Requerimientos_Modulo_UTP_LMS_Nahuel.md v1.5. Fechas provisorias. Primer tramo (T17.2 a T17.7 y T17.13) en construcción desde el 10 nov 2026, en sesiones encadenadas. T17.1 depende de T10.2; T17.12, de la etapa 3 de C59; T17.8, de la sesión de roles (C68).",
+      tareas:[
+        {id:"T17.1", t:"Inicio de la UTP: celda de pruebas junto a la del libro y avisos (RF-UTP-1 a 4)", h:2.5, e:"todo", c:"Con dos pruebas liberadas (50 % y 70 %) y una sin liberar, la celda dice 60 % y «2 pruebas», en ámbar, junto al avance y el logro del libro"},
+        {id:"T17.2", t:"Resultados solo de lo liberado (RF-UTP-5, 6)", h:1.5, e:"done", c:"Una prueba liberada en 1° A y no en 1° B da el mismo número de 1° A en el inicio, la prueba y los reportes, y ninguno de 1° B"},
+        {id:"T17.3", t:"Ver una prueba del colegio (RF-UTP-7 a 10)", h:4, e:"done", c:"La UTP ve preguntas, análisis, alumnos con su logro y el detalle de uno; en ninguna parte aparecen la nota, el tiempo ni las salidas"},
+        {id:"T17.4", t:"Editar en la UTP y «Editada por la UTP» (RF-UTP-11, 12)", h:2.5, e:"todo", c:"La UTP corrige una pregunta ajena; el autor ve la marca; la prueba ya rendida conserva la versión anterior"},
+        {id:"T17.5", t:"La prueba no empezada lleva la versión vigente (RF-UTP-13)", h:2.5, e:"todo", c:"Una prueba agendada y una compartida sin rendir muestran la versión nueva; una empezada, la anterior; una versión sin visar no llega a un colega"},
+        {id:"T17.6", t:"Devueltas (RF-UTP-14)", h:1.5, e:"todo", c:"Una rechazada aparece con su motivo y sale de la lista cuando el autor la corrige"},
+        {id:"T17.7", t:"Agenda: filtro, reagendar, quitar y aviso (RF-UTP-15 a 18)", h:3.5, e:"todo", c:"La UTP quita la fecha de 1° B y la prueba vuelve intacta al profesor, que ve el aviso con el motivo; 1° A conserva su fecha"},
+        {id:"T17.8", t:"La marca UTP en la ficha (RF-UTP-19); espera la sesión de roles", h:1.5, e:"todo", c:"Administración marca a una persona y ella ve la UTP; la bitácora lo registra"},
+        {id:"T17.9", t:"Seis maquetas (D135)", h:2.5, e:"wip", c:"Aprobadas por Claudio antes de construir cada pantalla"},
+        {id:"T17.10", t:"Documentos, trazabilidad y cierre", h:2, e:"todo", c:"Los RF-UTP citados por sus tests y el módulo en MODULOS_CONSTRUIDOS"},
+        {id:"T17.11", t:"La UTP en el libro y la matriz de cualquier curso, y la lectura de las abiertas (RF-UTP-20)", h:4, e:"todo", c:"La UTP abre el libro de 1° A con las respuestas y su matriz y lee una respuesta abierta; no puede marcarla revisada ni cambiar nada"},
+        {id:"T17.12", t:"Los OA de un curso con estado y logro (RF-UTP-21); espera la etapa 3 de C59", h:3.5, e:"todo", c:"Una actividad de repaso de un OA en otra unidad no cambia su estado; cada OA dice su logro en el libro y en las pruebas por separado"},
+        {id:"T17.13", t:"Histograma de una prueba por curso (RF-UTP-22)", h:2, e:"done", c:"Cuántos alumnos por tramo de 10 puntos, con promedio, mediana y desviación estándar; sin campana ni notas"},
+        {id:"T17.14", t:"Ranking con posición (RF-UTP-23)", h:1.5, e:"todo", c:"La UTP y el profesor ven la posición; los empates la comparten; el alumno no la ve en ninguna pantalla"},
+        {id:"T17.15", t:"Ficha del alumno (RF-UTP-24)", h:6.5, e:"todo", c:"Por asignatura, avance y logro en el libro y pruebas liberadas con logro y posición; ninguna nota; la bitácora registra quién abre cada ficha"},
+        {id:"T17.16", t:"Evolución del alumno (RF-UTP-25)", h:1.5, e:"todo", c:"El logro prueba a prueba en el año, por asignatura"},
+        {id:"T17.17", t:"Cinco maquetas (D135)", h:2.5, e:"wip", c:"Aprobadas por Claudio antes de construir cada pantalla"},
+        {id:"T17.18", t:"Documentos, trazabilidad y criterio funcional", h:1.5, e:"todo", c:"Los RF-UTP-20 a 26 citados por sus tests y el escenario del director en el criterio de B17"},
+        {id:"T17.19", t:"OA propios del colegio (RF-UTP-26)", h:5.5, e:"todo", c:"La UTP crea un OA de un taller; el profesor lo elige en el banco y aparece en la vista por OA; un OA en uso no se borra, se retira"},
+        {id:"T17.20", t:"Dos avisos: corrección de la UTP al titular y pruebas sin liberar en el inicio (RF-UTP-4, 13, 15)", h:2, e:"todo", c:"El colega ve el aviso con la pregunta, la prueba y quién la corrigió; la UTP ve «2 pruebas sin liberar» y llega a la lista filtrada"},
+        {id:"T17.21", t:"La UTP abre una prueba especial y lee los textos (RF-UTP-7; RF-PE-26 v1.11)", h:2, e:"todo", c:"La UTP abre la prueba de vocabulario, lee lo que escribió un alumno y su puntaje; no puede corregir y no aparece la nota"}
       ]}
   ],
 
