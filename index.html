@@ -241,8 +241,8 @@ cifras que se comunican. Se quitan de aquí cuando se corrijan en los documentos
    Estados de tarea: "done" | "wip" | "todo" | "cut"
    ═══════════════════════════════════════════════════════════════════ */
 const DATOS = {
-  actualizado: "2026-11-17",
-  hoy:         "2026-11-17",   // dejar igual a actualizado; permite congelar el panel para imprimir
+  actualizado: "2026-11-19",
+  hoy:         "2026-11-19",   // dejar igual a actualizado; permite congelar el panel para imprimir
   semana1:     "2026-07-27",   // lunes de la semana 1 del plan
   piloto:      "2026-10-05",   // Prueba 1 en IV medio (antes: piloto 2 basico 2 nov)
   mvp:         "2026-11-09",   // Prueba 2 en IV medio: el curso egresa a mediados de nov
@@ -405,11 +405,15 @@ const DATOS = {
         {id:"T10.10",t:"Gráficos del curso: avance por lección y logro por prueba", h:3,  e:"done", c:"El avance es por lección, nunca por objetivo de aprendizaje, y el logro coincide con el de la matriz del colegio"},
         {id:"T10.11",t:"Maqueta del calendario escolar configurable", h:3, e:"done", c:"Claudio aprueba la maqueta"},
         {id:"T10.12",t:"Calendario: semestres o trimestres, sábado y horario por día", h:3.5, e:"done", c:"Las vacaciones entre períodos se cuentan solas y con sábado suben los días de clases"},
-        {id:"T10.13",t:"Pantalla del calendario según la maqueta", h:2.5, e:"todo", c:"Quien administra carga un año completo sin ayuda y todo rechazo dice por qué"},
+        {id:"T10.13",t:"Pantalla del calendario según la maqueta", h:2.5, e:"done", c:"Quien administra carga un año completo sin ayuda y todo rechazo dice por qué"},
         {id:"T10.14",t:"Agenda de pruebas con horario por día", h:2.5, e:"todo", c:"Con el viernes hasta las 13:00 no se programa una prueba el viernes a las 15:00"},
         {id:"T10.15",t:"Una sola fecha de fin de año", h:2, e:"todo", c:"El material del año se borra al día siguiente del último día de clases, y nunca antes"},
         {id:"T10.16",t:"Confirmación de cambios, feriados por colegio y aviso de año sin calendario", h:2, e:"todo", c:"Al crear el primer curso de un año sin calendario aparece el recordatorio"},
-        {id:"T10.17",t:"Cierre del calendario configurable: documentos y verificación", h:1, e:"todo", c:"Los requerimientos dicen lo que el sistema hace"}
+        {id:"T10.17",t:"Cierre del calendario configurable: documentos y verificación", h:1, e:"todo", c:"Los requerimientos dicen lo que el sistema hace"},
+        {id:"T10.18",t:"Curso testigo: respuestas por el camino real contra una tabla de casos evidentes", h:4, e:"done", c:"La prueba pasa contra la tabla y falla si se cambia un número"},
+        {id:"T10.19",t:"Comando verificar_datos en cada despliegue y cada noche", h:3, e:"wip", c:"Una clave cambiada sin recorregir hace fallar el comando"},
+        {id:"T10.20",t:"Recorrido en el navegador por tipo de actividad, hasta la UTP", h:2, e:"todo", c:"Cada tipo autocorregido tiene su recorrido en verde"},
+        {id:"T10.21",t:"La base del logro al tocar la cifra: maqueta y construcción", h:2.5, e:"todo", c:"La cifra que aparece coincide con el recálculo independiente"}
       ]},
 
     { id:"B8", nombre:"Módulo de evaluación", ini:"2026-09-07", fin:"2026-11-13", real:null,
@@ -558,7 +562,7 @@ const DATOS = {
         {id:"T16.10", t:"RFE-12 · Historial de versiones y descarga del paquete exacto (D116)", h:5, e:"done", c:"De una lección cargada tres veces se descargan los tres paquetes, byte a byte"}
       ]},
     { id:"B18", nombre:"Pizarra de clase y cuaderno del alumno", ini:"2026-11-04", fin:"2026-11-15", real:68.6,
-      nota:"CERRADO el 15 nov 2026: construido y en main. C64 / D172, aprobada el 4 nov 2026, 38,5 h; C70 / D185, aprobada el 12 nov 2026, 13,5 h. Unas 68,6 h reales contra 52 estimadas, contando requerimientos, decisiones, auditorías y pruebas a mano. Queda encendida: no espera la política de datos de menores (D187, 14 nov 2026). Criterio funcional B18 pendiente al 1 mar 2027 (D94): pide una clase real con alumnos y lo verifica Claudio. Especificación: Requerimientos_Pizarra_LMS_Nahuel.md v1.7.",
+      nota:"CERRADO el 15 nov 2026: construido y en main. C64 / D172, aprobada el 4 nov 2026, 38,5 h; C70 / D185, aprobada el 12 nov 2026, 13,5 h. Unas 68,6 h reales contra 52 estimadas, contando requerimientos, decisiones, auditorías y pruebas a mano. Queda encendida: no espera la política de datos de menores (D187, 14 nov 2026). Criterio funcional B18 pendiente al 1 mar 2027 (D94): pide una clase real con alumnos y lo verifica Claudio. Especificación: Requerimientos_Pizarra_LMS_Nahuel.md v1.8. Después del cierre: C71 etapa 1 / D190, aprobada el 18 nov 2026, 4 h (el tipo de hoja de la hoja en blanco, T18.19 a T18.21); las 68,6 h reales son del bloque cerrado y no cuentan estas tres tareas. La etapa 2 de C71 (recuadro de texto, figuras y flecha, 18 h) sigue sin aprobar.",
       tareas:[
         {id:"T18.1", t:"La clase, la hoja y la hoja de cada alumno; permisos e interruptor (RF-PIZ-1, 16, 17, 21)", h:3, e:"done", c:"Con la pizarra apagada nadie la ve; encendida, solo el titular la abre y una sola por curso × asignatura"},
         {id:"T18.2", t:"Lanzar desde el libro, en blanco y desde una imagen pegada; ancla al libro (RF-PIZ-2 a 4)", h:5, e:"done", c:"Una hoja de cada origen llega a cada alumno; la del Ejercicio 7 queda bajo su lección"},
@@ -577,7 +581,10 @@ const DATOS = {
         {id:"T18.15", t:"Revisión: escribir sobre la hoja firme, junto a los cuatro niveles (RF-PIZ-24, 18)", h:1.5, e:"done", c:"Al día siguiente el profesor escribe en la hoja de un alumno y el nivel sigue oculto para él"},
         {id:"T18.16", t:"Alumno: ve lo de su profesor en clase y en el cuaderno, con interruptor y marca (RF-PIZ-25)", h:2, e:"done", c:"El alumno lo ve en unos 10 s sin recargar, no lo puede borrar y su compañero no lo ve"},
         {id:"T18.17", t:"Profesor jefe y UTP: ven lo escrito por el profesor, sin lápiz (RF-PIZ-20)", h:0.5, e:"done", c:"Ven la capa con su autor y su hora y no tienen herramientas"},
-        {id:"T18.18", t:"Seguridad, carga, E2E, documentos y trazabilidad de C70", h:2, e:"done", c:"Un alumno nunca recibe lo escrito a otro; RF-PIZ-24 y RF-PIZ-25 citados por tests (D93)"}
+        {id:"T18.18", t:"Seguridad, carga, E2E, documentos y trazabilidad de C70", h:2, e:"done", c:"Un alumno nunca recibe lo escrito a otro; RF-PIZ-24 y RF-PIZ-25 citados por tests (D93)"},
+        {id:"T18.19", t:"Maqueta del tipo de hoja de la hoja en blanco (C71 etapa 1, D135)", h:1, e:"done", c:"C71_01 aprobada por Claudio en MockUP/"},
+        {id:"T18.20", t:"Servidor: el tipo de hoja de la hoja en blanco, al lanzar, en la biblioteca y al cambiarlo en clase (RF-PIZ-26)", h:1, e:"todo", c:"Una hoja del libro o de imagen no admite tipo de hoja; cambiarlo en clase llega a cada copia y no toca lo escrito"},
+        {id:"T18.21", t:"Pantallas: los cuatro tipos de hoja debajo de los trazos y el botón «Tipo de hoja» (RF-PIZ-26)", h:2, e:"todo", c:"El borrador no borra la cuadrícula y el cuaderno muestra la hoja con su tipo al día siguiente"}
       ]},
     { id:"B17", nombre:"Módulo UTP", ini:"2026-11-10", fin:"2027-02-26", real:null,
       nota:"C62 / D171 (aprobada el 4 nov 2026, 24 h) y C66 / D175 (aprobada el 9 nov 2026, ampliada el 10 nov a 32,5 h). Especificación: Requerimientos_Modulo_UTP_LMS_Nahuel.md v1.5. Fechas provisorias. Primer tramo (T17.2 a T17.7 y T17.13) en construcción desde el 10 nov 2026, en sesiones encadenadas. T17.1 depende de T10.2; T17.12, de la etapa 3 de C59; T17.8, de la sesión de roles (C68).",
