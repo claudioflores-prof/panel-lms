@@ -241,8 +241,8 @@ cifras que se comunican. Se quitan de aquí cuando se corrijan en los documentos
    Estados de tarea: "done" | "wip" | "todo" | "cut"
    ═══════════════════════════════════════════════════════════════════ */
 const DATOS = {
-  actualizado: "2026-11-20",
-  hoy:         "2026-11-20",   // dejar igual a actualizado; permite congelar el panel para imprimir
+  actualizado: "2026-11-23",
+  hoy:         "2026-11-23",   // dejar igual a actualizado; permite congelar el panel para imprimir
   semana1:     "2026-07-27",   // lunes de la semana 1 del plan
   piloto:      "2026-10-05",   // Prueba 1 en IV medio (antes: piloto 2 basico 2 nov)
   mvp:         "2026-11-09",   // Prueba 2 en IV medio: el curso egresa a mediados de nov
@@ -407,8 +407,8 @@ const DATOS = {
         {id:"T10.12",t:"Calendario: semestres o trimestres, sábado y horario por día", h:3.5, e:"done", c:"Las vacaciones entre períodos se cuentan solas y con sábado suben los días de clases"},
         {id:"T10.13",t:"Pantalla del calendario según la maqueta", h:2.5, e:"done", c:"Quien administra carga un año completo sin ayuda y todo rechazo dice por qué"},
         {id:"T10.14",t:"Agenda de pruebas con horario por día", h:2.5, e:"done", c:"Con el viernes hasta las 13:00 no se programa una prueba el viernes a las 15:00"},
-        {id:"T10.15",t:"Una sola fecha de fin de año", h:2, e:"todo", c:"El material del año se borra al día siguiente del último día de clases, y nunca antes"},
-        {id:"T10.16",t:"Confirmación de cambios, feriados por colegio y aviso de año sin calendario", h:2, e:"todo", c:"Al crear el primer curso de un año sin calendario aparece el recordatorio"},
+        {id:"T10.15",t:"Una sola fecha de fin de año", h:2, e:"done", c:"El material del año se borra al día siguiente del último día de clases, y nunca antes"},
+        {id:"T10.16",t:"Confirmación de cambios, feriados por colegio y aviso de año sin calendario", h:2, e:"done", c:"Al crear el primer curso de un año sin calendario aparece el recordatorio"},
         {id:"T10.17",t:"Cierre del calendario configurable: documentos y verificación", h:1, e:"todo", c:"Los requerimientos dicen lo que el sistema hace"},
         {id:"T10.18",t:"Curso testigo: respuestas por el camino real contra una tabla de casos evidentes", h:4, e:"done", c:"La prueba pasa contra la tabla y falla si se cambia un número"},
         {id:"T10.19",t:"Comando verificar_datos en cada despliegue y cada noche", h:3, e:"wip", c:"Una clave cambiada sin recorregir hace fallar el comando"},
@@ -488,10 +488,10 @@ const DATOS = {
     { id:"B9", nombre:"Producción 2027", ini:"2026-12-01", fin:"2027-02-28", real:null,
       nota:"Ventana dic 2026 – mar 2027: purga anual, ActivityReport por matrícula, filtro de período y consulta agregada de biblioteca. Añadido al panel el 3 sep 2026 (C-4, auditoría del 28 ago): existía en el Plan Técnico y no figuraba aquí. T9.1 se adelantó al Bloque 7 como T8.0 (D69, cerrada) y T9.5 ya se ejecutó como D29/T6.0 (Bloque 6, cerrada) — ninguna de las dos se cuenta de nuevo en este bloque.",
       tareas:[
-        {id:"T9.2", t:"Definir el alcance de la purga anual y construir manage.py export_year (volcado + purga)", h:2,   e:"todo", c:"Se exporta un año completo a archivo, se purga, y el archivo permite reconstruir lo exportado"},
+        {id:"T9.2", t:"Definir el alcance de la purga anual y construir manage.py export_year (volcado + purga)", h:2,   e:"wip", c:"Se exporta un año completo a archivo, se purga, y el archivo permite reconstruir lo exportado"},
         {id:"T9.3", t:"ActivityReport pasa a FK a Enrollment; unicidad (enrollment, activity_id)",                  h:3,   e:"todo", c:"Un alumno que repite el curso rehace la misma actividad y quedan dos reportes, no uno pisado"},
-        {id:"T9.4", t:"Filtro de período en la autorización del endpoint de reporte y en la biblioteca",           h:1.5, e:"todo", c:"Un alumno de 3° en 2028 no ve el libro de 2° 2027 en su biblioteca"},
-        {id:"T9.6", t:"Consulta agregada de progreso por unidad (elimina el N+1 de la biblioteca)",                h:0.5, e:"todo", c:"La biblioteca hace un número constante de consultas, no una por unidad"}
+        {id:"T9.4", t:"Filtro de período en la autorización del endpoint de reporte y en la biblioteca",           h:1.5, e:"done", c:"Un alumno de 3° en 2028 no ve el libro de 2° 2027 en su biblioteca"},
+        {id:"T9.6", t:"Consulta agregada de progreso por unidad (elimina el N+1 de la biblioteca)",                h:0.5, e:"done", c:"La biblioteca hace un número constante de consultas, no una por unidad"}
       ]},
     { id:"B12", nombre:"Paquete Editorial Santillana", ini:"2026-10-06", fin:"2026-12-19", real:null,
       nota:"Aprobado por D70/C28 el 27 ago 2026: 62 h de alcance NUEVO, no corrección. Posterior al Bloque 7. Hasta el 29 de agosto no existía ni en el Plan Técnico ni en este panel, así que dirección nunca lo vio.",
@@ -561,8 +561,8 @@ const DATOS = {
         {id:"T16.9", t:"RFE-10 · Registro de cada paso del flujo", h:5, e:"done", c:"Cada transición de estado tiene quién y cuándo, consultable"},
         {id:"T16.10", t:"RFE-12 · Historial de versiones y descarga del paquete exacto (D116)", h:5, e:"done", c:"De una lección cargada tres veces se descargan los tres paquetes, byte a byte"}
       ]},
-    { id:"B18", nombre:"Pizarra de clase y cuaderno del alumno", ini:"2026-11-04", fin:"2026-11-15", real:68.6,
-      nota:"CERRADO el 15 nov 2026: construido y en main. C64 / D172, aprobada el 4 nov 2026, 38,5 h; C70 / D185, aprobada el 12 nov 2026, 13,5 h. Unas 68,6 h reales contra 52 estimadas, contando requerimientos, decisiones, auditorías y pruebas a mano. Queda encendida: no espera la política de datos de menores (D187, 14 nov 2026). Criterio funcional B18 pendiente al 1 mar 2027 (D94): pide una clase real con alumnos y lo verifica Claudio. Especificación: Requerimientos_Pizarra_LMS_Nahuel.md v1.8. Después del cierre: C71 etapa 1 / D190, aprobada el 18 nov 2026, 4 h (el tipo de hoja de la hoja en blanco, T18.19 a T18.21); las 68,6 h reales son del bloque cerrado y no cuentan estas tres tareas. La etapa 2 de C71 (recuadro de texto, figuras y flecha, 18 h) sigue sin aprobar.",
+    { id:"B18", nombre:"Pizarra de clase y cuaderno del alumno", ini:"2026-11-04", fin:"2026-11-23", real:78.2,
+      nota:"CERRADO el 15 nov 2026: construido y en main. C64 / D172, aprobada el 4 nov 2026, 38,5 h; C70 / D185, aprobada el 12 nov 2026, 13,5 h. Unas 68,6 h reales contra 52 estimadas, contando requerimientos, decisiones, auditorías y pruebas a mano. Queda encendida: no espera la política de datos de menores (D187, 14 nov 2026). Criterio funcional B18 pendiente al 1 mar 2027 (D94): pide una clase real con alumnos y lo verifica Claudio. Especificación: Requerimientos_Pizarra_LMS_Nahuel.md v1.8. Después del cierre: C71 etapa 1 / D190, aprobada el 18 nov 2026, 4 h (el tipo de hoja de la hoja en blanco, T18.19 a T18.21); la etapa 2 (recuadro de texto, figuras y flecha, T18.22 a T18.28), aprobada el 20 nov 2026, 18 h. Las dos etapas quedaron construidas y en main el 20 nov 2026: unas 7,5 h reales contra 22 estimadas. La etapa 3 (el rótulo de la hoja por su tipo, flecha y flecha doble, y el tamaño del texto, T18.29 a T18.32), aprobada el 23 nov 2026 después de que Claudio probó la pizarra, 6 h: construida ese día, unas 2,1 h reales. Con las 68,6 del cierre dan 78,2 h. Criterio funcional de C71 pendiente al 1 mar 2027, con el de B18.",
       tareas:[
         {id:"T18.1", t:"La clase, la hoja y la hoja de cada alumno; permisos e interruptor (RF-PIZ-1, 16, 17, 21)", h:3, e:"done", c:"Con la pizarra apagada nadie la ve; encendida, solo el titular la abre y una sola por curso × asignatura"},
         {id:"T18.2", t:"Lanzar desde el libro, en blanco y desde una imagen pegada; ancla al libro (RF-PIZ-2 a 4)", h:5, e:"done", c:"Una hoja de cada origen llega a cada alumno; la del Ejercicio 7 queda bajo su lección"},
@@ -583,8 +583,19 @@ const DATOS = {
         {id:"T18.17", t:"Profesor jefe y UTP: ven lo escrito por el profesor, sin lápiz (RF-PIZ-20)", h:0.5, e:"done", c:"Ven la capa con su autor y su hora y no tienen herramientas"},
         {id:"T18.18", t:"Seguridad, carga, E2E, documentos y trazabilidad de C70", h:2, e:"done", c:"Un alumno nunca recibe lo escrito a otro; RF-PIZ-24 y RF-PIZ-25 citados por tests (D93)"},
         {id:"T18.19", t:"Maqueta del tipo de hoja de la hoja en blanco (C71 etapa 1, D135)", h:1, e:"done", c:"C71_01 aprobada por Claudio en MockUP/"},
-        {id:"T18.20", t:"Servidor: el tipo de hoja de la hoja en blanco, al lanzar, en la biblioteca y al cambiarlo en clase (RF-PIZ-26)", h:1, e:"todo", c:"Una hoja del libro o de imagen no admite tipo de hoja; cambiarlo en clase llega a cada copia y no toca lo escrito"},
-        {id:"T18.21", t:"Pantallas: los cuatro tipos de hoja debajo de los trazos y el botón «Tipo de hoja» (RF-PIZ-26)", h:2, e:"todo", c:"El borrador no borra la cuadrícula y el cuaderno muestra la hoja con su tipo al día siguiente"}
+        {id:"T18.20", t:"Servidor: el tipo de hoja de la hoja en blanco, al lanzar, en la biblioteca y al cambiarlo en clase (RF-PIZ-26)", h:1, e:"done", c:"Una hoja del libro o de imagen no admite tipo de hoja; cambiarlo en clase llega a cada copia y no toca lo escrito"},
+        {id:"T18.21", t:"Pantallas: los cuatro tipos de hoja debajo de los trazos y el botón «Tipo de hoja» (RF-PIZ-26)", h:2, e:"done", c:"El borrador no borra la cuadrícula y el cuaderno muestra la hoja con su tipo al día siguiente"},
+        {id:"T18.22", t:"Maqueta de texto, figuras y flecha (C71 etapa 2, D135)", h:2, e:"done", c:"C71_02 aprobada por Claudio en MockUP/"},
+        {id:"T18.23", t:"Servidor: textos, figuras y sus operaciones dentro de los lotes (RF-PIZ-27)", h:3, e:"done", c:"La capa del profesor sobre la hoja del alumno rechaza textos y figuras (D185)"},
+        {id:"T18.24", t:"Motor común: los textos y las figuras en todas las pantallas que muestran una hoja (RF-PIZ-27)", h:3, e:"done", c:"Se ven igual en la clase, la grilla, la revisión y el cuaderno; el componente drawing del libro no cambia"},
+        {id:"T18.25", t:"Figuras y línea recta, creadas arrastrando (RF-PIZ-27)", h:2, e:"done", c:"Solo contorno, con el color y el grosor de la barra"},
+        {id:"T18.26", t:"Recuadro de texto, con teclado en tablet y teléfono (RF-PIZ-27)", h:3, e:"done", c:"Texto plano con tope de 200 caracteres"},
+        {id:"T18.27", t:"Flecha: seleccionar, mover y borrar un objeto (RF-PIZ-27)", h:3, e:"done", c:"Lo dibujado a mano no se mueve y el borrador no toca los objetos"},
+        {id:"T18.28", t:"Seguridad, carga y cierre de texto, figuras y flecha (RF-PIZ-27)", h:2, e:"done", c:"40 alumnos guardando a la vez sin pérdidas; RF-PIZ-27 citado por tests (D93)"},
+        {id:"T18.29", t:"Maqueta del rótulo por tipo de hoja y de las flechas (D135)", h:0.5, e:"done", c:"Aprobadas por Claudio"},
+        {id:"T18.30", t:"La hoja en blanco sin nombre se llama por su tipo de hoja (RF-PIZ-26)", h:1, e:"done", c:"Cambia al cambiar el tipo, para el profesor y para el alumno"},
+        {id:"T18.31", t:"Flecha y flecha doble en las figuras (RF-PIZ-27)", h:2.5, e:"done", c:"Punta abierta donde termina el trazo, o en los dos extremos"},
+        {id:"T18.32", t:"El tamaño del texto se ve en la barra y un texto escrito cambia de tamaño (RF-PIZ-27)", h:2, e:"done", c:"«Agrandar» y «Achicar» junto al texto seleccionado; Deshacer lo cubre"}
       ]},
     { id:"B17", nombre:"Módulo UTP", ini:"2026-11-10", fin:"2027-02-26", real:null,
       nota:"C62 / D171 (aprobada el 4 nov 2026, 24 h) y C66 / D175 (aprobada el 9 nov 2026, ampliada el 10 nov a 32,5 h). Especificación: Requerimientos_Modulo_UTP_LMS_Nahuel.md v1.5. Fechas provisorias. Primer tramo (T17.2 a T17.7 y T17.13) en construcción desde el 10 nov 2026, en sesiones encadenadas. T17.1 depende de T10.2; T17.12, de la etapa 3 de C59; T17.8, de la sesión de roles (C68).",
