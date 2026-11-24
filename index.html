@@ -241,8 +241,8 @@ cifras que se comunican. Se quitan de aquí cuando se corrijan en los documentos
    Estados de tarea: "done" | "wip" | "todo" | "cut"
    ═══════════════════════════════════════════════════════════════════ */
 const DATOS = {
-  actualizado: "2026-11-23",
-  hoy:         "2026-11-23",   // dejar igual a actualizado; permite congelar el panel para imprimir
+  actualizado: "2026-11-24",
+  hoy:         "2026-11-24",   // dejar igual a actualizado; permite congelar el panel para imprimir
   semana1:     "2026-07-27",   // lunes de la semana 1 del plan
   piloto:      "2026-10-05",   // Prueba 1 en IV medio (antes: piloto 2 basico 2 nov)
   mvp:         "2026-11-09",   // Prueba 2 en IV medio: el curso egresa a mediados de nov
@@ -391,16 +391,16 @@ const DATOS = {
       ]},
 
     { id:"B10", nombre:"Reportería", ini:"2026-09-14", fin:"2027-02-28", real:null,
-      nota:"Prioridad de dirección. No se hace de corrido: la fase 1 va antes de la prueba de octubre, la fase 2 antes de la de noviembre y la fase 3 en el verano. La regla central del módulo viene de un fracaso real: el avance se mide por unidad y lección, nunca por objetivo de aprendizaje, que es lo que volvió inservible el panel anterior del colegio. T10.0 se retiró de esta lista (C-3, auditoría del 28 ago 2026): era la misma tarea que T6.0, movida por D35 el 24 de agosto y ya cerrada en el Bloque 6 — este bloque la contaba dos veces.",
+      nota:"D195, 23 nov 2026: el tiempo de conexión, la planificación por semana y el correo al apoderado (T10.1, T10.3 y T10.5 a T10.8, 24,5 h) se construyen después de marzo de 2027, sin fecha; siguen aprobadas. En enero y febrero no se trabaja. Prioridad de dirección. No se hace de corrido: la fase 1 va antes de la prueba de octubre y la fase 2 antes de la de noviembre. La regla central del módulo viene de un fracaso real: el avance se mide por unidad y lección, nunca por objetivo de aprendizaje, que es lo que volvió inservible el panel anterior del colegio. T10.0 se retiró de esta lista (C-3, auditoría del 28 ago 2026): era la misma tarea que T6.0, movida por D35 el 24 de agosto y ya cerrada en el Bloque 6 — este bloque la contaba dos veces.",
       tareas:[
-        {id:"T10.1", t:"Permiso de UTP y medición de tiempo de conexión",          h:4.5,e:"todo", c:"Una hora de clase queda registrada como una fila con los minutos conectados, no como sesenta registros"},
+        {id:"T10.1", t:"Después de marzo de 2027 (D195) · Permiso de UTP y medición de tiempo de conexión",          h:4.5,e:"todo", c:"Una hora de clase queda registrada como una fila con los minutos conectados, no como sesenta registros"},
         {id:"T10.2", t:"Panel de avance para UTP y dirección",                     h:6,  e:"done", c:"Con 80 estudiantes y 6 asignaturas abre en menos de 1 segundo; una actividad de repaso no ensucia el avance de ninguna unidad"},
-        {id:"T10.3", t:"Ensayo del correo semanal con datos reales",               h:2,  e:"todo", c:"Llega a las casillas de prueba y se lee bien en el teléfono, sin adjuntos"},
+        {id:"T10.3", t:"Después de marzo de 2027 (D195) · Ensayo del correo semanal con datos reales",               h:2,  e:"todo", c:"Llega a las casillas de prueba y se lee bien en el teléfono, sin adjuntos"},
         {id:"T10.4", t:"Calendario escolar: trimestres, vacaciones y feriados",    h:5,  e:"done", c:"Después de una semana de vacaciones no aparece ninguna alerta nueva por el solo paso del tiempo"},
-        {id:"T10.5", t:"Planificación del libro por semana",                       h:6,  e:"todo", c:"El profesor confirma la planificación de la semana en un clic; si no planifica, el panel sigue sirviendo igual"},
-        {id:"T10.6", t:"Comparación entre lo planificado y lo realmente avanzado", h:2,  e:"todo", c:"El reporte del viernes responde quién no llegó a la página comprometida"},
-        {id:"T10.7", t:"Correo semanal al apoderado",                              h:8,  e:"todo", c:"Un apoderado dado de baja no lo recibe, y se puede responder qué se envió y cuándo"},
-        {id:"T10.8", t:"Servicio de envío de correo en producción",                h:2,  e:"todo", c:"Los correos llegan a la bandeja de entrada y no a spam"},
+        {id:"T10.5", t:"Después de marzo de 2027 (D195) · Planificación del libro por semana",                       h:6,  e:"todo", c:"El profesor confirma la planificación de la semana en un clic; si no planifica, el panel sigue sirviendo igual"},
+        {id:"T10.6", t:"Después de marzo de 2027 (D195) · Comparación entre lo planificado y lo realmente avanzado", h:2,  e:"todo", c:"El reporte del viernes responde quién no llegó a la página comprometida"},
+        {id:"T10.7", t:"Después de marzo de 2027 (D195) · Correo semanal al apoderado",                              h:8,  e:"todo", c:"Un apoderado dado de baja no lo recibe, y se puede responder qué se envió y cuándo"},
+        {id:"T10.8", t:"Después de marzo de 2027 (D195) · Servicio de envío de correo en producción",                h:2,  e:"todo", c:"Los correos llegan a la bandeja de entrada y no a spam"},
         {id:"T10.9", t:"Alertas como avisos del inicio de la UTP",                h:3.5,e:"done", c:"Después de una semana de vacaciones no aparece ningún aviso nuevo por el solo paso del tiempo"},
         {id:"T10.10",t:"Gráficos del curso: avance por lección y logro por prueba", h:3,  e:"done", c:"El avance es por lección, nunca por objetivo de aprendizaje, y el logro coincide con el de la matriz del colegio"},
         {id:"T10.11",t:"Maqueta del calendario escolar configurable", h:3, e:"done", c:"Claudio aprueba la maqueta"},
@@ -485,13 +485,14 @@ const DATOS = {
         {id:"T11.26", t:"Vigilancia de roles: gobierno/test_roles.py (D182 punto 13)", h:2.5, e:"done", c:"Un permiso inventado lo pone en rojo; una C sin línea Roles: lo pone en rojo"},
         {id:"T11.27", t:"El rol manda sobre la asignación docente (D188)", h:3, e:"done", c:"Quien pierde Profesor no aparece como profesora ni jefa en ninguna pantalla; la ficha del curso la marca; nada se borra y vuelve con el rol"},
       ]},
-    { id:"B9", nombre:"Producción 2027", ini:"2026-12-01", fin:"2027-02-28", real:null,
-      nota:"Ventana dic 2026 – mar 2027: purga anual, ActivityReport por matrícula, filtro de período y consulta agregada de biblioteca. Añadido al panel el 3 sep 2026 (C-4, auditoría del 28 ago): existía en el Plan Técnico y no figuraba aquí. T9.1 se adelantó al Bloque 7 como T8.0 (D69, cerrada) y T9.5 ya se ejecutó como D29/T6.0 (Bloque 6, cerrada) — ninguna de las dos se cuenta de nuevo en este bloque.",
+    { id:"B9", nombre:"Producción 2027", ini:"2026-11-20", fin:"2026-12-31", real:null,
+      nota:"D195, 23 nov 2026: se construye en la semana del 20 al 27 nov 2026; el cierre del año 2026 (export_year con la purga) es una operación de fines de diciembre y T9.3 va después de marzo de 2027. Texto anterior: Ventana dic 2026 – mar 2027: purga anual, ActivityReport por matrícula, filtro de período y consulta agregada de biblioteca. Añadido al panel el 3 sep 2026 (C-4, auditoría del 28 ago): existía en el Plan Técnico y no figuraba aquí. T9.1 se adelantó al Bloque 7 como T8.0 (D69, cerrada) y T9.5 ya se ejecutó como D29/T6.0 (Bloque 6, cerrada) — ninguna de las dos se cuenta de nuevo en este bloque.",
       tareas:[
-        {id:"T9.2", t:"Definir el alcance de la purga anual y construir manage.py export_year (volcado + purga)", h:2,   e:"wip", c:"Se exporta un año completo a archivo, se purga, y el archivo permite reconstruir lo exportado"},
-        {id:"T9.3", t:"ActivityReport pasa a FK a Enrollment; unicidad (enrollment, activity_id)",                  h:3,   e:"todo", c:"Un alumno que repite el curso rehace la misma actividad y quedan dos reportes, no uno pisado"},
+        {id:"T9.2", t:"Definir el alcance de la purga anual y construir manage.py export_year (volcado + purga)", h:2,   e:"done", c:"Se exporta un año completo a archivo, se purga, y el archivo permite reconstruir lo exportado"},
+        {id:"T9.3", t:"Después de marzo de 2027 (D195) · ActivityReport pasa a FK a Enrollment; unicidad (enrollment, activity_id)",                  h:3,   e:"todo", c:"Un alumno que repite el curso rehace la misma actividad y quedan dos reportes, no uno pisado"},
         {id:"T9.4", t:"Filtro de período en la autorización del endpoint de reporte y en la biblioteca",           h:1.5, e:"done", c:"Un alumno de 3° en 2028 no ve el libro de 2° 2027 en su biblioteca"},
-        {id:"T9.6", t:"Consulta agregada de progreso por unidad (elimina el N+1 de la biblioteca)",                h:0.5, e:"done", c:"La biblioteca hace un número constante de consultas, no una por unidad"}
+        {id:"T9.6", t:"Consulta agregada de progreso por unidad (elimina el N+1 de la biblioteca)",                h:0.5, e:"done", c:"La biblioteca hace un número constante de consultas, no una por unidad"},
+        {id:"T9.7", t:"El profesor ve solo los cursos del año escolar vigente",                                    h:2,   e:"done", c:"Un profesor con un curso de 2026 y uno de 2027 ve en su inicio solo el que está dictando"}
       ]},
     { id:"B12", nombre:"Paquete Editorial Santillana", ini:"2026-10-06", fin:"2026-12-19", real:null,
       nota:"Aprobado por D70/C28 el 27 ago 2026: 62 h de alcance NUEVO, no corrección. Posterior al Bloque 7. Hasta el 29 de agosto no existía ni en el Plan Técnico ni en este panel, así que dirección nunca lo vio.",
